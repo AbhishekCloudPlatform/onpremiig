@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
  
         // Pages do not require login
-        http.authorizeRequests().antMatchers("/","/feature").permitAll();
+        http.authorizeRequests().antMatchers("/","/feature","/register").permitAll();
  
        //http.authorizeRequests().antMatchers("/userInfo","/extract/**","/publishing/**").access("hasRole('" + AppRole.ROLE_USER + "')")
        

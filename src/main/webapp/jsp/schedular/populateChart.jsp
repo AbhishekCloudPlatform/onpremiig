@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-body" >
+
+					<div class="form-group col-md-12"  >
 					
 					
 					
@@ -9,7 +8,7 @@
 <!-- <input type="hidden" name="x" id="x">
 <input type="hidden" name="y" id="y">
  -->
- <fieldset class="fs">
+
 <table class="table table-bordered"   >
                     <thead>
                       <tr style="color: green;;font: bolder;">
@@ -57,7 +56,5 @@
                       
                      </tbody>
                   </table>
-                  </fieldset>
+
 </div>
-				</div>
-			</div>
