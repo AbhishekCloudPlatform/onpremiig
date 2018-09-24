@@ -75,6 +75,23 @@ public class ExtractionServiceImpl implements ExtractionService {
 	}
 
 	@Override
+	public ArrayList<String> getTargets() {
+		ArrayList<String> arr = new ArrayList<String>();
+		Connection connection;
+		try {
+			connection = ConnectionUtils.getConnection();
+			PreparedStatement pstm = connection.prepareStatement("select target_unique_name from target_master");
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next()) {
+				arr.add(rs.getString(1));
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return arr;
+	}
+	
+	@Override
 	public ConnectionMaster getConnections1(String src_val,int src_sys_id) {
 		// TODO Auto-generated method stub
 		Connection connection;

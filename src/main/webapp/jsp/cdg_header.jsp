@@ -288,7 +288,7 @@
             </div>
           </li>-->
           <li class="nav-item nav-logout d-none d-lg-block">
-           < <a class="nav-link" href="/login">
+           <a class="nav-link" href="/login">
               <i class="mdi mdi-power"></i>
             </a> 
           </li>
