@@ -1,0 +1,160 @@
+<jsp:include page="../cdg_header.jsp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script type="text/javascript">
+$(document).ready(function() {
+			$("#status").change(function() {
+				var status = $(this).val();
+				var feedid = document.getElementById('arrfeedId').value
+				$.post('/scheduler/statusfilter', {
+					status : status,
+					feedid : feedid
+				}, function(data) {
+					$('#allvalues').html(data)
+				});
+		
+	});
+			
+			
+			$("#arrfeedId").change(function() {
+				var status = document.getElementById('status').value
+				var feedid = $(this).val();
+				$.post('/scheduler/feedfilter', {
+					feedid : feedid,
+					status : status
+				}, function(data) {
+					$('#allvalues').html(data)
+				});
+			});
+			
+	
+});
+
+
+
+
+	
+
+</script>
+<div class="main-panel">
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body">
+					<h4 class="card-title">Current Jobs</h4>
+							<div class="row">
+						   <div class="form-group col-md-6 ">
+						   		<label>Feed Id</label> 
+											<select class="form-control" name="arrfeedId" id="arrfeedId">
+												<option value="ALL" selected="selected">All</option>
+											    <c:forEach items="${arrfeedId}" var="arrfeedId">
+													<option value="${arrfeedId}">${arrfeedId}</option>
+												</c:forEach>									  	
+											</select>
+				          </div>
+
+				          <div class="form-group col-md-6">
+				          <label>Status</label> 
+											<select class="form-control" name="status" id="status">
+												<option value="ALL" selected="selected">All</option>
+											    <option value="C">Completed</option>
+											    <option value="T">To Run</option>
+											    <option value="W">Waiting</option>
+											    <option value="F">Failed</option>
+											    <option value="R">Running</option>
+											    
+									  		</select>
+				          </div>
+				          </div>	
+        
+					</div>
+				</div>
+			</div>
+		</div>
+	
+         
+		<div class="row">
+			<div class="col-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body">
+					
+			
+					
+						<h4 class="card-title">Job Details</h4>
+						<%
+							if (request.getAttribute("successString") != null) {
+						%>
+						<p class="text-success h4">${successString}</p>
+						<%
+							}
+						%>
+						<%
+							if (request.getAttribute("errorString") != null) {
+						%>
+						<p class="text-danger h4">${errorString}</p>
+						<%
+							}
+						%>
+					<form class="forms-sample" id="extractionExtractData"
+							name="extractionExtractData" method="POST"
+							action="/extract/extractionExtractData1"
+							enctype="application/json">
+
+			<div id="allvalues" style="display: block;">
+				 <table class="table table-bordered"   >
+                    <thead>
+                      <tr style="color: green;;font: bolder;">
+                      <th>
+                          Feed Id
+                        </th>
+                        <th>
+                          Job Id
+                        </th>
+                        <th>
+                          Job Name
+                        </th>
+                        <th>
+                         Schedule Info
+                        </th>
+                    	<th>
+                        Status
+                        </th>
+                        <th >
+                        Run/Re-Run
+                        </th>
+                       <th >
+                        Kill/Abort
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                   <c:forEach var="row" items="${allLoadJobs}">
+	                    <tr>
+	                    <td><c:out value="${row.batch_id}" /></td>
+	                    <td><c:out value="${row.job_id}" /></td>
+						<td><c:out value="${row.job_name}" /></td>
+						<td><c:out value="${row.job_schedule_time}" /></td>
+						<td>
+                        <c:out value="${row.status}" />
+                        </td>
+						<td>
+						<a href="#" ><img src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
+						
+						</td>
+						<td>
+						<a href="#" ><img src="../../assets/img/stop.png"  alt="Image" height="160" width="160"class="rounded">
+						</a>
+						</td>		
+						</tr>
+	                </c:forEach>
+                      
+                     </tbody>
+                  </table>
+                 </div>
+                 
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<jsp:include page="../cdg_footer.jsp" />
