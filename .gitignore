@@ -1,49 +1,23 @@
+# Compiled class file
+*.class
 
-target/classes/META-INF/MANIFEST.MF
-target/classes/com/iig/gcp/constants/MySqlConstants.class
-target/classes/com/iig/gcp/controllers/ExtractionController.class
-target/classes/com/iig/gcp/controllers/LoginController.class
-target/classes/com/iig/gcp/controllers/RegisterController.class
-target/classes/com/iig/gcp/controllers/SchedularController.class
-target/classes/com/iig/gcp/extraction/dto/ComposerMaster.class
-target/classes/com/iig/gcp/extraction/dto/ConnectionMaster.class
-target/classes/com/iig/gcp/extraction/dto/CountryMaster.class
-target/classes/com/iig/gcp/extraction/dto/ExtractionMaster.class
-target/classes/com/iig/gcp/extraction/dto/ReservoirMaster.class
-target/classes/com/iig/gcp/extraction/dto/ScheduleMaster.class
-target/classes/com/iig/gcp/extraction/dto/SourceSystemMaster.class
-target/classes/com/iig/gcp/extraction/service/ExtractionService.class
-target/classes/com/iig/gcp/extraction/service/ExtractionServiceImpl.class
-target/classes/com/iig/gcp/feedlogging/dao/FeedLoggerDAO.class
-target/classes/com/iig/gcp/feedlogging/dao/FeedLoggerDAOImpl.class
-target/classes/com/iig/gcp/feedlogging/dto/FeedLoggerDTO.class
-target/classes/com/iig/gcp/feedlogging/service/FeedLoggingService.class
-target/classes/com/iig/gcp/feedlogging/service/FeedLoggingServiceImpl.class
-target/classes/com/iig/gcp/IigOnPremApplication.class
-target/classes/com/iig/gcp/login/dao/LoginDAO.class
-target/classes/com/iig/gcp/login/dao/LoginDAOImpl.class
-target/classes/com/iig/gcp/login/dto/UserAccount.class
-target/classes/com/iig/gcp/login/service/LoginService.class
-target/classes/com/iig/gcp/login/service/LoginServiceImpl.class
-target/classes/com/iig/gcp/scheduler/dao/SchedularDAO.class
-target/classes/com/iig/gcp/scheduler/dao/SchedularDAOImpl.class
-target/classes/com/iig/gcp/scheduler/dto/ArchiveJobsDTO.class
-target/classes/com/iig/gcp/scheduler/dto/DailyJobsDTO.class
-target/classes/com/iig/gcp/scheduler/dto/MasterJobsDTO.class
-target/classes/com/iig/gcp/scheduler/service/SchedularService.class
-target/classes/com/iig/gcp/scheduler/service/SchedularServiceImpl.class
-target/classes/com/iig/gcp/utils/ConnectionUtils.class
-target/classes/com/iig/gcp/utils/DBUtils.class
-target/classes/com/iig/gcp/utils/MySQLConnUtils.class
-target/classes/com/iig/gcp/WebSecurityConfig.class
-target/classes/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
-<<<<<<< HEAD
-target/IIGOnPrem-0.0.1-SNAPSHOT.jar
-target/IIGOnPrem-0.0.1-SNAPSHOT.jar.original
-target/maven-archiver/pom.properties
-target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
-target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
-=======
-target/classes/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
->>>>>>> bbc57692fd904cfa165e7c728d527fdd9130a3ec
-target/test-classes/com/iig/gcp/IigOnPremApplicationTests.class
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
