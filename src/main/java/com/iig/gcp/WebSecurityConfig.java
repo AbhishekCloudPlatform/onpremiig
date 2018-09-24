@@ -1,0 +1,40 @@
+package com.iig.gcp;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+ 
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+ 
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+ 
+        http.csrf().disable();
+ 
+        // Pages do not require login
+        http.authorizeRequests().antMatchers("/","/feature").permitAll();
+ 
+       //http.authorizeRequests().antMatchers("/userInfo","/extract/**","/publishing/**").access("hasRole('" + AppRole.ROLE_USER + "')")
+       
+       //.anyRequest().authenticated() ;
+ 
+     
+ 
+    }
+ 
+   
+    
+    @Override
+	public void configure(WebSecurity web) throws Exception {
+	    web
+	       .ignoring()
+	       .antMatchers("/resources/**", "/assets/**");
+	}
+ 
+}
