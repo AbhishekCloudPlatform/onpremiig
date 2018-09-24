@@ -19,7 +19,7 @@ function jsonconstruct()
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title">Data Extraction</h4>
-						<p class="card-description">Connection Details</p>
+						<p class="card-description">Source Details</p>
 						<%
 							if (request.getAttribute("successString") != null) {
 						%>
@@ -62,12 +62,12 @@ function jsonconstruct()
 							<fieldset class="fs">
 							<div class="form-group row">
 									<div class="col-sm-6">
-										<label>Connection Name</label> <input type="text"
+										<label>Source Name</label> <input type="text"
 											class="form-control" id="connection_name" name="connection_name"
 											placeholder="Connection Name">
 									</div>
 									<div class="col-sm-6">
-										<label>Connection Type</label> <input type="text"
+										<label>Source Type</label> <input type="text"
 											class="form-control" id="connection_type" name="connection_type" value="${src_val}" readonly="readonly">
 									</div>
 								</div>

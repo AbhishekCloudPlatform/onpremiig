@@ -11,6 +11,7 @@ public interface ExtractionService {
 
 	public String invokeRest(String json,String url) throws UnsupportedOperationException, Exception ;
 	public ArrayList<ConnectionMaster> getConnections(String src_val);
+	public ArrayList<String> getTargets();
 	public ConnectionMaster getConnections1(String src_val,int src_sys_id);
 	public String getExtType(int src_sys_id);
 	public String getExtType1(String src_unique_name);

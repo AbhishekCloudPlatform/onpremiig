@@ -11,7 +11,7 @@ public class MySqlConstants {
 	public static final String MYSQL_PASSWORD = "Infy@123";
 	
 	
-	public final static String EXTRACTION_COMPUTE_URL="http://104.196.101.198:8095/";
+	public final static String EXTRACTION_COMPUTE_URL="http://35.237.17.136:8095/";
 	public static String GET_SOURCE_CONNECTIONS="SELECT connection_id,connection_name,host_name,port_no,username,password,database_name,service_name from connection_master where connection_type=?";
 
 	

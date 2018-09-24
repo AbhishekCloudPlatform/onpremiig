@@ -48,6 +48,19 @@ public class ExtractionController {
 		return new ModelAndView("extraction/ConnectionDetails");
 	}
 	
+	@RequestMapping(value = "/extraction/TargetDetails", method = RequestMethod.GET)
+	public ModelAndView TargetDetails(@Valid ModelMap model) {
+		return new ModelAndView("extraction/TargetDetails");
+	}
+	
+	@RequestMapping(value = "/extraction/TargetDetails1", method = RequestMethod.POST)
+	public ModelAndView ConnectionDetails1(@Valid @ModelAttribute("x") String x, ModelMap model) throws UnsupportedOperationException, Exception {
+//		System.out.println(x);
+		String resp = es.invokeRest(x, "addTarget");
+		model.addAttribute("successString", resp.toString());
+		return new ModelAndView("extraction/TargetDetails");
+	}
+	
 	@RequestMapping(value = "/extraction/SystemHome", method = RequestMethod.GET)
 	public ModelAndView SystemHome() {
 		return new ModelAndView("extraction/SystemHome");
@@ -58,12 +71,14 @@ public class ExtractionController {
 		model.addAttribute("src_val", src_val);
 		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
 		model.addAttribute("conn_val", conn_val);
+		ArrayList<String> tgt = es.getTargets();
+		model.addAttribute("tgt", tgt);
 		/*ArrayList<String> buckets = DBUtils.getBuckets();
 		model.addAttribute("buckets", buckets);*/
 		ArrayList<CountryMaster> countries = es.getCountries();
 		model.addAttribute("countries", countries);
-		ArrayList<ReservoirMaster> reservoir = es.getReservoirs();
-		model.addAttribute("reservoir", reservoir);
+		/*ArrayList<ReservoirMaster> reservoir = es.getReservoirs();
+		model.addAttribute("reservoir", reservoir);*/
 		return new ModelAndView("extraction/SystemDetails");
 	}
 
@@ -82,12 +97,14 @@ public class ExtractionController {
 		model.addAttribute("src_val", src_val);
 		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
 		model.addAttribute("conn_val", conn_val);
+		ArrayList<String> tgt = es.getTargets();
+		model.addAttribute("tgt", tgt);
 		/*ArrayList<String> buckets = DBUtils.getBuckets();
 		model.addAttribute("buckets", buckets);*/
 		ArrayList<CountryMaster> countries = es.getCountries();
 		model.addAttribute("countries", countries);
-		ArrayList<ReservoirMaster> reservoir = es.getReservoirs();
-		model.addAttribute("reservoir", reservoir);
+		/*ArrayList<ReservoirMaster> reservoir = es.getReservoirs();
+		model.addAttribute("reservoir", reservoir);*/
 		return new ModelAndView("extraction/SystemDetails");
 	}
 

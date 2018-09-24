@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
 	function jsonconstruct() {
+		multisel('targetx', 'target');
 		var data = {};
 		$(".form-control").serializeArray().map(function(x) {
 			data[x.name] = x.value;
@@ -65,29 +66,39 @@
 							name="ExtractData" method="POST"
 							action="/extraction/SystemDetails2"
 							enctype="application/json">
-							<input type="hidden" name="x" id="x" value=""> <input
+							<input type="hidden" name="x" id="x" value="">
+							<input type="hidden" name="target" id="target" value="">
+							 <input
 								type="hidden" name="src_val" id="src_val" value="${src_val}">
 								 <input type="hidden" name="counter"
 								id="counter" class="form-control" value="1"> 
 							<fieldset class="fs">
 								<div class="form-group">
-									<label>Select Connection</label> <select class="form-control"
+									<label>Select Source</label> <select class="form-control"
 										id="connection_id" name="connection_id">
 										<option value="" selected disabled>${src_val}
-											Connections...</option>
+											Sources...</option>
 										<c:forEach items="${conn_val}" var="conn_val">
 											<option value="${conn_val.connection_id}">${conn_val.connection_name}</option>
 										</c:forEach>
 									</select>
 								</div>
 								<div class="form-group">
+									<label>Select Target</label> <select name="targetx"
+										id="targetx" class="form-control" multiple="multiple">
+										<c:forEach items="${tgt}" var="tgt">
+											<option value="${tgt}">${tgt}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<!-- <div class="form-group">
 									<label>Service Account</label> <select name="service_account"
 										id="service_account" class="form-control">
 										<option value="" selected disabled>Service Account
 											...</option>
 										<option value="Extraction_CDG_UK">Extraction_CDG_UK</option>
 									</select>
-								</div>
+								</div>-->
 								<div class="form-group row">
 									<div class="col-sm-6">
 										<label>Unique Extract Name</label> <input type="text"
@@ -109,8 +120,8 @@
 										class="form-control" id="src_sys_desc" name="src_sys_desc"
 										placeholder="Extract Description">
 								</div>
-								<div class="form-group row">
-									<div class="col-sm-6">
+								<div class="form-group">
+									<!-- <div class="col-sm-6">-->
 										<label>Extraction Type</label> <select name="src_extract_type"
 											id="src_extract_type" class="form-control"
 											onchange="sch(this.value);">
@@ -119,19 +130,19 @@
 											<option value="Real">One Time Full Extract</option>
 											<option value="Batch">Scheduled Batch Run</option>
 										</select>
-									</div>
-									<div class="col-sm-6">
+									<!-- </div>-->
+									<!-- <div class="col-sm-6">
 										<label>Target Bucket</label> <select name="target"
 											id="target" class="form-control">
-											<%-- <option value="" selected disabled>Target Bucket ...</option>
+											 <option value="" selected disabled>Target Bucket ...</option>
 											<c:forEach items="${buckets}" var="buckets">
 												<option value="${buckets}">${buckets}</option>
-											</c:forEach> --%>
+											</c:forEach>
 										</select>
-									</div>
+									</div>-->
 								</div>
 								<div id="scheduling_div" style="display: none;">
-									<div class="form-group">
+									<!-- <div class="form-group">
 										<label>Reservoir Id</label> <select name="reservoir_name"
 											id="reservoir_name" class="form-control">
 											<option value="" selected disabled>Reservoir Id ...</option>
@@ -139,7 +150,7 @@
 												<option value="${reservoir.reservoir_name}">${reservoir.reservoir_name} - ${reservoir.reservoir_desc}</option>
 											</c:forEach>
 										</select>
-									</div>
+									</div>-->
 								</div>
 							</fieldset>
 							<button onclick="jsonconstruct();"
@@ -149,4 +160,9 @@
 				</div>
 			</div>
 		</div>
+		
+<script>
+var select = document.getElementById('targetx');
+multi(select, {});
+</script>
 		<jsp:include page="../cdg_footer.jsp" />
