@@ -83,4 +83,4 @@ target/classes/com/iig/gcp/feedlogging/dao/FeedLoggerDAOImpl.class
 target/classes/com/iig/gcp/feedlogging/dto/FeedLoggerDTO.class
 target/classes/com/iig/gcp/feedlogging/service/FeedLoggingService.class
 target/classes/com/iig/gcp/feedlogging/service/FeedLoggingServiceImpl.class
-README.md
+target/*
