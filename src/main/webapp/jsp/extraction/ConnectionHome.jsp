@@ -13,7 +13,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title">Data Extraction</h4>
-						<p class="card-description">Connection Details</p>
+						<p class="card-description">Source Details</p>
 						<form class="forms-sample" id="ConnectionHome" name="ConnectionHome"
 							method="post" action="/extraction/ConnectionDetails">
 							<input type="hidden" name="src_val" id="src_val" value="">
