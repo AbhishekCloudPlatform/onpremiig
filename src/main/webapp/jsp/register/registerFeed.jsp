@@ -38,7 +38,7 @@
               
                <h3>Register Feed</h3> 
               
-              <form class="pt-3" action="/register/submit" method="POST">
+              <form class="pt-3" action="/register/submit" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
               
 <a href='../../assets/feedtemplate/uploadtemplate.xlsx' target="_blank">Download Template</a>
@@ -55,7 +55,7 @@
                       </div>
                     </div>
                 <div class="mt-3">
-                	<button type="submit" class="btn btn-block btn-facebook auth-form-btn" onClick="return validate();">
+                	<button type="submit" class="btn btn-block btn-facebook auth-form-btn" >
                     Submit
                   </button>
                 </div>

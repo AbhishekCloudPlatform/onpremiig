@@ -47,7 +47,7 @@ public class RegisterController {
 	
 	
 	@RequestMapping(value = { "/register/submit"}, method = RequestMethod.POST)
-	public ModelAndView dataLoader(@RequestParam("name") String name, @RequestParam("file") MultipartFile multiPartFile,ModelMap map)
+	public ModelAndView dataLoader( @RequestParam("file") MultipartFile multiPartFile,ModelMap map)
 			throws Exception {
 		List<FeedLoggerDTO> dataLoggerCollection = parseFeedRegisterExcel(multiPartFile);
 		if(dataLoggerCollection.size()==0) {
