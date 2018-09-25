@@ -56,6 +56,7 @@
 												</c:forEach>
 											</select>
 										</div>
+										<div id="dyn"></div>
 									</fieldset>
 								</form>
 							</div>
