@@ -560,3 +560,4 @@ target/classes/com/iig/gcp/controllers/ExtractionController.class
 target/classes/com/iig/gcp/constants/MySqlConstants.class
 src/main/java/com/iig/gcp/controllers/RegisterController.java
 README.md
+*.class
