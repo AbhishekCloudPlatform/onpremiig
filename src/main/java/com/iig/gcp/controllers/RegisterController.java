@@ -70,8 +70,7 @@ public class RegisterController {
 	 * @throws IOException
 	 * @throws InvalidFormatException
 	 */
-	private List<FeedLoggerDTO> parseFeedRegisterExcel(MultipartFile multiPartFile)
-			throws Exception, IOException, InvalidFormatException {
+	private List<FeedLoggerDTO> parseFeedRegisterExcel(MultipartFile multiPartFile) throws Exception, IOException, InvalidFormatException {
 		File file = convert(multiPartFile);
 
 		Workbook workbook = WorkbookFactory.create(file);
@@ -101,22 +100,31 @@ public class RegisterController {
 			String feedId = dataFormatter.formatCellValue(cellIterator.next());
 			if(!feedId.equals("")) {
 				dataLoggerDTO.setFeed_id(feedId);
+			}else {
+				break;
 			}
 
 			String classification = dataFormatter.formatCellValue(cellIterator.next());
 			if(!classification.equals("")) {
 				dataLoggerDTO.setClassification(classification);
+			}else {
+				break;
 			}
 
 			String subClassification = dataFormatter.formatCellValue(cellIterator.next());
 			if(!subClassification.equals("")) {
 				dataLoggerDTO.setSubClassification(subClassification);
+			}else {
+				break;
 			}
 
 			String dataValue = dataFormatter.formatCellValue(cellIterator.next());
 			if(!dataValue.equals("")) {
 				dataLoggerDTO.setValue(dataValue);
+			}else {
+				break;
 			}
+			
 			dataLoggerCollection.add(dataLoggerDTO);
 
 		}
