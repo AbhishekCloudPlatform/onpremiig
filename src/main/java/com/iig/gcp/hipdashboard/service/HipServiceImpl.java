@@ -20,4 +20,10 @@ public class HipServiceImpl implements HipService {
 		return hipDao.getfeeds();
 	}
 
+	@Override
+	public ArrayList<String> getfeedsFromLoggerStats() throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return hipDao.getfeedsFromLoggerStats();
+	}
+
 }

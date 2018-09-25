@@ -18,7 +18,16 @@ public class HipController {
 	HipService hipService;
 	
 	@RequestMapping(value = { "/hip"}, method = RequestMethod.GET)
-    public String hipDashboard() {
+    public String hipDashboard(ModelMap map) {
+		
+		try {
+		ArrayList<String> fs = hipService.getfeedsFromLoggerStats();
+		map.addAttribute("feed_id", fs);
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+		}
         return "/hip/hipdashboard";
     }
 	

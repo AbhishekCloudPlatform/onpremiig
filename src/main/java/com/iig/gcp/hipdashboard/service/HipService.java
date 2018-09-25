@@ -6,5 +6,6 @@ import java.util.ArrayList;
 public interface HipService {
 
 	ArrayList<String> getfeeds() throws SQLException, Exception;
+	ArrayList<String> getfeedsFromLoggerStats() throws SQLException, Exception;
 
 }
