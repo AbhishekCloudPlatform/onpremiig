@@ -40,18 +40,6 @@ public class RegisterController {
         return "/register/registerFeed";
     }
 	
-	@RequestMapping(value = { "/hip"}, method = RequestMethod.GET)
-    public String hipDashboard() {
-        return "/hip/hipdashboard";
-    }
-	
-	@RequestMapping(value = { "/hipmaster"}, method = RequestMethod.GET)
-	public ModelAndView hipmasterDashboard(ModelMap map)
-			throws Exception {
-		ArrayList<String> fs = feedLoggingService.getfeeds();
-		map.addAttribute("feed_id", fs);
-        return  new ModelAndView("/hip/hipmasterdashboard");
-    }
 	
 	@RequestMapping(value = { "/register/submit"}, method = RequestMethod.POST)
 	public ModelAndView dataLoader( @RequestParam("file") MultipartFile multiPartFile,ModelMap map)

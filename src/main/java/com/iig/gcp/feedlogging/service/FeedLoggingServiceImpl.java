@@ -25,20 +25,5 @@ public class FeedLoggingServiceImpl implements FeedLoggingService{
 		feedLoggerDAOImpl.loadFeed(dataLoggerCollection);
 	}
 
-	@Override
-	public ArrayList<String> getfeeds() throws SQLException, Exception {
-		ArrayList<String> arr = new ArrayList<String>();
-		Connection connection;
-		try {
-			connection = ConnectionUtils.getConnection();
-			PreparedStatement pstm = connection.prepareStatement("select distinct feed_id from logger_master");
-			ResultSet rs = pstm.executeQuery();
-			while (rs.next()) {
-				arr.add(rs.getString(1));
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}		
-		return arr;
-	}
+	
 }
