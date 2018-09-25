@@ -284,7 +284,7 @@ public class ExtractionServiceImpl implements ExtractionService {
 		Connection connection;
 		try {
 			connection = ConnectionUtils.getConnection();
-			PreparedStatement pstm = connection.prepareStatement("select src_sys_id,src_unique_name from source_system_master");
+			PreparedStatement pstm = connection.prepareStatement("select a.src_sys_id,a.src_unique_name from source_system_master a,extraction_master b where a.src_sys_id=b.src_sys_id");
 			ResultSet rs = pstm.executeQuery();
 			while (rs.next()) {
 				ssm = new SourceSystemMaster();
