@@ -29,7 +29,7 @@ public class FeedLoggerDAOImpl implements FeedLoggerDAO {
 					String insertFeedLoggerQuery = "INSERT INTO" + SPACE + DATABASE_NAME + "." + TABLE_NAME + SPACE
 							+ "(feed_id,classification,subclassification,value)" + "VALUES" + "("
 							+ QUOTE + feedLogger.getFeed_id() + QUOTE + COMMA + QUOTE + feedLogger.getClassification()
-							+ QUOTE + COMMA + QUOTE + feedLogger.getSubClassification() + QUOTE + COMMA + QUOTE
+							+ QUOTE + COMMA + QUOTE + feedLogger.getSubclassification() + QUOTE + COMMA + QUOTE
 							+ feedLogger.getValue() + QUOTE + ")" + SEMICOLON;
 
 					Statement statement = conn.createStatement();

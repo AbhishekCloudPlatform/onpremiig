@@ -6,7 +6,7 @@
 <!--<link rel="apple-touch-icon" sizes="76x76" href="./material/img/apple-icon.png">
   <link rel="icon" type="image/png" href="./material/img/favicon.png"> -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>Juniper</title>
+<title>Feed Master Dashboard</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -32,6 +32,18 @@
 <script src="../../assets/js/multi.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#feedIdFilter").change(function() {
+			var feed_id = $(this).val();
+			$.post('/hip/hipmasterdashboard1', {
+				feed_id : feed_id
+			}, function(data) {
+				$('#datdyn').html(data)
+			});
+		});
+	});
+</script>
 </head>
 <body class="profile-page sidebar-collapse" data-parallax="true"
 	style="background-image: url('./material/img/city-profile.jpg');">
@@ -44,21 +56,22 @@
 						<div class="row">
 							<div class="card-body">
 								<h2 class="card-title">Feed Master Dashboard</h2>
-								<form class="forms-sample" id="runform" name="runform"
-									method="post" action="/schedule/selectFeedId">
-									<fieldset class="fs">
 										<div class="row">
-											<label>Select Feed</label> <select class="form-control"
-												id="feedIdFilter" name="feedIdFilter">
-												<option value="" selected disabled>Feed Data...</option>
-												<c:forEach items="${feed_id}" var="feed_id">
-													<option value="${feed_id}">${feed_id}</option>
-												</c:forEach>
-											</select>
+											<div class="col-md-12">
+												<div class="form-group">
+													<label> Select Feed </label> <select class="form-control"
+														id="feedIdFilter" name="feedIdFilter">
+														<option value="" selected disabled>Select Feed
+															...</option>
+														<c:forEach items="${feed_id}" var="feed_id">
+															<option value="${feed_id}">${feed_id}</option>
+														</c:forEach>
+													</select>
+												</div>
+											</div>
 										</div>
-										<div id="dyn"></div>
-									</fieldset>
-								</form>
+										<div id="datdyn">
+										</div>
 							</div>
 						</div>
 					</div>
