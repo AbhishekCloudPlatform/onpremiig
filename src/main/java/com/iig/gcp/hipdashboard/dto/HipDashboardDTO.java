@@ -42,6 +42,14 @@ public class HipDashboardDTO {
 	private int script_pointer;
 	private String worker_id;
 	private String duration;
+	private String run_id;
+	
+	public String getRun_id() {
+		return run_id;
+	}
+	public void setRun_id(String run_id) {
+		this.run_id = run_id;
+	}
 	public int getJob_sequence() {
 		return job_sequence;
 	}
