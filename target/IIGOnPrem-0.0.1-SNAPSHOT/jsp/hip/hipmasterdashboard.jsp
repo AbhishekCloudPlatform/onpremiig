@@ -56,9 +56,6 @@
 						<div class="row">
 							<div class="card-body">
 								<h2 class="card-title">Feed Master Dashboard</h2>
-								<form class="forms-sample" id="runform" name="runform"
-									method="post" action="/schedule/selectFeedId">
-									<fieldset class="fs">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
@@ -75,8 +72,6 @@
 										</div>
 										<div id="datdyn">
 										</div>
-									</fieldset>
-								</form>
 							</div>
 						</div>
 					</div>
