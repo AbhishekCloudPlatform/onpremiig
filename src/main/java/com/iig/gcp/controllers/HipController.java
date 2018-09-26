@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iig.gcp.hipdashboard.dto.HipDashboardDTO;
 import com.iig.gcp.feedlogging.dto.FeedLoggerDTO;
+import com.iig.gcp.hipdashboard.dto.HipDashboardDTO;
 import com.iig.gcp.hipdashboard.service.HipService;
-import com.iig.gcp.scheduler.dto.ArchiveJobsDTO;
 
 @Controller
 public class HipController {

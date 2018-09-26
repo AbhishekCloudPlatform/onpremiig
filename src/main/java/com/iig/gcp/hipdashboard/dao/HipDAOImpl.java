@@ -24,7 +24,7 @@ public class HipDAOImpl implements HipDAO {
 		Connection connection = null;
 		try {
 			connection = ConnectionUtils.getConnection();
-			PreparedStatement pstm = connection.prepareStatement("select distinct feed_id from logger_master");
+			PreparedStatement pstm = connection.prepareStatement("select distinct feed_id from logger_master order by feed_id; ");
 			ResultSet rs = pstm.executeQuery();
 			while (rs.next()) {
 				arr.add(rs.getString(1));

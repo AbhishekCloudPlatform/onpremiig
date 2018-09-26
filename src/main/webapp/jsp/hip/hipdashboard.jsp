@@ -43,13 +43,13 @@ $(document).ready(function() {
 				$('#table').html(data);	
 				  document.getElementById('chartId').style.display= "block";
 				  document.getElementById('table').style.display= "block";
-			alert(feed_id);
+			//alert(feed_id);
 		var x=document.getElementById("x").value;
 		var y=document.getElementById("y").value;
 		var newx = x.split(',');
 		var newy = y.split(',');
-		var a=[180801,180802,180805];
-		var b=[26.0000,13.0000,18];
+		//var a=[180801,180802,180805];
+		//var b=[26.0000,13.0000,18];
 		newx[0]=newx[0].replace("[","");
 		newy[0]=newy[0].replace("[","")
 		newx[newx.length-1]=newx[newx.length-1].replace("]","");
@@ -59,10 +59,10 @@ $(document).ready(function() {
 				
 				    labels: newx,
 				    datasets: [{
-				      label: 'Duration Of Jobs',
+				      label: 'Duration in Minutes',
 				      data: newy,
 				      backgroundColor: [
-				        'rgba(255, 99, 132, 0.2)',
+				       // 'rgba(255, 99, 132, 0.2)',
 				        'rgba(54, 162, 235, 0.2)',
 				        'rgba(255, 206, 86, 0.2)',
 				        'rgba(75, 192, 192, 0.2)',
@@ -70,7 +70,7 @@ $(document).ready(function() {
 				        'rgba(255, 159, 64, 0.2)'
 				      ],
 				      borderColor: [
-				        'rgba(255,99,132,1)',
+				        //'rgba(255,99,132,1)',
 				        'rgba(54, 162, 235, 1)',
 				        'rgba(255, 206, 86, 1)',
 				        'rgba(75, 192, 192, 1)',
@@ -119,6 +119,11 @@ $(document).ready(function() {
       <div class="container">
 			<div class="tab-content tab-space">
           <div class="tab-pane active text-center gallery" id="studio">
+          <div class="row">
+          <div class="mt-3" align="left">
+                	<a href="/">Home</a>
+                </div>
+          </div>
             <div class="row">
 
 			
