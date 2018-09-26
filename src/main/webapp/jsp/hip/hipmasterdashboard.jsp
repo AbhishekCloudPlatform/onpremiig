@@ -53,6 +53,11 @@
 			<div class="container">
 				<div class="tab-content tab-space">
 					<div class="tab-pane active text-center gallery" id="studio">
+					  <div class="row">
+          <div class="mt-3" align="left">
+                	<a href="/">Home</a>
+                </div>
+          </div>
 						<div class="row">
 							<div class="card-body">
 								<h2 class="card-title">Feed Master Dashboard</h2>
