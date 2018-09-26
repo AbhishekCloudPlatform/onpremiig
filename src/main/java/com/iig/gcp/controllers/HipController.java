@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iig.gcp.hipdashboard.dto.HipDashboardDTO;
+import com.iig.gcp.feedlogging.dto.FeedLoggerDTO;
 import com.iig.gcp.hipdashboard.service.HipService;
 import com.iig.gcp.scheduler.dto.ArchiveJobsDTO;
 
@@ -46,7 +48,6 @@ public class HipController {
         return  new ModelAndView("/hip/hipmasterdashboard");
     }
 	
-	
 	@RequestMapping(value = { "/hip/feedIdFilter"}, method = RequestMethod.POST)
 	public ModelAndView hipFeedFilter(ModelMap map,@Valid @RequestParam("feed_id") String feed_id)
 			throws Exception {
@@ -72,4 +73,11 @@ public class HipController {
         return  new ModelAndView("/hip/hipdashboard2");
     }
 	
+	@RequestMapping(value = { "/hip/hipmasterdashboard1"}, method = RequestMethod.POST)
+	public ModelAndView hipmasterDashboard1(@Valid @ModelAttribute("feed_id") String feed_id, ModelMap map)
+			throws Exception {
+		ArrayList<FeedLoggerDTO> fs = hipService.getfeeddetails(feed_id);
+		map.addAttribute("feed", fs);
+        return  new ModelAndView("/hip/hipmasterdashboard1");
+    }
 }

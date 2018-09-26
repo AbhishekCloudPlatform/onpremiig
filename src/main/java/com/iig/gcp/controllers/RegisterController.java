@@ -108,7 +108,7 @@ public class RegisterController {
 
 			String subClassification = dataFormatter.formatCellValue(cellIterator.next());
 			if(!subClassification.equals("")) {
-				dataLoggerDTO.setSubClassification(subClassification);
+				dataLoggerDTO.setSubclassification(subClassification);
 			}else {
 				break;
 			}

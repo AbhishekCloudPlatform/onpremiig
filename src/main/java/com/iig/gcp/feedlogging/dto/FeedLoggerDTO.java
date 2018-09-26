@@ -18,10 +18,10 @@ public class FeedLoggerDTO
 	public void setClassification(String classification) {
 		this.classification = classification;
 	}
-	public String getSubClassification() {
+	public String getSubclassification() {
 		return subclassification;
 	}
-	public void setSubClassification(String subclassification) {
+	public void setSubclassification(String subclassification) {
 		this.subclassification = subclassification;
 	}
 	public String getValue() {
