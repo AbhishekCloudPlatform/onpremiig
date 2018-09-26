@@ -43,7 +43,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public List<MasterJobsDTO> allLoadJobs() throws Exception {
 		List<MasterJobsDTO> scheduledJobs = new ArrayList<MasterJobsDTO>();
 		Connection conn=ConnectionUtils.getConnection();			
-		String query="Select job_id,job_name,batch_id,case when weekly_flag='Y' then concat('Weekly on ',week_run_day) when daily_flag='Y' then concat('Daily at ',substr(job_schedule_time,1,2)) when monthly_flag='Y' then concat('Monthly on ',month_run_day ) when yearly_flag='Y' then concat('Yearly on ',month_run_val ,' month') end as consolidated_Schedule,case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end as Schedule from iigs_ui_master_job_detail order by batch_id, job_id;";
+		String query="Select job_id,job_name,batch_id,case when weekly_flag='Y' then concat('Weekly on ',week_run_day) when daily_flag='Y' then concat('Daily at ',substr(job_schedule_time,1,5)) when monthly_flag='Y' then concat('Monthly on ',month_run_day ) when yearly_flag='Y' then concat('Yearly on ',month_run_val ,' month') end as consolidated_Schedule,case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end as Schedule from iigs_ui_master_job_detail order by batch_id, job_id;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		ResultSet rs =pstm.executeQuery();
 		MasterJobsDTO dto=null;
