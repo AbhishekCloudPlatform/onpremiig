@@ -1,15 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-					<div class="form-group col-md-12"  >
-					
-					
-					
-					
-<!-- <input type="hidden" name="x" id="x">
-<input type="hidden" name="y" id="y">
- -->
-
-<table class="table table-bordered"   >
+<div class="col-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body">
+                  		<table class="table table-bordered"   >
                     <thead>
                       <tr style="color: green;;font: bolder;">
                       <th>
@@ -56,5 +50,13 @@
                       
                      </tbody>
                   </table>
+                  		
+               		 </div>
+				</div>
+			</div>
+					
+					
+<!-- <input type="hidden" name="x" id="x">
+<input type="hidden" name="y" id="y">
+ -->
 
-</div>

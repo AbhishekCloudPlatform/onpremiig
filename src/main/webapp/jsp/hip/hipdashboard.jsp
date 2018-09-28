@@ -37,87 +37,75 @@ $(document).ready(function() {
 	$("#feedIdFilter").change(function() {
 		var feed_id = $(this).val();
 	//	alert(feed_id);
-		$.post('/schedule/feedIdFilter', {		
+		$.post('/hip/feedIdFilter', {		
 			feed_id : feed_id	
 		}, function(data) {
-			//document.getElementById('chartId').style.display= "none";
-			$('#jobIdFilter').html(data);
-				
-			//start job filter
-				$("#lstJobId").change(function() {
-					var job_id = $(this).val();
-				//	alert("value of job id"+job_id);
-					$.post('/schedule/jobIdFilter', {
-						job_id : job_id	,
-						feed_id :feed_id
-					}, function(result) {
-						
-						$('#testValue').html(result);
-						
-						document.getElementById('testValue').style.display= "block";
-						document.getElementById('chartId').style.display= "block";
-						 var areaData = {
-								    labels: ["2013", "2014", "2015", "2016", "2017"],
-								    datasets: [{
-								      label: 'Duration Of Jobs',
-								      data: [12, 19, 3, 5, 2, 3],
-								      backgroundColor: [
-								        'rgba(255, 99, 132, 0.2)',
-								        'rgba(54, 162, 235, 0.2)',
-								        'rgba(255, 206, 86, 0.2)',
-								        'rgba(75, 192, 192, 0.2)',
-								        'rgba(153, 102, 255, 0.2)',
-								        'rgba(255, 159, 64, 0.2)'
-								      ],
-								      borderColor: [
-								        'rgba(255,99,132,1)',
-								        'rgba(54, 162, 235, 1)',
-								        'rgba(255, 206, 86, 1)',
-								        'rgba(75, 192, 192, 1)',
-								        'rgba(153, 102, 255, 1)',
-								        'rgba(255, 159, 64, 1)'
-								      ],
-								      borderWidth: 1,
-								      fill: true, // 3: no fill
-								    }]
-								  };
-
-								  var areaOptions = {
-								    plugins: {
-								      filler: {
-								        propagate: true
-								      }
-								    }
-								  }
-								  
-								  if ($("#areaChart").length) {
-									    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-									    var areaChart = new Chart(areaChartCanvas, {
-									      type: 'line',
-									      data: areaData,
-									      options: areaOptions
-									    });
-									  }
-						
-						
-						
-					})
-					
-					
-					
-					
-				});
-			
-				//end job filter
-			
-			
-			});
+				$('#table').html(data);	
+				  document.getElementById('chartId').style.display= "block";
+				  document.getElementById('table').style.display= "block";
+			//alert(feed_id);
+		var x=document.getElementById("x").value;
+		var y=document.getElementById("y").value;
+		var newx = x.split(',');
+		var newy = y.split(',');
+		//var a=[180801,180802,180805];
+		//var b=[26.0000,13.0000,18];
+		newx[0]=newx[0].replace("[","");
+		newy[0]=newy[0].replace("[","")
+		newx[newx.length-1]=newx[newx.length-1].replace("]","");
+		newy[newy.length-1]=newy[newy.length-1].replace("]","");
 		
+		 var areaData = {
+				
+				    labels: newx,
+				    datasets: [{
+				      label: 'Duration in Minutes',
+				      data: newy,
+				      backgroundColor: [
+				       // 'rgba(255, 99, 132, 0.2)',
+				        'rgba(54, 162, 235, 0.2)',
+				        'rgba(255, 206, 86, 0.2)',
+				        'rgba(75, 192, 192, 0.2)',
+				        'rgba(153, 102, 255, 0.2)',
+				        'rgba(255, 159, 64, 0.2)'
+				      ],
+				      borderColor: [
+				        //'rgba(255,99,132,1)',
+				        'rgba(54, 162, 235, 1)',
+				        'rgba(255, 206, 86, 1)',
+				        'rgba(75, 192, 192, 1)',
+				        'rgba(153, 102, 255, 1)',
+				        'rgba(255, 159, 64, 1)'
+				      ],
+				      borderWidth: 1,
+				      fill: true, // 3: no fill
+				    }]
+				  };
+
+				  var areaOptions = {
+				    plugins: {
+				      filler: {
+				        propagate: true
+				      }
+				    }
+				  }
+				  
+				  if ($("#areaChart").length) {
+					    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+					    var areaChart = new Chart(areaChartCanvas, {
+					      type: 'line',
+					      data: areaData,
+					      options: areaOptions
+					    });
+					  }
+		
+		
+				
 		});
 	
 		//fetch the job filer values using feedid-End
 	
-	
+	});
 		
 	});
 	
@@ -131,6 +119,11 @@ $(document).ready(function() {
       <div class="container">
 			<div class="tab-content tab-space">
           <div class="tab-pane active text-center gallery" id="studio">
+          <div class="row">
+          <div class="mt-3" align="left">
+                	<a href="/">Home</a>
+                </div>
+          </div>
             <div class="row">
 
 			
@@ -140,8 +133,11 @@ $(document).ready(function() {
 							method="post" action="/schedule/selectFeedId">
 							<fieldset class="fs">
 							<div class="row">
-								<div class="form-group col-md-6 ">
-										<label>Select Feed</label> <select class="form-control"
+								<div class="form-group col-md-4">
+								</div>
+								<div class="form-group col-md-4 ">
+										<h4 class="card-title">Select Feed</h4>
+										 <select class="form-control"
 											id="feedIdFilter" name="feedIdFilter">
 											<option value="" selected disabled>Feed Data...</option>
 											<c:forEach items="${feed_id}" var="feed_id">
@@ -149,17 +145,24 @@ $(document).ready(function() {
 											</c:forEach>
 										</select>
 								</div>
-								<div class="form-group col-md-6 " id="jobIdFilter">
-								</div>
-								</div>
-								<div class="row" style="display: none;" id="testValue">
+								<div class="form-group col-md-4" id="hello">
 			
+								</div>
+								</div>
+								<div class="row" style="display: none;" id="chartId" style="display: none;">
+									<h4 class="card-title">Run chart</h4>
+                  					<canvas id="areaChart" style="height:250px"></canvas>
+								</div>
+								<br>
+								<div class="row" style="display: none;" id="table" style="display: none;">
+								
+                  					
 								</div>
 							</fieldset>							
 						</form>		
 					</div>
 				</div>
-			<div class="row" id="chartId" style="display: none;">
+			<%-- <div class="row" id="chartId" style="display: none;">
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
@@ -168,7 +171,7 @@ $(document).ready(function() {
                		 </div>
 				</div>
 			</div>
-		</div>
+		</div> --%>
               </div>
             </div>
           </div>

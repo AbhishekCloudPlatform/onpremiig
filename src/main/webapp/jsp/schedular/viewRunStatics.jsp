@@ -5,7 +5,7 @@ $(document).ready(function() {
 	//fetch the job filer values using feedid-Start
 	$("#feedIdFilter").change(function() {
 		var feed_id = $(this).val();
-		alert(feed_id);
+		//alert(feed_id);
 		$.post('/schedule/feedIdFilter', {		
 			feed_id : feed_id	
 		}, function(data) {
@@ -15,7 +15,7 @@ $(document).ready(function() {
 			//start job filter
 				$("#lstJobId").change(function() {
 					var job_id = $(this).val();
-					alert("value of job id"+job_id);
+				//	alert("value of job id"+job_id);
 					$.post('/schedule/jobIdFilter', {
 						job_id : job_id	,
 						feed_id :feed_id
@@ -24,10 +24,10 @@ $(document).ready(function() {
 						$('#testValue').html(result);
 						
 						document.getElementById('testValue').style.display= "block";
-						var a = eval('('+'${x}'+')'); 
+					//	var a = eval('('+'${x}'+')'); 
 
 						//var x = '${x}';
-						alert(a);
+					//	alert(a);
 						
 						
 						
@@ -86,13 +86,6 @@ $(document).ready(function() {
 			
 		</div>
 		<div class="row" id="chartId" style="display: none;">
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-body">
-                  		<h4 class="card-title">Run chart</h4>
-                  		<canvas id="areaChart" style="height:250px"></canvas>
-               		 </div>
-				</div>
-			</div>
+			
 		</div>
 <jsp:include page="../cdg_footer.jsp" />

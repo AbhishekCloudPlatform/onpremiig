@@ -58,9 +58,9 @@
 
               </div>
 			   <div class="col-md-4 ml-auto">
-               <a href="/hip" > <img src="./material/img/examples/dashboard.jpg" alt="Image" height="160" width="160"class="rounded">
-								<h4>HIP Dashboard</h4>  </a>
-
+                <img src="./material/img/examples/dashboard.jpg" alt="Image" height="160" width="160"class="rounded">
+							<a href="/hip" >	 <h4>HIP Run Statistics</h4> </a>
+							<a href="/hipmaster"><h4>HIP Master Data</h4> </a>
               </div>
             </div>
           </div>

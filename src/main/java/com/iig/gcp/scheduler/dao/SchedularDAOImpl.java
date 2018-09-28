@@ -60,8 +60,10 @@ public class SchedularDAOImpl implements SchedularDAO {
 	@Override
 	public List<MasterJobsDTO> allLoadJobs() throws Exception {
 		List<MasterJobsDTO> scheduledJobs = new ArrayList<MasterJobsDTO>();
+
 		Connection conn = ConnectionUtils.getConnection();
 		String query = "Select job_id,job_name,batch_id,case when weekly_flag='Y' then concat('Weekly on ',week_run_day) when daily_flag='Y' then concat('Daily at ',substr(job_schedule_time,1,2)) when monthly_flag='Y' then concat('Monthly on ',month_run_day ) when yearly_flag='Y' then concat('Yearly on ',month_run_val ,' month') end as consolidated_Schedule,case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end as Schedule from iigs_ui_master_job_detail order by batch_id, job_id;";
+
 		PreparedStatement pstm = conn.prepareStatement(query);
 		ResultSet rs = pstm.executeQuery();
 		MasterJobsDTO dto = null;
@@ -130,9 +132,11 @@ public class SchedularDAOImpl implements SchedularDAO {
 
 	@Override
 	public ArrayList<ArchiveJobsDTO> getListOfArchievJobs(@Valid String feed_id) throws Exception {
-		ArrayList<ArchiveJobsDTO> arrArchiveJobsDTO = new ArrayList<ArchiveJobsDTO>();
-		Connection conn = ConnectionUtils.getConnection();
-		String query = "select job_id from iigs_archive_job_detail where batch_id=? order by job_id";
+
+		ArrayList<ArchiveJobsDTO> arrArchiveJobsDTO =new ArrayList<ArchiveJobsDTO>();
+		Connection conn=ConnectionUtils.getConnection();	
+		String query="select distinct job_id from iigs_archive_job_detail where batch_id=? order by job_id";
+
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, feed_id);
 		ResultSet rs = pstm.executeQuery();
@@ -282,6 +286,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 		ConnectionUtils.closeQuietly(conn);
 		return scheduledJobs;
 	}
+
 
 	@Override
 	public MasterJobsDTO orderJobFromMaster(String feedId, String jobId)
@@ -625,5 +630,8 @@ public class SchedularDAOImpl implements SchedularDAO {
 	 * 
 	 * return null; }
 	 */
+
+
+	
 
 }
