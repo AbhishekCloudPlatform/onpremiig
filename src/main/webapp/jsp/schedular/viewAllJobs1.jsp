@@ -1,4 +1,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script type="text/javascript">
+$(document).ready(function() {
+			
+			$("#run ").click(function(){
+			alert("in");
+			var $row = $(this).closest("tr");
+			var $feedId = $row.find('td:eq( 0 )').html();
+			var $jobId = $row.find('td:eq( 1 )').html();
+			alert("feedId"+$feedId);
+			alert("jobId"+$jobId);
+				   $.post('/scheduler/runMasterJob', {
+					   feedId : $feedId,
+					   jobId : $jobId
+					}, function(data) {
+						
+					});
+				});
+});
+</script>
+
 			<div id="allvalues" style="display: block;">
 				 <table class="table table-bordered"   >
                     <thead>
@@ -34,7 +54,7 @@
 						<td><c:out value="${row.job_name}" /></td>
 						<td><c:out value="${row.consolidatedSchedule}" /></td>
 						<td>
-						<a href="#" ><img src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
+						<a href="#" ><img name="run" id="run" src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
 						
 						<!-- <button type="button" class="btn btn-success btn-fw">Run</button> -->
 						</td>

@@ -33,8 +33,31 @@ public class MasterJobsDTO {
 	private String month_run_val;
 	private String month_run_day;
 	private String command_type;
+	private String target_emid;
+	private String source_emid;
+	private String feed_id;
+	private String project_id;
+	private int week_num_month;
 	private String schedule;
 	private String consolidatedSchedule;
+	private String is_suspended;
+	private String in_current;
+	
+	
+	
+	
+	public String getIs_suspended() {
+		return is_suspended;
+	}
+	public void setIs_suspended(String is_suspended) {
+		this.is_suspended = is_suspended;
+	}
+	public String getIn_current() {
+		return in_current;
+	}
+	public void setIn_current(String in_current) {
+		this.in_current = in_current;
+	}
 	public String getSchedule() {
 		return schedule;
 	}
@@ -238,6 +261,36 @@ public class MasterJobsDTO {
 	}
 	public void setJob_schedule_time(String job_schedule_time) {
 		this.job_schedule_time = job_schedule_time;
+	}
+	public String getTarget_emid() {
+		return target_emid;
+	}
+	public void setTarget_emid(String target_emid) {
+		this.target_emid = target_emid;
+	}
+	public String getSource_emid() {
+		return source_emid;
+	}
+	public void setSource_emid(String source_emid) {
+		this.source_emid = source_emid;
+	}
+	public String getFeed_id() {
+		return feed_id;
+	}
+	public void setFeed_id(String feed_id) {
+		this.feed_id = feed_id;
+	}
+	public String getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(String project_id) {
+		this.project_id = project_id;
+	}
+	public int getWeek_num_month() {
+		return week_num_month;
+	}
+	public void setWeek_num_month(int week_num_month) {
+		this.week_num_month = week_num_month;
 	}    
 
 }

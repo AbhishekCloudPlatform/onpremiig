@@ -27,7 +27,21 @@ $(document).ready(function() {
 				});
 			});
 			
-	
+			
+			$("#run ").click(function(){
+			alert("in");
+			var $row = $(this).closest("tr");
+			var $feedId = $row.find('td:eq( 0 )').html();
+			var $jobId = $row.find('td:eq( 1 )').html();
+			alert("feedId"+$feedId);
+			alert("jobId"+$jobId);
+				   $.post('/scheduler/runMasterJob', {
+					   feedId : $feedId,
+					   jobId : $jobId
+					}, function(data) {
+						
+					});
+				});
 });
 
 
@@ -100,7 +114,7 @@ $(document).ready(function() {
 							enctype="application/json">
 
 			<div id="allvalues" style="display: block;">
-				 <table class="table table-bordered"   >
+				 <table class="table table-bordered" id="feedId1"  >
                     <thead>
                       <tr style="color: green;;font: bolder;">
                       <th style="">
@@ -134,7 +148,7 @@ $(document).ready(function() {
 						<td><c:out value="${row.job_name}" /></td>
 						<td><c:out value="${row.consolidatedSchedule}" /></td>
 						<td>
-						<a href="#" ><img src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
+						<a href="#" ><img name="run" id="run" src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
 						
 						<!-- <button type="button" class="btn btn-success btn-fw">Run</button> -->
 						</td>
@@ -144,7 +158,7 @@ $(document).ready(function() {
 						<!-- <button type="button" class="btn btn-danger btn-fw">Delete</button> -->
 						</td>
 						<td>
-					<a href="#" ><img src="../../assets/img/suspend.png"  alt="Image" height="160" width="160"class="rounded">
+						<a href="#" ><img src="../../assets/img/suspend.png"  alt="Image" height="160" width="160"class="rounded">
 						</a>
 						</td>	
 						</tr>

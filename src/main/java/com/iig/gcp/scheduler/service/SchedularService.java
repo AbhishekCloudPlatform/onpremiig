@@ -1,5 +1,7 @@
 package com.iig.gcp.scheduler.service;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,8 @@ public interface SchedularService {
 	ArrayList<String> getFeedFromMaster()throws Exception;
 	List<MasterJobsDTO> allLoadJobs() throws Exception;
 	List<MasterJobsDTO> typeLoadJobs(String frequency, String batchId) throws Exception;
+	MasterJobsDTO orderJobFromMaster(String feedId,String jobId) throws ClassNotFoundException, SQLException, ParseException;
+	String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException;
 
 	
 	
