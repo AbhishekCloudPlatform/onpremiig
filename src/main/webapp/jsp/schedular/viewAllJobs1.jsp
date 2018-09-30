@@ -16,6 +16,19 @@ $(document).ready(function() {
 						
 					});
 				});
+			
+			$("#delete ").click(function(){
+				var $row = $(this).closest("tr");
+				var $feedId = $row.find('td:eq( 0 )').html();
+				var $jobId = $row.find('td:eq( 1 )').html();
+				window.location.reload();
+					   $.post('/scheduler/deleteMasterJob', {
+						   feedId : $feedId,
+						   jobId : $jobId
+						}, function(data) {
+							
+						});
+					});	
 });
 </script>
 
@@ -59,7 +72,7 @@ $(document).ready(function() {
 						<!-- <button type="button" class="btn btn-success btn-fw">Run</button> -->
 						</td>
 						<td>
-						<a href="#" ><img src="../../assets/img/delete.png"  alt="Image" height="160" width="160"class="rounded">
+						<a href="#" ><img name="delete" id="delete" src="../../assets/img/delete.png"  alt="Image" height="160" width="160"class="rounded">
 						</a>
 						<!-- <button type="button" class="btn btn-danger btn-fw">Delete</button> -->
 						</td>

@@ -19,6 +19,7 @@ public interface SchedularDAO {
 	 List<MasterJobsDTO> allLoadJobs() throws Exception;
 	 List<MasterJobsDTO> typAndBatchLoadJobs(String strFrequencyType, String strBatchId) throws Exception;
 	 MasterJobsDTO orderJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException, ParseException;
+	 String deleteJobFromMaster(String feedId, String jobId) throws Exception;
 
 	
 	//Archive Table

@@ -4,6 +4,8 @@
 
 package com.iig.gcp.controllers;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iig.gcp.scheduler.dto.ArchiveJobsDTO;
@@ -75,6 +78,30 @@ public class SchedularController {
 		}
 		return allJobs(modelMap);
 	}
+	
+	/**
+	 * This method deletes the record from MasterFeed data
+	 * 
+	 * @param feed_id
+	 * @param job_id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = { "/scheduler/deleteMasterJob" }, method = RequestMethod.POST)
+	public ModelAndView deleteJobFromMaster(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, ModelMap modelMap) {
+		try {
+			String message = schedularService.deleteJobFromMaster(feedId, jobId);
+			modelMap.addAttribute("message",message);
+			System.out.println(message);
+			
+		} 	catch (Exception e ){		
+		
+			modelMap.addAttribute("errorStatus", e.getMessage());
+
+		}
+    	return new ModelAndView("schedular/viewAllJobs1");
+	}	
 
 	/**
 	 * This method populated the View Run Statics Screen with list of Job Id w.r.t.

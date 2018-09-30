@@ -106,6 +106,12 @@ public class SchedularServiceImpl implements SchedularService{
 		return schedularDAO.moveJobFromMasterToCurrentJob(masterJobDTO);
 		
 	}
+	
+	@Override
+	public String deleteJobFromMaster(String feedId, String jobId) throws Exception {
+		return schedularDAO.deleteJobFromMaster(feedId, jobId);
+		
+	}	
 
 
 

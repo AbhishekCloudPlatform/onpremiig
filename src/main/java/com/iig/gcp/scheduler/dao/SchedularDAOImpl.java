@@ -112,6 +112,26 @@ public class SchedularDAOImpl implements SchedularDAO {
 		ConnectionUtils.closeQuietly(conn);
 		return scheduledJobs;
 	}
+	
+	@Override
+	public String deleteJobFromMaster(String feedId, String jobId) throws Exception{
+		try {
+		Connection conn = ConnectionUtils.getConnection();
+		String query = "delete from iigs_ui_master_job_detail where job_id = ? and batch_id=? ;";
+		PreparedStatement pstm = conn.prepareStatement(query);
+		pstm.setString(1, jobId);
+		pstm.setString(2, feedId);	
+		int rs = pstm.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		return (rs + " Jobs deleted with FeedID: " + feedId + " and JobID: " + jobId);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			return (e.toString());
+
+		}		
+	}
+	
 
 	// Archive Table
 	@Override
@@ -299,7 +319,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 				+ "predessor_job_id_1,predessor_job_id_2,predessor_job_id_3,predessor_job_id_4,"
 				+ "predessor_job_id_5,predessor_job_id_6,predessor_job_id_7,predessor_job_id_8,predessor_job_id_9,predessor_job_id_10,"
 				+ "weekly_flag,week_run_day,month_run_day,month_run_val,is_dependent_job,command_type,yearly_flag,"
-				+ "week_num_month from " + FEED_MASTER_TABLE + " where batch_id= ? and job_id=?;";
+				+ "week_num_month from " + FEED_MASTER_TABLE + " where batch_id='?' and job_id='?';";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, feedId);
 		pstm.setString(2, jobId);
