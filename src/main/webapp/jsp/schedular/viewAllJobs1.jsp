@@ -21,13 +21,13 @@ $(document).ready(function() {
 				var $row = $(this).closest("tr");
 				var $feedId = $row.find('td:eq( 0 )').html();
 				var $jobId = $row.find('td:eq( 1 )').html();
-				window.location.reload();
 					   $.post('/scheduler/deleteMasterJob', {
 						   feedId : $feedId,
 						   jobId : $jobId
 						}, function(data) {
 							
 						});
+						window.location.reload();
 					});	
 });
 </script>
