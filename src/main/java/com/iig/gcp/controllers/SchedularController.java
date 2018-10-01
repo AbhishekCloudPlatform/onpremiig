@@ -79,6 +79,31 @@ public class SchedularController {
 	}
 
 	/**
+	 * This method suspends the job in master table.
+	 * 
+	 * @param feed_id
+	 * @param job_id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = { "/scheduler/suspendMasterJob" }, method = RequestMethod.POST)
+	public ModelAndView suspendJobFromMaster(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, @RequestParam("scheduleInfo") String scheduleInfo, ModelMap modelMap) {
+		try {
+			String suspendStatus = schedularService.suspendJobFromMaster(feedId, jobId, scheduleInfo);
+			if (suspendStatus.equals("Success")) {
+				modelMap.addAttribute("successString", "Job Suspended");
+			} else {
+				modelMap.addAttribute("errorStatus", "Job Suspense failure");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.addAttribute("errorStatus", e.getMessage());
+		}
+		return allJobs(modelMap);
+	}
+
+	/**
 	 * This method deletes the record from MasterFeed data
 	 * 
 	 * @param feed_id
@@ -91,7 +116,7 @@ public class SchedularController {
 			@RequestParam("jobId") String jobId, ModelMap modelMap) {
 		try {
 			String message = schedularService.deleteJobFromMaster(feedId, jobId);
-			modelMap.addAttribute("message", message);
+			modelMap.addAttribute("successString", "Job deleted");
 			System.out.println(message);
 
 		} catch (Exception e) {

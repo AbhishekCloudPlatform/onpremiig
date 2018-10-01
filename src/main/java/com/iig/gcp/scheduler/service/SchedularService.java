@@ -36,6 +36,7 @@ public interface SchedularService {
 	MasterJobsDTO orderJobFromMaster(String feedId,String jobId) throws ClassNotFoundException, SQLException, ParseException;
 	String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException;
 	String deleteJobFromMaster(String feedId,String jobId) throws Exception;
+	String suspendJobFromMaster(String feedId, String jobId, String scheduleInfo) throws ClassNotFoundException, SQLException;
 
 
 	

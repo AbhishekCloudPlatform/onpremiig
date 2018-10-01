@@ -23,6 +23,10 @@ import com.iig.gcp.scheduler.dto.DailyJobsDTO;
 import com.iig.gcp.scheduler.dto.MasterJobsDTO;
 import com.iig.gcp.utils.ConnectionUtils;
 
+/**
+ * @author Nakuldinkarrao.V
+ *
+ */
 @Component
 public class SchedularDAOImpl implements SchedularDAO {
 
@@ -113,15 +117,32 @@ public class SchedularDAOImpl implements SchedularDAO {
 		return scheduledJobs;
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public String deleteJobFromMaster(String feedId, String jobId) throws Exception{
 		try {
 		Connection conn = ConnectionUtils.getConnection();
+		PreparedStatement pstm;
+		MasterJobsDTO masterJobDTO =orderJobFromMaster(feedId,jobId);
+		if(masterJobDTO!=null) {
+			jobId = masterJobDTO.getJob_id();
+			int masterJobSeq=masterJobDTO.getJob_sequence();
+			
+			for(int i=1;i<=10;i++) {
+				String predessor="predessor_job_id_"+i;
+				String updatePredecessorsQuery= "update iigs_ui_master_job_detail  set "+predessor+"=' ' where "+predessor+"="+QUOTE+jobId+QUOTE+" and job_sequence="+QUOTE+masterJobSeq+QUOTE+";";
+				pstm = conn.prepareStatement(updatePredecessorsQuery);
+				pstm.executeUpdate();
+			}
+		}
+		
 		String query = "delete from iigs_ui_master_job_detail where job_id = ? and batch_id=? ;";
-		PreparedStatement pstm = conn.prepareStatement(query);
-		pstm.setString(1, jobId);
-		pstm.setString(2, feedId);	
-		int rs = pstm.executeUpdate();
+		PreparedStatement pstm1 = conn.prepareStatement(query);
+		pstm1.setString(1, jobId);
+		pstm1.setString(2, feedId);	
+		int rs = pstm1.executeUpdate();
 		ConnectionUtils.closeQuietly(conn);
 		return (rs + " Jobs deleted with FeedID: " + feedId + " and JobID: " + jobId);
 		}
@@ -320,7 +341,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 				+ "predessor_job_id_1,predessor_job_id_2,predessor_job_id_3,predessor_job_id_4,"
 				+ "predessor_job_id_5,predessor_job_id_6,predessor_job_id_7,predessor_job_id_8,predessor_job_id_9,predessor_job_id_10,"
 				+ "weekly_flag,week_run_day,month_run_day,month_run_val,is_dependent_job,command_type,yearly_flag,"
-				+ "week_num_month from " + FEED_MASTER_TABLE + " where batch_id=? and job_id=?;";
+				+ "week_num_month,job_sequence from " + FEED_MASTER_TABLE + " where batch_id=? and job_id=?;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, feedId);
 		pstm.setString(2, jobId);
@@ -429,6 +450,8 @@ public class SchedularDAOImpl implements SchedularDAO {
 				int i = Integer.parseInt(weekNumMonth);
 				masterJobDTO.setWeek_num_month(i);
 			}
+			
+			masterJobDTO.setJob_sequence(rs.getInt(37));
 
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -542,11 +565,34 @@ public class SchedularDAOImpl implements SchedularDAO {
 			return (e.toString());
 
 		}
+	}
+
+
+/***
+ * This method suspends job present in Master so it wont move to Current table ever.
+ * @param feedId
+ * @param jobId
+ */
+	@Override
+	public String suspendJobFromMaster(String feedId, String jobId, String scheduleInfo) {
+		Connection conn;
+		try {
+			conn = ConnectionUtils.getConnection();
+			String suspendFromMasterQuery = "update iigs_ui_master_job_detail  set is_suspended='Y' where batch_id=? and job_id=?";
+			PreparedStatement pstm = conn.prepareStatement(suspendFromMasterQuery);
+			pstm.setString(1, feedId);
+			pstm.setString(2, jobId);
+			pstm.executeUpdate();
+			ConnectionUtils.closeQuietly(conn);
+			return "Success";
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return "Failure";
+		}
+		
 	}	
 
-	/*	*//**
-			* 
-			*/
+	
 	/*
 	 * 
 	 * @Override public List<MasterJobsDTO> batchIdLoadJobs(String strBatchId)
