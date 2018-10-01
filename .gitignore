@@ -649,5 +649,16 @@ target/classes/com/iig/gcp/controllers/LoginController.class
 target/classes/com/iig/gcp/controllers/ExtractionController.class
 target/classes/com/iig/gcp/constants/MySqlConstants.class
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+<<<<<<< HEAD
+target/surefire-reports/com.iig.gcp.IigOnPremApplicationTests.txt
+target/surefire-reports/TEST-com.iig.gcp.IigOnPremApplicationTests.xml
+target/test-classes/com/iig/gcp/IigOnPremApplicationTests.class
+target/classes/com/iig/gcp/scheduler/dao/SchedularDAOImpl.class
+target/IIGOnPrem-0.0.1-SNAPSHOT.war.original
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/surefire-reports/com.iig.gcp.IigOnPremApplicationTests.txt
+target/surefire-reports/TEST-com.iig.gcp.IigOnPremApplicationTests.xml
+=======
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+>>>>>>> 27e4ffd4dc8a6b471846c86c46b7b88b9f4f7d95
