@@ -557,7 +557,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
 		try {
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "update iigs_current_job_detail set last_update_ts=now(), status='F' where job_id = ? and batch_id=? and batch_date=?;";
+		String query = "update "+ FEED_MASTER_TABLE +" set last_update_ts=now(), status='F' where job_id = ? and batch_id=? and batch_date=?;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, jobId);
 		pstm.setString(2, feedId);
@@ -581,7 +581,7 @@ public class SchedularDAOImpl implements SchedularDAO {
  * @param jobId
  */
 	@Override
-	public String suspendJobFromMaster(String feedId, String jobId, String scheduleInfo) {
+	public String suspendJobFromMaster(String feedId, String jobId) {
 		Connection conn;
 		try {
 			conn = ConnectionUtils.getConnection();
@@ -597,7 +597,26 @@ public class SchedularDAOImpl implements SchedularDAO {
 			return "Failure";
 		}
 		
-	}	
+	}
+
+@Override
+public String unSuspendJobFromMaster(@Valid String feedId, String jobId) {
+	Connection conn;
+	try {
+		conn = ConnectionUtils.getConnection();
+		String suspendFromMasterQuery = "update iigs_ui_master_job_detail  set is_suspended='N' where batch_id=? and job_id=? and is_suspended='Y'";
+		PreparedStatement pstm = conn.prepareStatement(suspendFromMasterQuery);
+		pstm.setString(1, feedId);
+		pstm.setString(2, jobId);
+		pstm.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		return "Success";
+	} catch (ClassNotFoundException | SQLException e) {
+		e.printStackTrace();
+		return "Failure";
+	}
+	
+}	
 
 	
 	/*

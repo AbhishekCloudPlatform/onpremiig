@@ -36,5 +36,6 @@ public interface SchedularDAO {
 	String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException;
 	String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
 	String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
-	String suspendJobFromMaster(String feedId, String jobId, String scheduleInfo) throws ClassNotFoundException, SQLException;
+	String suspendJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException;
+	String unSuspendJobFromMaster(@Valid String feedId, String jobId);
 }

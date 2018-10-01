@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -87,10 +88,36 @@ public class SchedularController {
 	 * @return
 	 */
 	@RequestMapping(value = { "/scheduler/suspendMasterJob" }, method = RequestMethod.POST)
-	public ModelAndView suspendJobFromMaster(@Valid @RequestParam("feedId") String feedId,
-			@RequestParam("jobId") String jobId, @RequestParam("scheduleInfo") String scheduleInfo, ModelMap modelMap) {
+	public  ModelAndView suspendJobFromMaster(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, ModelMap modelMap) {
 		try {
-			String suspendStatus = schedularService.suspendJobFromMaster(feedId, jobId, scheduleInfo);
+			String suspendStatus = schedularService.suspendJobFromMaster(feedId, jobId);
+			if (suspendStatus.equals("Success")) {
+				modelMap.addAttribute("successString", "Job Suspended");
+			} else {
+				modelMap.addAttribute("errorStatus", "Job Suspense failure");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.addAttribute("errorStatus", e.getMessage());
+		}
+		return allJobs(modelMap);
+	}
+	
+	
+	/**
+	 * This method unsuspends the job in master table.
+	 * 
+	 * @param feed_id
+	 * @param job_id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = { "/scheduler/unSuspendMasterJob" }, method = RequestMethod.POST)
+	public  ModelAndView unSuspendJobFromMaster(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, ModelMap modelMap) {
+		try {
+			String suspendStatus = schedularService.unSuspendJobFromMaster(feedId, jobId);
 			if (suspendStatus.equals("Success")) {
 				modelMap.addAttribute("successString", "Job Suspended");
 			} else {

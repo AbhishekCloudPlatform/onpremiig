@@ -64,15 +64,17 @@ $(document).ready(function() {
 						   feedId : $feedId,
 						   jobId : $jobId
 						}, function(data) {
+						window.location.reload();
 						});
 				} else {
 					   $.post('/scheduler/suspendMasterJob', {
 						   feedId : $feedId,
 						   jobId : $jobId
 						}, function(data) {
+						window.location.reload();
 						});
 				}
-						window.location.reload();
+						
 					});				
 });
 

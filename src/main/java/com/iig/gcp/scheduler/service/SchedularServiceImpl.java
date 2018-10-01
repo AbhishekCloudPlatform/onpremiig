@@ -124,8 +124,13 @@ public class SchedularServiceImpl implements SchedularService{
 	}
 
 	@Override
-	public String suspendJobFromMaster(String feedId, String jobId, String scheduleInfo) throws ClassNotFoundException, SQLException {
-		return schedularDAO.suspendJobFromMaster(feedId,jobId,scheduleInfo);
+	public String suspendJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException {
+		return schedularDAO.suspendJobFromMaster(feedId,jobId);
+	}
+
+	@Override
+	public String unSuspendJobFromMaster(@Valid String feedId, String jobId) {
+		return schedularDAO.unSuspendJobFromMaster(feedId,jobId);
 	}	
 
 
