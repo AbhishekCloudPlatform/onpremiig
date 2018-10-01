@@ -198,6 +198,7 @@ public class SchedularController {
 			ArrayList<String> arrfeedId = schedularService.getFeedFromMaster();
 			modelMap.addAttribute("arrfeedId", arrfeedId);
 			modelMap.addAttribute("allLoadJobs", hsMap.get("ALL"));
+			System.out.println(hsMap.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -169,8 +169,10 @@ $(document).ready(function() {
 						<!-- <button type="button" class="btn btn-danger btn-fw">Delete</button> -->
 						</td>
 						<td>
-						<a href="#" ><img src="../../assets/img/suspend.png"  alt="Image" height="160" width="160"class="rounded">
-						</a>
+							<a href="#">
+								<img class="img-fluid img-thumbnail" id="${row.job_sequence}" src="../../assets/img/${row.is_suspended}.png" 
+					      				alt="Image" height="160" width="160"class="rounded"  >
+							</a>
 						</td>	
 						</tr>
 	                </c:forEach>

@@ -145,13 +145,13 @@ $(document).ready(function() {
                          Schedule Info
                         </th>
                     	<th>
-                        Status
+                         Status
                         </th>
                         <th >
-                        Run/Re-Run
+                         Run/Re-Run
                         </th>
                        <th >
-                        Kill
+                         Kill
                         </th>
                       </tr>
                     </thead>

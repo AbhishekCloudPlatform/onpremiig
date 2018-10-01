@@ -66,8 +66,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 		List<MasterJobsDTO> scheduledJobs = new ArrayList<MasterJobsDTO>();
 
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "Select job_id,job_name,batch_id,case when weekly_flag='Y' then concat('Weekly on ',week_run_day) when daily_flag='Y' then concat('Daily at ',substr(job_schedule_time,1,2)) when monthly_flag='Y' then concat('Monthly on ',month_run_day ) when yearly_flag='Y' then concat('Yearly on ',month_run_val ,' month') end as consolidated_Schedule,case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end as Schedule from iigs_ui_master_job_detail order by batch_id, job_id;";
-
+		String query="Select master.job_id,master.job_name,master.batch_id,case when master.weekly_flag='Y' then concat('Weekly on ',master.week_run_day) when master.daily_flag='Y' then concat('Daily at ',substr(master.job_schedule_time,1,5)) when master.monthly_flag='Y' then concat('Monthly on ',master.month_run_day ) when master.yearly_flag='Y' then concat('Yearly on ',master.month_run_val ,' month') end as consolidated_Schedule,case when master.weekly_flag='Y' then 'Weekly' when master.daily_flag='Y' then 'Daily' when master.monthly_flag='Y' then 'Monthly' when master.yearly_flag='Y' then 'Yearly' end as Schedule, case when current.job_sequence is null then 'CURR-N' else 'CURR-Y' end as in_current, concat('SUS-',master.is_suspended) as is_suspended, master.job_sequence from iigs_ui_master_job_detail master left join iigs_current_job_detail current on master.job_id=current.job_id and master.batch_id=current.batch_id where current.batch_date=date(now()) order by master.batch_id, master.job_id ;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		ResultSet rs = pstm.executeQuery();
 		MasterJobsDTO dto = null;
@@ -77,6 +76,10 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setJob_name(rs.getString(2));
 			dto.setBatch_id(rs.getString(3));
 			dto.setConsolidatedSchedule(rs.getString(4));
+			dto.setSchedule(rs.getString(5));
+			dto.setIn_current(rs.getString(6));
+			dto.setIs_suspended(rs.getString(7));
+			dto.setJob_sequence(rs.getInt(8));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -99,7 +102,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 			frequency = "%";
 		}
 
-		String query = "Select job_id,job_name,batch_id,case when weekly_flag='Y' then concat('Weekly on ',week_run_day) when daily_flag='Y' then concat('Daily at ',substr(job_schedule_time,1,2)) when monthly_flag='Y' then concat('Monthly on ',month_run_day ) when yearly_flag='Y' then concat('Yearly on ',month_run_val ,' month') end as consolidated_Schedule,case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end as Schedule from iigs_ui_master_job_detail where case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end like ? and batch_id like ? order by batch_id, job_id;";
+		String query = "Select master.job_id,master.job_name,master.batch_id,case when master.weekly_flag='Y' then concat('Weekly on ',master.week_run_day) when master.daily_flag='Y' then concat('Daily at ',substr(master.job_schedule_time,1,5)) when master.monthly_flag='Y' then concat('Monthly on ',master.month_run_day ) when master.yearly_flag='Y' then concat('Yearly on ',master.month_run_val ,' month') end as consolidated_Schedule,case when master.weekly_flag='Y' then 'Weekly' when master.daily_flag='Y' then 'Daily' when master.monthly_flag='Y' then 'Monthly' when master.yearly_flag='Y' then 'Yearly' end as Schedule, case when current.job_sequence is null then 'CURR-N' else 'CURR-Y' end as in_current, concat('SUS-',master.is_suspended) as is_suspended, master.job_sequence from iigs_ui_master_job_detail master left join iigs_current_job_detail current on master.job_id=current.job_id and master.batch_id=current.batch_id where current.batch_date=date(now()) and case when master.weekly_flag='Y' then 'Weekly' when master.daily_flag='Y' then 'Daily' when master.monthly_flag='Y' then 'Monthly' when master.yearly_flag='Y' then 'Yearly' end like ? and master.batch_id like ? order by batch_id, job_id;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, frequency);
 		pstm.setString(2, batchId);
@@ -111,6 +114,10 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setJob_name(rs.getString(2));
 			dto.setBatch_id(rs.getString(3));
 			dto.setConsolidatedSchedule(rs.getString(4));
+			dto.setSchedule(rs.getString(5));
+			dto.setIn_current(rs.getString(6));
+			dto.setIs_suspended(rs.getString(7));
+			dto.setJob_sequence(rs.getInt(8));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
