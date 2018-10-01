@@ -691,3 +691,7 @@ target/surefire-reports/com.iig.gcp.IigOnPremApplicationTests.txt
 target/surefire-reports/TEST-com.iig.gcp.IigOnPremApplicationTests.xml
 target/test-classes/com/iig/gcp/IigOnPremApplicationTests.class
 target/classes/com/iig/gcp/scheduler/dao/SchedularDAOImpl.class
+target/IIGOnPrem-0.0.1-SNAPSHOT.war.original
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/surefire-reports/com.iig.gcp.IigOnPremApplicationTests.txt
+target/surefire-reports/TEST-com.iig.gcp.IigOnPremApplicationTests.xml
