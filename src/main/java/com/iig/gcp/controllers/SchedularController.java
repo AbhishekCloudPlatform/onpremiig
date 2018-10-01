@@ -4,8 +4,6 @@
 
 package com.iig.gcp.controllers;
 
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iig.gcp.scheduler.dto.ArchiveJobsDTO;
@@ -65,12 +62,14 @@ public class SchedularController {
 			@RequestParam("jobId") String jobId, ModelMap modelMap) {
 		try {
 			MasterJobsDTO masterJobDTO = schedularService.orderJobFromMaster(feedId, jobId);
-			String message = schedularService.moveJobFromMasterToCurrentJob(masterJobDTO);
-			if (message.equals("Success")) {
-				modelMap.addAttribute("successString", "Job Ordered for today");
-				
-			} else {
-				modelMap.addAttribute("errorStatus", "Job ordering failure");
+			if (masterJobDTO != null) {
+				String message = schedularService.moveJobFromMasterToCurrentJob(masterJobDTO);
+				if (message.equals("Success")) {
+					modelMap.addAttribute("successString", "Job Ordered for today");
+
+				} else {
+					modelMap.addAttribute("errorStatus", "Job ordering failure");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,7 +77,7 @@ public class SchedularController {
 		}
 		return allJobs(modelMap);
 	}
-	
+
 	/**
 	 * This method deletes the record from MasterFeed data
 	 * 
@@ -92,16 +91,16 @@ public class SchedularController {
 			@RequestParam("jobId") String jobId, ModelMap modelMap) {
 		try {
 			String message = schedularService.deleteJobFromMaster(feedId, jobId);
-			modelMap.addAttribute("message",message);
+			modelMap.addAttribute("message", message);
 			System.out.println(message);
-			
-		} 	catch (Exception e ){		
-		
+
+		} catch (Exception e) {
+
 			modelMap.addAttribute("errorStatus", e.getMessage());
 
 		}
-    	return new ModelAndView("schedular/viewAllJobs1");
-	}	
+		return new ModelAndView("schedular/viewAllJobs1");
+	}
 
 	/**
 	 * This method populated the View Run Statics Screen with list of Job Id w.r.t.
@@ -259,34 +258,34 @@ public class SchedularController {
 		}
 		return new ModelAndView("schedular/viewCurrentJobs1");
 	}
-	
+
 	@RequestMapping(value = { "/scheduler/runScheduleJob" }, method = RequestMethod.POST)
 	public ModelAndView runScheduleJob(@Valid @RequestParam("feedId") String feedId,
 			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
 		try {
 			String message = schedularService.runScheduleJob(feedId, jobId, batchDate);
-			modelMap.addAttribute("message",message);			
-		} 	catch (Exception e ){		
-		
+			modelMap.addAttribute("message", message);
+		} catch (Exception e) {
+
 			modelMap.addAttribute("errorStatus", e.getMessage());
 
 		}
-    	return new ModelAndView("schedular/viewCurrentJobs1");
-	}	
-	
+		return new ModelAndView("schedular/viewCurrentJobs1");
+	}
+
 	@RequestMapping(value = { "/scheduler/stopScheduleJob" }, method = RequestMethod.POST)
 	public ModelAndView stopScheduleJob(@Valid @RequestParam("feedId") String feedId,
 			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
 		try {
 			String message = schedularService.stopScheduleJob(feedId, jobId, batchDate);
-			modelMap.addAttribute("message",message);			
-		} 	catch (Exception e ){		
-		
+			modelMap.addAttribute("message", message);
+		} catch (Exception e) {
+
 			modelMap.addAttribute("errorStatus", e.getMessage());
 
 		}
-    	return new ModelAndView("schedular/viewCurrentJobs1");
-	}	
+		return new ModelAndView("schedular/viewCurrentJobs1");
+	}
 	/*
 	 * @RequestMapping(value = { "/scheduler/scheduledjobs"}, method =
 	 * RequestMethod.GET) public ModelAndView scheduledJobs(ModelMap modelMap) { try
