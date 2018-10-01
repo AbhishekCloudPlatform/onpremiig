@@ -29,12 +29,14 @@
 		dyndiv.getElementsByTagName('input')[2].name = "service_account" + i;
 		dyndiv.getElementsByTagName('input')[3].id = "target_bucket" + i;
 		dyndiv.getElementsByTagName('input')[3].name = "target_bucket" + i;
-		dyndiv.getElementsByTagName('input')[4].id = "target_cluster" + i;
-		dyndiv.getElementsByTagName('input')[4].name = "target_cluster" + i;	
-		dyndiv.getElementsByTagName('input')[5].id = "username" + i;
-		dyndiv.getElementsByTagName('input')[5].name = "username" + i;
-		dyndiv.getElementsByTagName('input')[6].id = "target_dir" + i;
-		dyndiv.getElementsByTagName('input')[6].name = "target_dir" + i;
+		dyndiv.getElementsByTagName('input')[4].id = "knox_url" + i;
+		dyndiv.getElementsByTagName('input')[4].name = "knox_url" + i;	
+		dyndiv.getElementsByTagName('input')[5].id = "hadoop_path" + i;
+		dyndiv.getElementsByTagName('input')[5].name = "hadoop_path" + i;
+		dyndiv.getElementsByTagName('input')[6].id = "username" + i;
+		dyndiv.getElementsByTagName('input')[6].name = "username" + i;
+		dyndiv.getElementsByTagName('input')[7].id = "password" + i;
+		dyndiv.getElementsByTagName('input')[7].name = "password" + i;
 		dyndiv.getElementsByClassName('gx')[0].id="g"+i;
 		dyndiv.getElementsByClassName('hx')[0].id="h"+i;
 		dyn.parentNode.appendChild(dyndiv);
@@ -92,12 +94,12 @@
 							<div id="dyn1">
 								<div class="form-group row">
 									<div class="col-sm-6">
-										<label>Target Name</label> <input type="text"
+										<label>Target Name *</label> <input type="text"
 											class="form-control" id="target_unique_name1"
 											name="target_unique_name1" placeholder="Target Name">
 									</div>
 									<div class="col-sm-6">
-										<label>Target Type</label> <select name="target_type1"
+										<label>Target Type *</label> <select name="target_type1"
 											id="target_type1" class="form-control"
 											onchange="sys_typ(this.id,this.value)">
 											<option value="" selected disabled>Target Type ...</option>
@@ -110,19 +112,19 @@
 								<div id="g1" class="gx">
 									<div class="form-group row">
 										<div class="col-sm-4">
-											<label>Target Project</label> <input type="text"
+											<label>Target Project *</label> <input type="text"
 												class="form-control" id="target_project1"
 												name="target_project1" placeholder="Target Project"
 												value="juniperonprem">
 										</div>
 										<div class="col-sm-4">
-											<label>Service Account</label> <input type="text"
+											<label>Service Account *</label> <input type="text"
 												class="form-control" id="service_account1"
 												name="service_account1" placeholder="Service Account"
 												value="Extraction_CDG_UK">
 										</div>
 										<div class="col-sm-4">
-											<label>Target Bucket</label> <input type="text"
+											<label>Target Bucket *</label> <input type="text"
 												class="form-control" id="target_bucket1"
 												name="target_bucket1" placeholder="Target Bucket"
 												value="extraction-bucket1">
@@ -131,30 +133,37 @@
 								</div>
 								<div id="h1" class="hx" style="display: none;">
 									<div class="form-group row">
-										<div class="col-sm-4">
-											<label>Target Cluster</label> <input type="text"
-												class="form-control" id="target_cluster1"
-												name="target_cluster1" placeholder="Target Cluster">
+										<div class="col-sm-6">
+											<label>KNOX URL *</label> <input type="text"
+												class="form-control" id="knox_url1"
+												name="knox_url1" placeholder="KNOX URL">
 										</div>
-										<div class="col-sm-4">
-											<label>Username</label> <input type="text"
+										<div class="col-sm-6">
+											<label>Hadoop Path *</label> <input type="text"
+												class="form-control" id="hadoop_path1"
+												name="hadoop_path1" placeholder="Hadoop Path">
+										</div>
+										</div>
+										<div class="form-group row">
+										<div class="col-sm-6">
+											<label>Username *</label> <input type="text"
 												class="form-control" id="username1"
 												name="username1" placeholder="Username">
 										</div>
-										<div class="col-sm-4">
-											<label>Target Directory</label> <input type="text"
-												class="form-control" id="target_dir1"
-												name="target_dir1" placeholder="Target Directory">
+										<div class="col-sm-6">
+											<label>Password *</label> <input type="password"
+												class="form-control" id="password1"
+												name="password1" placeholder="Password">
 										</div>
 									</div>
 								</div>
 								</div>
 								</div>
-								<div class="form-group" style="float: right; position:relative; margin: 5px;">
+								<!-- <div class="form-group" style="float: right; position:relative; margin: 5px;">
 									<button id="add" type="button"
 										class="btn btn-rounded btn-gradient-info mr-2"
 										onclick="return dup_div();">+</button>
-								</div>
+								</div>-->
 							</fieldset>
 							<button onclick="jsonconstruct();"
 								class="btn btn-rounded btn-gradient-info mr-2">Save</button>

@@ -62,44 +62,44 @@ function jsonconstruct()
 							<fieldset class="fs">
 							<div class="form-group row">
 									<div class="col-sm-6">
-										<label>Source Name</label> <input type="text"
+										<label>Source Name *</label> <input type="text"
 											class="form-control" id="connection_name" name="connection_name"
 											placeholder="Connection Name">
 									</div>
 									<div class="col-sm-6">
-										<label>Source Type</label> <input type="text"
+										<label>Source Type *</label> <input type="text"
 											class="form-control" id="connection_type" name="connection_type" value="${src_val}" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-3">
-										<label>Host Name</label> <input type="text"
+										<label>Host Name *</label> <input type="text"
 											class="form-control" id="host_name" name="host_name"
 											placeholder="Host Name">
 									</div>
 									<div class="col-sm-3">
-										<label>Port Number</label> <input type="text"
+										<label>Port Number *</label> <input type="text"
 											class="form-control" id="port" name="port"
 											placeholder="Port Number">
 									</div>
 									<div class="col-sm-3">
-										<label>Username</label> <input type="text"
+										<label>Username *</label> <input type="text"
 											class="form-control" id="user_name" name="user_name"
 											placeholder="Username">
 									</div>
 									<div class="col-sm-3">
-										<label>Password</label> <input type="password"
+										<label>Password *</label> <input type="password"
 											class="form-control" id="password" name="password"
 											placeholder="Password">
 									</div>
 								</div>
 							<div class="form-group" id="db" style="display:none;">
-								<label>Database Name</label> <input type="text"
+								<label>Database Name *</label> <input type="text"
 									class="form-control" id="db_name" name="db_name"
 									placeholder="Database Name">
 							</div>
 								<div class="form-group" id="service" style="display:none;">
-									<label>Service Name/ID</label> <input type="text"
+									<label>Service Name/ID *</label> <input type="text"
 										class="form-control" id="service_name" name="service_name"
 										placeholder="Service Name/ID">
 								</div>

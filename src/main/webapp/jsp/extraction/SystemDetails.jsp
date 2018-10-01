@@ -74,7 +74,7 @@
 								id="counter" class="form-control" value="1"> 
 							<fieldset class="fs">
 								<div class="form-group">
-									<label>Select Source</label> <select class="form-control"
+									<label>Select Source *</label> <select class="form-control"
 										id="connection_id" name="connection_id">
 										<option value="" selected disabled>${src_val}
 											Sources...</option>
@@ -84,7 +84,7 @@
 									</select>
 								</div>
 								<div class="form-group">
-									<label>Select Target</label> <select name="targetx"
+									<label>Select Target *</label> <select name="targetx"
 										id="targetx" class="form-control" multiple="multiple">
 										<c:forEach items="${tgt}" var="tgt">
 											<option value="${tgt}">${tgt}</option>
@@ -101,7 +101,7 @@
 								</div>-->
 								<div class="form-group row">
 									<div class="col-sm-6">
-										<label>Unique Extract Name</label> <input type="text"
+										<label>Unique Extract Name *</label> <input type="text"
 											class="form-control" id="src_unique_name"
 											name="src_unique_name" placeholder="Unique Extract Name">
 											<div id="res" style="font-size:0.7em;text-align:center;"></div>
@@ -116,13 +116,13 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label>Extract Description</label> <input type="text"
+									<label>Extract Description *</label> <input type="text"
 										class="form-control" id="src_sys_desc" name="src_sys_desc"
 										placeholder="Extract Description">
 								</div>
 								<div class="form-group">
 									<!-- <div class="col-sm-6">-->
-										<label>Extraction Type</label> <select name="src_extract_type"
+										<label>Extraction Type *</label> <select name="src_extract_type"
 											id="src_extract_type" class="form-control"
 											onchange="sch(this.value);">
 											<option value="" selected disabled>Extraction Type
