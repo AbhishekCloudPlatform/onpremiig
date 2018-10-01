@@ -26,7 +26,35 @@ $(document).ready(function() {
 				});
 			});
 			
-	
+			$("#run ").click(function(){
+				var $row = $(this).closest("tr");
+				var $feedId = $row.find('td:eq( 0 )').html();
+				var $jobId = $row.find('td:eq( 1 )').html();
+				var $batchDate = $row.find('td:eq(2)').html();
+					   $.post('/scheduler/runScheduleJob', {
+						   feedId : $feedId,
+						   jobId : $jobId,
+						   batchDate : $batchDate
+						}, function(data) {
+							$('#allvalues').html(data)
+						});
+						window.location.reload();
+					});		
+			
+			$("#stop ").click(function(){
+				var $row = $(this).closest("tr");
+				var $feedId = $row.find('td:eq( 0 )').html();
+				var $jobId = $row.find('td:eq( 1 )').html();
+				var $batchDate = $row.find('td:eq(2)').html();
+					   $.post('/scheduler/stopScheduleJob', {
+						   feedId : $feedId,
+						   jobId : $jobId,
+						   batchDate : $batchDate
+						}, function(data) {
+							$('#allvalues').html(data)
+						});
+						window.location.reload();
+					});				
 });
 
 
@@ -111,7 +139,7 @@ $(document).ready(function() {
                           Job Id
                         </th>
                         <th>
-                          Job Name
+                          Batch Date
                         </th>
                         <th>
                          Schedule Info
@@ -123,7 +151,7 @@ $(document).ready(function() {
                         Run/Re-Run
                         </th>
                        <th >
-                        Kill/Abort
+                        Kill
                         </th>
                       </tr>
                     </thead>
@@ -132,17 +160,16 @@ $(document).ready(function() {
 	                    <tr>
 	                    <td><c:out value="${row.batch_id}" /></td>
 	                    <td><c:out value="${row.job_id}" /></td>
-						<td><c:out value="${row.job_name}" /></td>
+						<td><c:out value="${row.batch_date}" /></td>
 						<td><c:out value="${row.job_schedule_time}" /></td>
 						<td>
                         <c:out value="${row.status}" />
                         </td>
 						<td>
-						<a href="#" ><img src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
-						
+						<a href="#" ><img name="run" id="run" src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>						
 						</td>
 						<td>
-						<a href="#" ><img src="../../assets/img/stop.png"  alt="Image" height="160" width="160"class="rounded">
+						<a href="#" ><img name = "stop" id="stop" src="../../assets/img/stop.png"  alt="Image" height="160" width="160"class="rounded">
 						</a>
 						</td>		
 						</tr>

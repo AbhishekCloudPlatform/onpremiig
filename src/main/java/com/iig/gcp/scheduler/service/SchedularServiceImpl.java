@@ -111,6 +111,16 @@ public class SchedularServiceImpl implements SchedularService{
 	public String deleteJobFromMaster(String feedId, String jobId) throws Exception {
 		return schedularDAO.deleteJobFromMaster(feedId, jobId);
 		
+	}
+
+	@Override
+	public String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+		return schedularDAO.runScheduleJob(feedId, jobId, batchDate);
+	}
+
+	@Override
+	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception{
+		return schedularDAO.stopScheduleJob(feedId, jobId, batchDate);
 	}	
 
 

@@ -174,7 +174,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public ArrayList<ArchiveJobsDTO> getChartDetails(@Valid String job_id) throws Exception {
 		ArrayList<ArchiveJobsDTO> arrArchiveJobsDTO = new ArrayList<ArchiveJobsDTO>();
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "select job_id, batch_id, status, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where job_id=? order by batch_id, job_id";
+		String query = "select job_id, batch_id, status, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where job_id=? order by batch_date, batch_id, job_id";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, job_id);
 		ResultSet rs = pstm.executeQuery();
@@ -197,7 +197,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public List<ArchiveJobsDTO> getRunStats(@Valid String job_id, @Valid String feed_id) throws Exception {
 		List<ArchiveJobsDTO> archiveJobs = new ArrayList<ArchiveJobsDTO>();
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "select job_id, batch_id, job_name, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where batch_id=? and job_id=? order by batch_date";
+		String query = "select job_id, batch_id, job_name, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where batch_id=? and job_id=? order by batch_date, batch_id, job_id";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, feed_id);
 		pstm.setString(2, job_id);
@@ -244,7 +244,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public List<DailyJobsDTO> allCurrentJobs() throws Exception {
 		List<DailyJobsDTO> scheduledJobs = new ArrayList<DailyJobsDTO>();
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "Select job_id,job_name,batch_id, CAST(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status from iigs_current_job_detail order by job_schedule_time ;";
+		String query = "Select job_id,job_name,batch_id, CAST(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status, batch_date from iigs_current_job_detail order by batch_id, job_id, batch_date ;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		ResultSet rs = pstm.executeQuery();
 		DailyJobsDTO dto = null;
@@ -255,6 +255,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setBatch_id(rs.getString(3));
 			dto.setJob_schedule_time(rs.getString(4));
 			dto.setStatus(rs.getString(5));
+			dto.setBatch_date(rs.getString(6));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -287,8 +288,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 		} else if (!status.equals("ALL") && feedId.equals("ALL")) {
 			feedId = "%";
 		}
-		// Need to change the query
-		String query = "Select job_id,job_name,batch_id, cast(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status from iigs_current_job_detail where case when status='' then 'T' else status end like ? and batch_id like ? order by job_schedule_time desc;";
+		String query = "Select job_id,job_name,batch_id, cast(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status, batch_date from iigs_current_job_detail where case when status='' then 'T' else status end like ? and batch_id like ? order by batch_id, job_id, batch_date;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, status);
 		pstm.setString(2, feedId);
@@ -301,6 +301,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setBatch_id(rs.getString(3));
 			dto.setStatus(rs.getString(5));
 			dto.setJob_schedule_time(rs.getString(4));
+			dto.setBatch_date(rs.getString(6));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -500,6 +501,48 @@ public class SchedularDAOImpl implements SchedularDAO {
 			return message;
 		}
 	}
+
+	@Override
+	public String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+		try {
+		Connection conn = ConnectionUtils.getConnection();
+		String query = "update iigs_current_job_detail set last_update_ts=now(), job_schedule_time=current_time(), status='' where job_id = ? and batch_id=? and batch_date=?;";
+		PreparedStatement pstm = conn.prepareStatement(query);
+		pstm.setString(1, jobId);
+		pstm.setString(2, feedId);
+		pstm.setString(3, batchDate);
+		int rs = pstm.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		System.out.println(rs);
+		return ("Job run with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			return (e.toString());
+
+		}
+	}
+	
+	@Override
+	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+		try {
+		Connection conn = ConnectionUtils.getConnection();
+		String query = "update iigs_current_job_detail set last_update_ts=now(), status='F' where job_id = ? and batch_id=? and batch_date=?;";
+		PreparedStatement pstm = conn.prepareStatement(query);
+		pstm.setString(1, jobId);
+		pstm.setString(2, feedId);
+		pstm.setString(3, batchDate);
+		int rs = pstm.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		System.out.println(rs);
+		return ("Stopped run with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			return (e.toString());
+
+		}
+	}	
 
 	/*	*//**
 			* 

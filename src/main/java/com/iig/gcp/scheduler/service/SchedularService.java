@@ -18,8 +18,10 @@ public interface SchedularService {
 	List<DailyJobsDTO> allCurrentJobs() throws Exception;
 	ArrayList<String> getFeedFromCurrent() throws Exception;
 	List<DailyJobsDTO> filterCurrentJobs(String status, String feedId) throws Exception;
-
 	HashMap<String, ArrayList<String>> allCurrentJobsGroupByFeedId() throws Exception;
+	String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
+	String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
+
 	
 	//Archive table
 	ArrayList<String> getFeedIdList() throws Exception;

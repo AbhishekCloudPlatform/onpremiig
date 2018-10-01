@@ -7,7 +7,7 @@ public class DailyJobsDTO {
 	private String job_id;
 	private String	 job_name;
 	private String batch_id;
-	private Date batch_date;
+	private String batch_date;
 	private String pre_processing;
 	private String post_processing;
 	private String command;
@@ -83,10 +83,10 @@ public class DailyJobsDTO {
 	public void setBatch_id(String batch_id) {
 		this.batch_id = batch_id;
 	}
-	public Date getBatch_date() {
+	public String getBatch_date() {
 		return batch_date;
 	}
-	public void setBatch_date(Date batch_date) {
+	public void setBatch_date(String batch_date) {
 		this.batch_date = batch_date;
 	}
 	public String getPre_processing() {

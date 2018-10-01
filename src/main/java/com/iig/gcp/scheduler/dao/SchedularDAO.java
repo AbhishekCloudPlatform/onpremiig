@@ -34,4 +34,6 @@ public interface SchedularDAO {
 	List<DailyJobsDTO> filterCurrentJobs(String status, String feedId) throws Exception;
 	HashMap<String, ArrayList<String>> allCurrentJobsGroupByFeedId() throws Exception;
 	String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException;
+	String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
+	String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
 }

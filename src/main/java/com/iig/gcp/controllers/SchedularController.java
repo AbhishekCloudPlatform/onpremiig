@@ -259,6 +259,34 @@ public class SchedularController {
 		}
 		return new ModelAndView("schedular/viewCurrentJobs1");
 	}
+	
+	@RequestMapping(value = { "/scheduler/runScheduleJob" }, method = RequestMethod.POST)
+	public ModelAndView runScheduleJob(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
+		try {
+			String message = schedularService.runScheduleJob(feedId, jobId, batchDate);
+			modelMap.addAttribute("message",message);			
+		} 	catch (Exception e ){		
+		
+			modelMap.addAttribute("errorStatus", e.getMessage());
+
+		}
+    	return new ModelAndView("schedular/viewCurrentJobs1");
+	}	
+	
+	@RequestMapping(value = { "/scheduler/stopScheduleJob" }, method = RequestMethod.POST)
+	public ModelAndView stopScheduleJob(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
+		try {
+			String message = schedularService.stopScheduleJob(feedId, jobId, batchDate);
+			modelMap.addAttribute("message",message);			
+		} 	catch (Exception e ){		
+		
+			modelMap.addAttribute("errorStatus", e.getMessage());
+
+		}
+    	return new ModelAndView("schedular/viewCurrentJobs1");
+	}	
 	/*
 	 * @RequestMapping(value = { "/scheduler/scheduledjobs"}, method =
 	 * RequestMethod.GET) public ModelAndView scheduledJobs(ModelMap modelMap) { try
