@@ -1,5 +1,7 @@
 package com.iig.gcp.scheduler.service;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,6 +94,34 @@ public class SchedularServiceImpl implements SchedularService{
 		// TODO Auto-generated method stub
 		return schedularDAO.allCurrentJobsGroupByFeedId();
 	}
+
+	@Override
+	public MasterJobsDTO orderJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException, ParseException {
+		return schedularDAO.orderJobFromMaster(feedId, jobId);
+		
+	}
+
+	@Override
+	public String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException {
+		return schedularDAO.moveJobFromMasterToCurrentJob(masterJobDTO);
+		
+	}
+	
+	@Override
+	public String deleteJobFromMaster(String feedId, String jobId) throws Exception {
+		return schedularDAO.deleteJobFromMaster(feedId, jobId);
+		
+	}
+
+	@Override
+	public String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+		return schedularDAO.runScheduleJob(feedId, jobId, batchDate);
+	}
+
+	@Override
+	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception{
+		return schedularDAO.stopScheduleJob(feedId, jobId, batchDate);
+	}	
 
 
 

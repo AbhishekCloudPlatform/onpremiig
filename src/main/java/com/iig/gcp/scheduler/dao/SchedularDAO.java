@@ -1,5 +1,7 @@
 package com.iig.gcp.scheduler.dao;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,8 @@ public interface SchedularDAO {
 	 ArrayList<String> getFeedFromMaster() throws Exception;
 	 List<MasterJobsDTO> allLoadJobs() throws Exception;
 	 List<MasterJobsDTO> typAndBatchLoadJobs(String strFrequencyType, String strBatchId) throws Exception;
+	 MasterJobsDTO orderJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException, ParseException;
+	 String deleteJobFromMaster(String feedId, String jobId) throws Exception;
 
 	
 	//Archive Table
@@ -29,4 +33,7 @@ public interface SchedularDAO {
 	ArrayList<String> getFeedFromCurrent() throws Exception;
 	List<DailyJobsDTO> filterCurrentJobs(String status, String feedId) throws Exception;
 	HashMap<String, ArrayList<String>> allCurrentJobsGroupByFeedId() throws Exception;
+	String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException;
+	String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
+	String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
 }

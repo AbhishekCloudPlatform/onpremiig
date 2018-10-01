@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.iig.gcp.IigOnPremApplicationTests
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.231 s - in com.iig.gcp.IigOnPremApplicationTests
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.985 s - in com.iig.gcp.IigOnPremApplicationTests
+>>>>>>> 27e4ffd4dc8a6b471846c86c46b7b88b9f4f7d95
