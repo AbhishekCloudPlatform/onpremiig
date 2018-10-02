@@ -37,9 +37,9 @@ $(document).ready(function() {
 				   $.post('/scheduler/runMasterJob', {
 					   feedId : $feedId,
 					   jobId : $jobId
-					}, function(data) {						
+					}, function(data) {
+					window.location.reload();					
 					});
-					window.location.reload();
 				}
 			});
 			
@@ -51,8 +51,8 @@ $(document).ready(function() {
 						   feedId : $feedId,
 						   jobId : $jobId
 						}, function(data) {
+							window.location.reload();
 						});
-						window.location.reload();
 					});		
 			
 			$("#suspend ").click(function(){
