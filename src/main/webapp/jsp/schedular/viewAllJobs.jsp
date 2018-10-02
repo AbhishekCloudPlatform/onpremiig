@@ -29,19 +29,54 @@ $(document).ready(function() {
 			
 			
 			$("#run ").click(function(){
-			alert("in");
 			var $row = $(this).closest("tr");
 			var $feedId = $row.find('td:eq( 0 )').html();
 			var $jobId = $row.find('td:eq( 1 )').html();
-			alert("feedId"+$feedId);
-			alert("jobId"+$jobId);
+			var $val = $row.find('td:eq( 4 )').html();
+			if($val.includes("CURR-N")){
 				   $.post('/scheduler/runMasterJob', {
 					   feedId : $feedId,
 					   jobId : $jobId
 					}, function(data) {
-						
+					window.location.reload();					
 					});
-				});
+				}
+			});
+			
+			$("#delete ").click(function(){
+				var $row = $(this).closest("tr");
+				var $feedId = $row.find('td:eq( 0 )').html();
+				var $jobId = $row.find('td:eq( 1 )').html();
+					   $.post('/scheduler/deleteMasterJob', {
+						   feedId : $feedId,
+						   jobId : $jobId
+						}, function(data) {
+							window.location.reload();
+						});
+					});		
+			
+			$("#suspend ").click(function(){
+				var $row = $(this).closest("tr");
+				var $feedId = $row.find('td:eq( 0 )').html();
+				var $jobId = $row.find('td:eq( 1 )').html();
+				var $val = $row.find('td:eq( 6 )').html();
+				if($val.includes("SUS-Y")){
+					   $.post('/scheduler/unSuspendMasterJob', {
+						   feedId : $feedId,
+						   jobId : $jobId
+						}, function(data) {
+						window.location.reload();
+						});
+				} else {
+					   $.post('/scheduler/suspendMasterJob', {
+						   feedId : $feedId,
+						   jobId : $jobId
+						}, function(data) {
+						window.location.reload();
+						});
+				}
+						
+					});				
 });
 
 
@@ -111,7 +146,7 @@ $(document).ready(function() {
 					<form class="forms-sample" id="extractionExtractData"
 							name="extractionExtractData" method="POST"
 							action="/extract/extractionExtractData1"
-							enctype="application/json">
+							enctype="application/json">						
 
 			<div id="allvalues" style="display: block;">
 				 <table class="table table-bordered" id="feedId1"  >
@@ -130,7 +165,7 @@ $(document).ready(function() {
                          Schedule Info
                         </th>
                     	<th>
-                          Run
+                          Order
                         </th>
                         <th>
                          Delete
@@ -148,18 +183,24 @@ $(document).ready(function() {
 						<td><c:out value="${row.job_name}" /></td>
 						<td><c:out value="${row.consolidatedSchedule}" /></td>
 						<td>
-						<a href="#" ><img name="run" id="run" src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
-						
+							<input type="hidden" id="img_id" value="${row.in_current}"/>
+							<a href="#">
+								<img id="run" name="run" src="../../assets/img/${row.in_current}.png" 
+					      				alt="Image" height="160" width="160"class="rounded"  >
+							</a>					
 						<!-- <button type="button" class="btn btn-success btn-fw">Run</button> -->
 						</td>
 						<td>
-						<a href="#" ><img src="../../assets/img/delete.png"  alt="Image" height="160" width="160"class="rounded">
+						<a href="#" ><img name="delete" id="delete" src="../../assets/img/delete.png"  alt="Image" height="160" width="160"class="rounded">
 						</a>
 						<!-- <button type="button" class="btn btn-danger btn-fw">Delete</button> -->
 						</td>
 						<td>
-						<a href="#" ><img src="../../assets/img/suspend.png"  alt="Image" height="160" width="160"class="rounded">
-						</a>
+							<input type="hidden" id="img_id" value="${row.is_suspended}"/>
+							<a href="#">
+								<img id="suspend" name="suspend" src="../../assets/img/${row.is_suspended}.png" 
+					      				alt="Image" height="160" width="160"class="rounded"  >
+							</a>
 						</td>	
 						</tr>
 	                </c:forEach>

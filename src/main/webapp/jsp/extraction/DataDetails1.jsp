@@ -9,7 +9,7 @@
 	<div id="tbl_fld">
 		<div class="form-group row">
 			<div class="col-sm-6">
-				<label>Select Table</label> <select class="form-control"
+				<label>Select Table *</label> <select class="form-control"
 					id="table_name1" name="table_name1"
 					onchange="getcols(this.id,this.value)">
 					<option value="" selected disabled>Table...</option>
@@ -19,7 +19,7 @@
 				</select>
 			</div>
 			<div class="col-sm-6">
-				<label>Load Type</label> <select class="form-control"
+				<label>Load Type *</label> <select class="form-control"
 					id="fetch_type1" name="fetch_type1"
 					onchange="incr(this.id,this.value)">
 					<c:choose>
@@ -37,7 +37,7 @@
 		</div>
 		<div id="fldd1"></div>
 		<div class="form-group">
-			<label>Where Condition</label>
+			<label>Where Condition *</label>
 			<textarea class="form-control" id="where_clause1"
 				name="where_clause1" style="width: 100%;"
 				placeholder="column1='filter1' and (column2>'filter2' or column3<'filter3')"></textarea>

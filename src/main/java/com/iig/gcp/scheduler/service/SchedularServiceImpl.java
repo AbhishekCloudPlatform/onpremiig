@@ -106,6 +106,32 @@ public class SchedularServiceImpl implements SchedularService{
 		return schedularDAO.moveJobFromMasterToCurrentJob(masterJobDTO);
 		
 	}
+	
+	@Override
+	public String deleteJobFromMaster(String feedId, String jobId) throws Exception {
+		return schedularDAO.deleteJobFromMaster(feedId, jobId);
+		
+	}
+
+	@Override
+	public String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+		return schedularDAO.runScheduleJob(feedId, jobId, batchDate);
+	}
+
+	@Override
+	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception{
+		return schedularDAO.stopScheduleJob(feedId, jobId, batchDate);
+	}
+
+	@Override
+	public String suspendJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException {
+		return schedularDAO.suspendJobFromMaster(feedId,jobId);
+	}
+
+	@Override
+	public String unSuspendJobFromMaster(@Valid String feedId, String jobId) {
+		return schedularDAO.unSuspendJobFromMaster(feedId,jobId);
+	}	
 
 
 

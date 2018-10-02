@@ -23,6 +23,10 @@ import com.iig.gcp.scheduler.dto.DailyJobsDTO;
 import com.iig.gcp.scheduler.dto.MasterJobsDTO;
 import com.iig.gcp.utils.ConnectionUtils;
 
+/**
+ * @author Nakuldinkarrao.V
+ *
+ */
 @Component
 public class SchedularDAOImpl implements SchedularDAO {
 
@@ -62,8 +66,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 		List<MasterJobsDTO> scheduledJobs = new ArrayList<MasterJobsDTO>();
 
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "Select job_id,job_name,batch_id,case when weekly_flag='Y' then concat('Weekly on ',week_run_day) when daily_flag='Y' then concat('Daily at ',substr(job_schedule_time,1,2)) when monthly_flag='Y' then concat('Monthly on ',month_run_day ) when yearly_flag='Y' then concat('Yearly on ',month_run_val ,' month') end as consolidated_Schedule,case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end as Schedule from iigs_ui_master_job_detail order by batch_id, job_id;";
-
+		String query="Select master.job_id,master.job_name,master.batch_id,case when master.weekly_flag='Y' then concat('Weekly on ',master.week_run_day) when master.daily_flag='Y' then concat('Daily at ',substr(master.job_schedule_time,1,5)) when master.monthly_flag='Y' then concat('Monthly on ',master.month_run_day ) when master.yearly_flag='Y' then concat('Yearly on ',master.month_run_val ,' month') end as consolidated_Schedule,case when master.weekly_flag='Y' then 'Weekly' when master.daily_flag='Y' then 'Daily' when master.monthly_flag='Y' then 'Monthly' when master.yearly_flag='Y' then 'Yearly' end as Schedule, case when current.job_sequence is null then 'CURR-N' else 'CURR-Y' end as in_current, concat('SUS-',master.is_suspended) as is_suspended, master.job_sequence from iigs_ui_master_job_detail master left join iigs_current_job_detail current on master.job_id=current.job_id and master.batch_id=current.batch_id and current.batch_date=date(now()) order by master.batch_id, master.job_id ;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		ResultSet rs = pstm.executeQuery();
 		MasterJobsDTO dto = null;
@@ -73,6 +76,10 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setJob_name(rs.getString(2));
 			dto.setBatch_id(rs.getString(3));
 			dto.setConsolidatedSchedule(rs.getString(4));
+			dto.setSchedule(rs.getString(5));
+			dto.setIn_current(rs.getString(6));
+			dto.setIs_suspended(rs.getString(7));
+			dto.setJob_sequence(rs.getInt(8));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -95,7 +102,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 			frequency = "%";
 		}
 
-		String query = "Select job_id,job_name,batch_id,case when weekly_flag='Y' then concat('Weekly on ',week_run_day) when daily_flag='Y' then concat('Daily at ',substr(job_schedule_time,1,2)) when monthly_flag='Y' then concat('Monthly on ',month_run_day ) when yearly_flag='Y' then concat('Yearly on ',month_run_val ,' month') end as consolidated_Schedule,case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end as Schedule from iigs_ui_master_job_detail where case when weekly_flag='Y' then 'Weekly' when daily_flag='Y' then 'Daily' when monthly_flag='Y' then 'Monthly' when yearly_flag='Y' then 'Yearly' end like ? and batch_id like ? order by batch_id, job_id;";
+		String query = "Select master.job_id,master.job_name,master.batch_id,case when master.weekly_flag='Y' then concat('Weekly on ',master.week_run_day) when master.daily_flag='Y' then concat('Daily at ',substr(master.job_schedule_time,1,5)) when master.monthly_flag='Y' then concat('Monthly on ',master.month_run_day ) when master.yearly_flag='Y' then concat('Yearly on ',master.month_run_val ,' month') end as consolidated_Schedule,case when master.weekly_flag='Y' then 'Weekly' when master.daily_flag='Y' then 'Daily' when master.monthly_flag='Y' then 'Monthly' when master.yearly_flag='Y' then 'Yearly' end as Schedule, case when current.job_sequence is null then 'CURR-N' else 'CURR-Y' end as in_current, concat('SUS-',master.is_suspended) as is_suspended, master.job_sequence from iigs_ui_master_job_detail master left join iigs_current_job_detail current on master.job_id=current.job_id and master.batch_id=current.batch_id and current.batch_date=date(now()) where case when master.weekly_flag='Y' then 'Weekly' when master.daily_flag='Y' then 'Daily' when master.monthly_flag='Y' then 'Monthly' when master.yearly_flag='Y' then 'Yearly' end like ? and master.batch_id like ? order by batch_id, job_id;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, frequency);
 		pstm.setString(2, batchId);
@@ -107,11 +114,52 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setJob_name(rs.getString(2));
 			dto.setBatch_id(rs.getString(3));
 			dto.setConsolidatedSchedule(rs.getString(4));
+			dto.setSchedule(rs.getString(5));
+			dto.setIn_current(rs.getString(6));
+			dto.setIs_suspended(rs.getString(7));
+			dto.setJob_sequence(rs.getInt(8));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
 		return scheduledJobs;
 	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String deleteJobFromMaster(String feedId, String jobId) throws Exception{
+		try {
+		Connection conn = ConnectionUtils.getConnection();
+		PreparedStatement pstm;
+		MasterJobsDTO masterJobDTO =orderJobFromMaster(feedId,jobId);
+		if(masterJobDTO!=null) {
+			jobId = masterJobDTO.getJob_id();
+			int masterJobSeq=masterJobDTO.getJob_sequence();
+			
+			for(int i=1;i<=10;i++) {
+				String predessor="predessor_job_id_"+i;
+				String updatePredecessorsQuery= "update iigs_ui_master_job_detail  set "+predessor+"=' ' where "+predessor+"="+QUOTE+jobId+QUOTE+" and job_sequence="+QUOTE+masterJobSeq+QUOTE+";";
+				pstm = conn.prepareStatement(updatePredecessorsQuery);
+				pstm.executeUpdate();
+			}
+		}
+		
+		String query = "delete from iigs_ui_master_job_detail where job_id = ? and batch_id=? ;";
+		PreparedStatement pstm1 = conn.prepareStatement(query);
+		pstm1.setString(1, jobId);
+		pstm1.setString(2, feedId);	
+		int rs = pstm1.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		return (rs + " Jobs deleted with FeedID: " + feedId + " and JobID: " + jobId);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			return (e.toString());
+
+		}		
+	}
+	
 
 	// Archive Table
 	@Override
@@ -154,7 +202,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public ArrayList<ArchiveJobsDTO> getChartDetails(@Valid String job_id) throws Exception {
 		ArrayList<ArchiveJobsDTO> arrArchiveJobsDTO = new ArrayList<ArchiveJobsDTO>();
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "select job_id, batch_id, status, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where job_id=? order by batch_id, job_id";
+		String query = "select job_id, batch_id, status, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where job_id=? order by batch_date, batch_id, job_id";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, job_id);
 		ResultSet rs = pstm.executeQuery();
@@ -177,7 +225,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public List<ArchiveJobsDTO> getRunStats(@Valid String job_id, @Valid String feed_id) throws Exception {
 		List<ArchiveJobsDTO> archiveJobs = new ArrayList<ArchiveJobsDTO>();
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "select job_id, batch_id, job_name, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where batch_id=? and job_id=? order by batch_date";
+		String query = "select job_id, batch_id, job_name, start_time, end_time, batch_date, timediff(end_time,start_time) as duration from iigs_archive_job_detail where batch_id=? and job_id=? order by batch_date, batch_id, job_id";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, feed_id);
 		pstm.setString(2, job_id);
@@ -224,7 +272,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	public List<DailyJobsDTO> allCurrentJobs() throws Exception {
 		List<DailyJobsDTO> scheduledJobs = new ArrayList<DailyJobsDTO>();
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "Select job_id,job_name,batch_id, CAST(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status from iigs_current_job_detail order by job_schedule_time ;";
+		String query = "Select job_id,job_name,batch_id, CAST(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status, batch_date from iigs_current_job_detail order by batch_id, job_id, batch_date ;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		ResultSet rs = pstm.executeQuery();
 		DailyJobsDTO dto = null;
@@ -235,6 +283,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setBatch_id(rs.getString(3));
 			dto.setJob_schedule_time(rs.getString(4));
 			dto.setStatus(rs.getString(5));
+			dto.setBatch_date(rs.getString(6));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -267,8 +316,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 		} else if (!status.equals("ALL") && feedId.equals("ALL")) {
 			feedId = "%";
 		}
-		// Need to change the query
-		String query = "Select job_id,job_name,batch_id, cast(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status from iigs_current_job_detail where case when status='' then 'T' else status end like ? and batch_id like ? order by job_schedule_time desc;";
+		String query = "Select job_id,job_name,batch_id, cast(job_schedule_time as char), case when status='C' then 'Completed' when status='F' then 'Failed' when status='R' then 'Running' when status='W' then 'Waiting' else 'To Run' end as status, batch_date from iigs_current_job_detail where case when status='' then 'T' else status end like ? and batch_id like ? order by batch_id, job_id, batch_date;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, status);
 		pstm.setString(2, feedId);
@@ -281,6 +329,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 			dto.setBatch_id(rs.getString(3));
 			dto.setStatus(rs.getString(5));
 			dto.setJob_schedule_time(rs.getString(4));
+			dto.setBatch_date(rs.getString(6));
 			scheduledJobs.add(dto);
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -299,7 +348,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 				+ "predessor_job_id_1,predessor_job_id_2,predessor_job_id_3,predessor_job_id_4,"
 				+ "predessor_job_id_5,predessor_job_id_6,predessor_job_id_7,predessor_job_id_8,predessor_job_id_9,predessor_job_id_10,"
 				+ "weekly_flag,week_run_day,month_run_day,month_run_val,is_dependent_job,command_type,yearly_flag,"
-				+ "week_num_month from " + FEED_MASTER_TABLE + " where batch_id= ? and job_id=?;";
+				+ "week_num_month,job_sequence from " + FEED_MASTER_TABLE + " where batch_id=? and job_id=?;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, feedId);
 		pstm.setString(2, jobId);
@@ -408,6 +457,8 @@ public class SchedularDAOImpl implements SchedularDAO {
 				int i = Integer.parseInt(weekNumMonth);
 				masterJobDTO.setWeek_num_month(i);
 			}
+			
+			masterJobDTO.setJob_sequence(rs.getInt(37));
 
 		}
 		ConnectionUtils.closeQuietly(conn);
@@ -481,9 +532,93 @@ public class SchedularDAOImpl implements SchedularDAO {
 		}
 	}
 
-	/*	*//**
-			* 
-			*/
+	@Override
+	public String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+		try {
+		Connection conn = ConnectionUtils.getConnection();
+		String query = "update iigs_current_job_detail set last_update_ts=now(), job_schedule_time=current_time(), status='' where job_id = ? and batch_id=? and batch_date=?;";
+		PreparedStatement pstm = conn.prepareStatement(query);
+		pstm.setString(1, jobId);
+		pstm.setString(2, feedId);
+		pstm.setString(3, batchDate);
+		int rs = pstm.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		System.out.println(rs);
+		return ("Job run with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			return (e.toString());
+
+		}
+	}
+	
+	@Override
+	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+		try {
+		Connection conn = ConnectionUtils.getConnection();
+		String query = "update "+ FEED_MASTER_TABLE +" set last_update_ts=now(), status='F' where job_id = ? and batch_id=? and batch_date=?;";
+		PreparedStatement pstm = conn.prepareStatement(query);
+		pstm.setString(1, jobId);
+		pstm.setString(2, feedId);
+		pstm.setString(3, batchDate);
+		int rs = pstm.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		System.out.println(rs);
+		return ("Stopped run with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+			return (e.toString());
+
+		}
+	}
+
+
+/***
+ * This method suspends job present in Master so it wont move to Current table ever.
+ * @param feedId
+ * @param jobId
+ */
+	@Override
+	public String suspendJobFromMaster(String feedId, String jobId) {
+		Connection conn;
+		try {
+			conn = ConnectionUtils.getConnection();
+			String suspendFromMasterQuery = "update iigs_ui_master_job_detail  set is_suspended='Y' where batch_id=? and job_id=?";
+			PreparedStatement pstm = conn.prepareStatement(suspendFromMasterQuery);
+			pstm.setString(1, feedId);
+			pstm.setString(2, jobId);
+			pstm.executeUpdate();
+			ConnectionUtils.closeQuietly(conn);
+			return "Success";
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			return "Failure";
+		}
+		
+	}
+
+@Override
+public String unSuspendJobFromMaster(@Valid String feedId, String jobId) {
+	Connection conn;
+	try {
+		conn = ConnectionUtils.getConnection();
+		String suspendFromMasterQuery = "update iigs_ui_master_job_detail  set is_suspended='N' where batch_id=? and job_id=? and is_suspended='Y'";
+		PreparedStatement pstm = conn.prepareStatement(suspendFromMasterQuery);
+		pstm.setString(1, feedId);
+		pstm.setString(2, jobId);
+		pstm.executeUpdate();
+		ConnectionUtils.closeQuietly(conn);
+		return "Success";
+	} catch (ClassNotFoundException | SQLException e) {
+		e.printStackTrace();
+		return "Failure";
+	}
+	
+}	
+
+	
 	/*
 	 * 
 	 * @Override public List<MasterJobsDTO> batchIdLoadJobs(String strBatchId)

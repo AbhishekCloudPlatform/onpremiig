@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,18 +63,95 @@ public class SchedularController {
 			@RequestParam("jobId") String jobId, ModelMap modelMap) {
 		try {
 			MasterJobsDTO masterJobDTO = schedularService.orderJobFromMaster(feedId, jobId);
-			String message = schedularService.moveJobFromMasterToCurrentJob(masterJobDTO);
-			if (message.equals("Success")) {
-				modelMap.addAttribute("successString", "Job Ordered for today");
-				
-			} else {
-				modelMap.addAttribute("errorStatus", "Job ordering failure");
+			if (masterJobDTO != null) {
+				String message = schedularService.moveJobFromMasterToCurrentJob(masterJobDTO);
+				if (message.equals("Success")) {
+					modelMap.addAttribute("successString", "Job Ordered for today");
+
+				} else {
+					modelMap.addAttribute("errorStatus", "Job ordering failure");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.addAttribute("errorStatus", e.getMessage());
 		}
 		return allJobs(modelMap);
+	}
+
+	/**
+	 * This method suspends the job in master table.
+	 * 
+	 * @param feed_id
+	 * @param job_id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = { "/scheduler/suspendMasterJob" }, method = RequestMethod.POST)
+	public  ModelAndView suspendJobFromMaster(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, ModelMap modelMap) {
+		try {
+			String suspendStatus = schedularService.suspendJobFromMaster(feedId, jobId);
+			if (suspendStatus.equals("Success")) {
+				modelMap.addAttribute("successString", "Job Suspended");
+			} else {
+				modelMap.addAttribute("errorStatus", "Job Suspense failure");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.addAttribute("errorStatus", e.getMessage());
+		}
+		return allJobs(modelMap);
+	}
+	
+	
+	/**
+	 * This method unsuspends the job in master table.
+	 * 
+	 * @param feed_id
+	 * @param job_id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = { "/scheduler/unSuspendMasterJob" }, method = RequestMethod.POST)
+	public  ModelAndView unSuspendJobFromMaster(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, ModelMap modelMap) {
+		try {
+			String suspendStatus = schedularService.unSuspendJobFromMaster(feedId, jobId);
+			if (suspendStatus.equals("Success")) {
+				modelMap.addAttribute("successString", "Job Suspended");
+			} else {
+				modelMap.addAttribute("errorStatus", "Job Suspense failure");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.addAttribute("errorStatus", e.getMessage());
+		}
+		return allJobs(modelMap);
+	}
+
+	/**
+	 * This method deletes the record from MasterFeed data
+	 * 
+	 * @param feed_id
+	 * @param job_id
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = { "/scheduler/deleteMasterJob" }, method = RequestMethod.POST)
+	public ModelAndView deleteJobFromMaster(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, ModelMap modelMap) {
+		try {
+			String message = schedularService.deleteJobFromMaster(feedId, jobId);
+			modelMap.addAttribute("successString", "Job deleted");
+			System.out.println(message);
+
+		} catch (Exception e) {
+
+			modelMap.addAttribute("errorStatus", e.getMessage());
+
+		}
+		return new ModelAndView("schedular/viewAllJobs1");
 	}
 
 	/**
@@ -229,6 +307,34 @@ public class SchedularController {
 			modelMap.addAttribute("allLoadJobs", dtos);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return new ModelAndView("schedular/viewCurrentJobs1");
+	}
+
+	@RequestMapping(value = { "/scheduler/runScheduleJob" }, method = RequestMethod.POST)
+	public ModelAndView runScheduleJob(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
+		try {
+			String message = schedularService.runScheduleJob(feedId, jobId, batchDate);
+			modelMap.addAttribute("message", message);
+		} catch (Exception e) {
+
+			modelMap.addAttribute("errorStatus", e.getMessage());
+
+		}
+		return new ModelAndView("schedular/viewCurrentJobs1");
+	}
+
+	@RequestMapping(value = { "/scheduler/stopScheduleJob" }, method = RequestMethod.POST)
+	public ModelAndView stopScheduleJob(@Valid @RequestParam("feedId") String feedId,
+			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
+		try {
+			String message = schedularService.stopScheduleJob(feedId, jobId, batchDate);
+			modelMap.addAttribute("message", message);
+		} catch (Exception e) {
+
+			modelMap.addAttribute("errorStatus", e.getMessage());
+
 		}
 		return new ModelAndView("schedular/viewCurrentJobs1");
 	}

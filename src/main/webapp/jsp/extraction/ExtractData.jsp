@@ -63,7 +63,7 @@
 							<input type="hidden" name="cron" id="cron" class="form-control"
 								value=""> 
 							<div class="form-group">
-									<label>Source System Name</label> <select name="src_unique_name"
+									<label>Source System Name *</label> <select name="src_unique_name"
 										id="src_unique_name" class="form-control">
 										<option value="" selected disabled>Source System Name
 											...</option>

@@ -155,7 +155,7 @@
 							<input type="hidden" name="x" id="x" value=""> 
 							<input type="hidden" name="src_val" id="src_val" value="${src_val}">
 							<div class="form-group">
-									<label>Source System Name</label> <select name="src_sys_id"
+									<label>Source System Name *</label> <select name="src_sys_id"
 										id="src_sys_id" class="form-control">
 										<option value="" selected disabled>Source System Name
 											...</option>

@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="form-group" id="incc${id}" style="display: none;">
-	<label>Select Incremental Column</label> <select class="form-control"
+	<label>Select Incremental Column *</label> <select class="form-control"
 		id="incr_col${id}" name="incr_col${id}">
 		<option value="" selected disabled>Incremental Column...</option>
 		<c:forEach var="fields" items="${fields}">
@@ -9,7 +9,7 @@
 	</select>
 </div>
 <div class="form-group">
-	<label>Select Columns</label> <select class="form-control"
+	<label>Select Columns *</label> <select class="form-control"
 		id="col_name${id}" name="col_name${id}" multiple="multiple">
 		<option value="*">Select All</option>
 		<c:forEach var="fields" items="${fields}">
