@@ -34,8 +34,8 @@ $(document).ready(function() {
 				var $row = $(this).closest("tr");
 				var $feedId = $row.find('td:eq( 0 )').html();
 				var $jobId = $row.find('td:eq( 1 )').html();
-				var $val = $row.find('td:eq( 6 )').html().substr(48,5);
-				if($val == "SUS-Y"){
+				var $val = $row.find('td:eq( 6 )').html();
+				if($val.includes("SUS-Y")){
 					   $.post('/scheduler/unSuspendMasterJob', {
 						   feedId : $feedId,
 						   jobId : $jobId

@@ -58,8 +58,8 @@ $(document).ready(function() {
 				var $row = $(this).closest("tr");
 				var $feedId = $row.find('td:eq( 0 )').html();
 				var $jobId = $row.find('td:eq( 1 )').html();
-				var $val = $row.find('td:eq( 6 )').html().substr(48,5);
-				if($val == "SUS-Y"){
+				var $val = $row.find('td:eq( 6 )').html();
+				if($val.includes("SUS-Y")){
 					   $.post('/scheduler/unSuspendMasterJob', {
 						   feedId : $feedId,
 						   jobId : $jobId
@@ -182,8 +182,11 @@ $(document).ready(function() {
 						<td><c:out value="${row.job_name}" /></td>
 						<td><c:out value="${row.consolidatedSchedule}" /></td>
 						<td>
-						<a href="#" ><img name="run" id="run" src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
-						
+							<input type="hidden" id="img_id" value="${row.in_current}"/>
+							<a href="#">
+								<img class="img-fluid img-thumbnail" id="run" name="run" src="../../assets/img/${row.in_current}.png" 
+					      				alt="Image" height="160" width="160"class="rounded"  >
+							</a>					
 						<!-- <button type="button" class="btn btn-success btn-fw">Run</button> -->
 						</td>
 						<td>
