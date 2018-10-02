@@ -316,7 +316,7 @@ public class SchedularController {
 			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
 		try {
 			String message = schedularService.runScheduleJob(feedId, jobId, batchDate);
-			modelMap.addAttribute("message", message);
+			modelMap.addAttribute("successString", message);
 		} catch (Exception e) {
 
 			modelMap.addAttribute("errorStatus", e.getMessage());
@@ -326,13 +326,12 @@ public class SchedularController {
 	}
 
 	@RequestMapping(value = { "/scheduler/stopScheduleJob" }, method = RequestMethod.POST)
-	public ModelAndView stopScheduleJob(@Valid @RequestParam("feedId") String feedId,
+	public ModelAndView killCurrentJob(@Valid @RequestParam("feedId") String feedId,
 			@RequestParam("jobId") String jobId, @RequestParam("batchDate") String batchDate, ModelMap modelMap) {
 		try {
-			String message = schedularService.stopScheduleJob(feedId, jobId, batchDate);
-			modelMap.addAttribute("message", message);
+			String message = schedularService.killCurrentJob(feedId, jobId, batchDate);
+			modelMap.addAttribute("successString", message);
 		} catch (Exception e) {
-
 			modelMap.addAttribute("errorStatus", e.getMessage());
 
 		}

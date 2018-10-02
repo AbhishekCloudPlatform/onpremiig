@@ -20,7 +20,8 @@ public interface SchedularService {
 	List<DailyJobsDTO> filterCurrentJobs(String status, String feedId) throws Exception;
 	HashMap<String, ArrayList<String>> allCurrentJobsGroupByFeedId() throws Exception;
 	String runScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
-	String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
+	//String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
+	String killCurrentJob(@Valid String feedId, String jobId, String batchDate) throws Exception;
 
 	
 	//Archive table
@@ -38,6 +39,7 @@ public interface SchedularService {
 	String deleteJobFromMaster(String feedId,String jobId) throws Exception;
 	String suspendJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException;
 	String unSuspendJobFromMaster(@Valid String feedId, String jobId);
+
 
 
 	

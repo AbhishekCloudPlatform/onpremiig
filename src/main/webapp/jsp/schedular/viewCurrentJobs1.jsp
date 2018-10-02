@@ -14,26 +14,28 @@ $(document).ready(function() {
 				   batchDate : $batchDate
 				}, function(data) {
 					$('#allvalues').html(data)
+					window.location.reload();
 					});
-				window.location.reload();
+				
 				}
 		});	
 	
-	$("#stop ").click(function(){
+	$("#kill ").click(function(){
 		var $row = $(this).closest("tr");
 		var $feedId = $row.find('td:eq( 0 )').html();
 		var $jobId = $row.find('td:eq( 1 )').html();
 		var $batchDate = $row.find('td:eq(2)').html();
 		var $val = $row.find('td:eq( 6 )').html();
-		if($val.includes("KILL-Completed")){
+		if($val.includes("KILL-Running")){
 			   $.post('/scheduler/stopScheduleJob', {
 				   feedId : $feedId,
 				   jobId : $jobId,
 				   batchDate : $batchDate
 				}, function(data) {
 					$('#allvalues').html(data)
+					window.location.reload();
 				});
-				window.location.reload();
+				
 			}
 	});
 });
@@ -83,7 +85,7 @@ $(document).ready(function() {
 							</a>						
 						</td>
 						<td>
-						<a href="#" ><img name = "stop" id="stop" src="../../assets/img/KILL-${row.status}.png"  alt="Image" height="160" width="160"class="rounded">
+						<a href="#" ><img name = "kill" id="kill" src="../../assets/img/KILL-${row.status}.png"  alt="Image" height="160" width="160"class="rounded">
 						</a>
 						</td>	
 						</tr>

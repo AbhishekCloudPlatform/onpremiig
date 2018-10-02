@@ -119,8 +119,8 @@ public class SchedularServiceImpl implements SchedularService{
 	}
 
 	@Override
-	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception{
-		return schedularDAO.stopScheduleJob(feedId, jobId, batchDate);
+	public String killCurrentJob(@Valid String feedId, String jobId, String batchDate) throws Exception{
+		return schedularDAO.killCurrentJob(feedId, jobId, batchDate);
 	}
 
 	@Override
@@ -131,9 +131,7 @@ public class SchedularServiceImpl implements SchedularService{
 	@Override
 	public String unSuspendJobFromMaster(@Valid String feedId, String jobId) {
 		return schedularDAO.unSuspendJobFromMaster(feedId,jobId);
-	}	
-
-
+	}
 
 	
 	

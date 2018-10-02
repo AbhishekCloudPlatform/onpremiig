@@ -543,8 +543,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 		pstm.setString(3, batchDate);
 		int rs = pstm.executeUpdate();
 		ConnectionUtils.closeQuietly(conn);
-		System.out.println(rs);
-		return ("Job run with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
+		return (rs + "Job run with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -553,19 +552,21 @@ public class SchedularDAOImpl implements SchedularDAO {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
-	public String stopScheduleJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
+	public String killCurrentJob(@Valid String feedId, String jobId, String batchDate) throws Exception {
 		try {
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "update "+ FEED_MASTER_TABLE +" set last_update_ts=now(), status='F' where job_id = ? and batch_id=? and batch_date=?;";
+		String query = "update "+ FEED_CURRENT_TABLE +" set last_update_ts=now(), status='F' where job_id = ? and batch_id=? and batch_date=?;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, jobId);
 		pstm.setString(2, feedId);
 		pstm.setString(3, batchDate);
 		int rs = pstm.executeUpdate();
 		ConnectionUtils.closeQuietly(conn);
-		System.out.println(rs);
-		return ("Stopped run with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
+		return (rs + "Killed job with FeedID: " + feedId + " and JobID: " + jobId + " on Batch Date: " + batchDate);
 		}
 		catch (Exception e) {
 			System.out.println(e.toString());
@@ -589,9 +590,9 @@ public class SchedularDAOImpl implements SchedularDAO {
 			PreparedStatement pstm = conn.prepareStatement(suspendFromMasterQuery);
 			pstm.setString(1, feedId);
 			pstm.setString(2, jobId);
-			pstm.executeUpdate();
+			int rs=pstm.executeUpdate();
 			ConnectionUtils.closeQuietly(conn);
-			return "Success";
+			return (rs + " Jobs Suspended with FeedID: " + feedId + " and JobID: " + jobId);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			return "Failure";
@@ -608,9 +609,9 @@ public String unSuspendJobFromMaster(@Valid String feedId, String jobId) {
 		PreparedStatement pstm = conn.prepareStatement(suspendFromMasterQuery);
 		pstm.setString(1, feedId);
 		pstm.setString(2, jobId);
-		pstm.executeUpdate();
+		int rs=pstm.executeUpdate();
 		ConnectionUtils.closeQuietly(conn);
-		return "Success";
+		return (rs + " Jobs Unsuspended with FeedID: " + feedId + " and JobID: " + jobId);
 	} catch (ClassNotFoundException | SQLException e) {
 		e.printStackTrace();
 		return "Failure";
