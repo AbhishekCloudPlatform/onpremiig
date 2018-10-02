@@ -28,7 +28,30 @@ $(document).ready(function() {
 							
 						});
 						window.location.reload();
-					});	
+					});
+					
+					$("#suspend ").click(function(){
+				var $row = $(this).closest("tr");
+				var $feedId = $row.find('td:eq( 0 )').html();
+				var $jobId = $row.find('td:eq( 1 )').html();
+				var $val = $row.find('td:eq( 6 )').html().substr(48,5);
+				if($val == "SUS-Y"){
+					   $.post('/scheduler/unSuspendMasterJob', {
+						   feedId : $feedId,
+						   jobId : $jobId
+						}, function(data) {
+						window.location.reload();
+						});
+				} else {
+					   $.post('/scheduler/suspendMasterJob', {
+						   feedId : $feedId,
+						   jobId : $jobId
+						}, function(data) {
+						window.location.reload();
+						});
+				}
+						
+					});			
 });
 </script>
 
@@ -78,7 +101,7 @@ $(document).ready(function() {
 						</td>
 						<td>
 							<a href="#">
-								<img class="img-fluid img-thumbnail" id="${row.job_sequence}" src="../../assets/img/${row.is_suspended}.png" 
+								<img class="img-fluid img-thumbnail" id="suspend" name="suspend" src="../../assets/img/${row.is_suspended}.png" 
 					      				alt="Image" height="160" width="160"class="rounded"  >
 							</a>
 						</td>
