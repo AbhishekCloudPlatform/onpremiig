@@ -661,4 +661,10 @@ target/surefire-reports/TEST-com.iig.gcp.IigOnPremApplicationTests.xml
 =======
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+<<<<<<< HEAD
+src/main/java/com/iig/gcp/controllers/UserManagementController.java
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
+=======
 >>>>>>> 27e4ffd4dc8a6b471846c86c46b7b88b9f4f7d95
+>>>>>>> b8de1242f111fc09eb0a34b867825172bd05def3
