@@ -6,21 +6,26 @@ $(document).ready(function() {
 		var $feedId = $row.find('td:eq( 0 )').html();
 		var $jobId = $row.find('td:eq( 1 )').html();
 		var $batchDate = $row.find('td:eq(2)').html();
+		var $val = $row.find('td:eq( 5 )').html();
+		if($val.includes("RUN-Failed")){
 			   $.post('/scheduler/runScheduleJob', {
 				   feedId : $feedId,
 				   jobId : $jobId,
 				   batchDate : $batchDate
 				}, function(data) {
 					$('#allvalues').html(data)
-				});
+					});
 				window.location.reload();
-			});		
+				}
+		});	
 	
 	$("#stop ").click(function(){
 		var $row = $(this).closest("tr");
 		var $feedId = $row.find('td:eq( 0 )').html();
 		var $jobId = $row.find('td:eq( 1 )').html();
 		var $batchDate = $row.find('td:eq(2)').html();
+		var $val = $row.find('td:eq( 6 )').html();
+		if($val.includes("KILL-Completed")){
 			   $.post('/scheduler/stopScheduleJob', {
 				   feedId : $feedId,
 				   jobId : $jobId,
@@ -29,7 +34,8 @@ $(document).ready(function() {
 					$('#allvalues').html(data)
 				});
 				window.location.reload();
-			});	
+			}
+	});
 });
 </script>
 
