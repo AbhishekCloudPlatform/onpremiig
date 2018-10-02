@@ -148,7 +148,7 @@ $(document).ready(function() {
                          Status
                         </th>
                         <th >
-                         Run/Re-Run
+                         Re-Run
                         </th>
                        <th >
                          Kill
@@ -166,10 +166,12 @@ $(document).ready(function() {
                         <c:out value="${row.status}" />
                         </td>
 						<td>
-						<a href="#" ><img name="run" id="run" src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>						
-						</td>
+							<a href="#">
+								<img id="run" name="run" src="../../assets/img/RUN-${row.status}.png" 
+					      				alt="Image" height="160" width="160"class="rounded"  >
+							</a>						</td>
 						<td>
-						<a href="#" ><img name = "stop" id="stop" src="../../assets/img/stop.png"  alt="Image" height="160" width="160"class="rounded">
+						<a href="#" ><img name = "stop" id="stop" src="../../assets/img/KILL-${row.status}.png"  alt="Image" height="160" width="160"class="rounded">
 						</a>
 						</td>		
 						</tr>

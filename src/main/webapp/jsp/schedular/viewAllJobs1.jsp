@@ -2,20 +2,20 @@
 <script type="text/javascript">
 $(document).ready(function() {
 			
-			$("#run ").click(function(){
-			alert("in");
-			var $row = $(this).closest("tr");
-			var $feedId = $row.find('td:eq( 0 )').html();
-			var $jobId = $row.find('td:eq( 1 )').html();
-			alert("feedId"+$feedId);
-			alert("jobId"+$jobId);
-				   $.post('/scheduler/runMasterJob', {
-					   feedId : $feedId,
-					   jobId : $jobId
-					}, function(data) {
-						
-					});
+	$("#run ").click(function(){
+		var $row = $(this).closest("tr");
+		var $feedId = $row.find('td:eq( 0 )').html();
+		var $jobId = $row.find('td:eq( 1 )').html();
+		var $val = $row.find('td:eq( 4 )').html();
+		if($val.includes("CURR-N")){
+			   $.post('/scheduler/runMasterJob', {
+				   feedId : $feedId,
+				   jobId : $jobId
+				}, function(data) {						
 				});
+				window.location.reload();
+			}
+		});
 			
 			$("#delete ").click(function(){
 				var $row = $(this).closest("tr");
@@ -72,7 +72,7 @@ $(document).ready(function() {
                          Schedule Info
                         </th>
                     	<th>
-                          Run
+                          Order
                         </th>
                         <th>
                          Delete
@@ -90,8 +90,11 @@ $(document).ready(function() {
 						<td><c:out value="${row.job_name}" /></td>
 						<td><c:out value="${row.consolidatedSchedule}" /></td>
 						<td>
-						<a href="#" ><img name="run" id="run" src="../../assets/img/run.png"  alt="Image" height="160" width="160"class="rounded"></a>
-						
+							<input type="hidden" id="img_id" value="${row.in_current}"/>
+							<a href="#">
+								<img id="run" name="run" src="../../assets/img/${row.in_current}.png" 
+					      				alt="Image" height="160" width="160"class="rounded"  >
+							</a>						
 						<!-- <button type="button" class="btn btn-success btn-fw">Run</button> -->
 						</td>
 						<td>
@@ -101,7 +104,7 @@ $(document).ready(function() {
 						</td>
 						<td>
 							<a href="#">
-								<img class="img-fluid img-thumbnail" id="suspend" name="suspend" src="../../assets/img/${row.is_suspended}.png" 
+								<img id="suspend" name="suspend" src="../../assets/img/${row.is_suspended}.png" 
 					      				alt="Image" height="160" width="160"class="rounded"  >
 							</a>
 						</td>
