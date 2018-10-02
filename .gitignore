@@ -651,3 +651,6 @@ target/classes/com/iig/gcp/constants/MySqlConstants.class
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+src/main/java/com/iig/gcp/controllers/UserManagementController.java
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
