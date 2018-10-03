@@ -15,6 +15,7 @@ $(document).ready(function() {
 				}, function(data) {
 					$('#allvalues').html(data)
 					window.location.reload();
+					alert("Job ordered for today");		
 					});
 				
 				}
@@ -34,6 +35,7 @@ $(document).ready(function() {
 				}, function(data) {
 					$('#allvalues').html(data)
 					window.location.reload();
+					alert("Job killed");		
 				});
 				
 			}
