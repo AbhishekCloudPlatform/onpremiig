@@ -24,8 +24,8 @@ $(document).ready(function() {
 	          data: {user: user},
 	          cache: false,
 	          success: function(data) {
-	            $("#userid").html(data);
-				document.getElementById('features').style.display= "block";
+	            $("#featureblock").html(data);
+				
 
 	          }
 	        });
@@ -69,24 +69,14 @@ $(document).ready(function() {
 											<label>Select User</label>
 											<input type="text"
 											class="form-control" id="username"
-											name="username" placeholder="USER ID">
-											
+											name="username" placeholder="USER ID">			
 										</div>
-										<div id="userid" class="col-sm-6">
-											  	
 										
-										</div>
+								</div>		  	
+								<div id="featureblock" class="form-group row">		
+									
 								</div>
-								<div id="features" class="form-group row" style="display: none;">
-									<div class="col-sm-12">
-										<label>Select Features</label> <select name="targetx"
-											id="targetx" class="form-control" multiple="multiple">											
-											<c:forEach items="${arrFeature}" var="arrFeature">
-												<option value="${arrFeature.feature_order}">${arrFeature.feature_name}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</div>
+								
 							</fieldset>
 							<button onclick="jsonconstruct();"
 								class="btn btn-rounded btn-gradient-info mr-2">Submit</button>
@@ -96,8 +86,4 @@ $(document).ready(function() {
 			</div>
 		</div>
 		
-<script>
-var select = document.getElementById('targetx');
-multi(select, {});
-</script>
 <jsp:include page="../cdg_footer.jsp" />
