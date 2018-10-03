@@ -9,6 +9,23 @@
 					<div class="card-body">
 						<h4 class="card-title">Create Project</h4>
 						<p class="card-description">Project Details</p>
+						 <div class="mt-3" align="center">
+                
+                <%
+							if (request.getAttribute("successString") != null) {
+						%>
+						<p class="text-success h4">${successString}</p>
+						<%
+							}
+						%>
+						<%
+							if (request.getAttribute("errorString") != null) {
+						%>
+						<p class="text-danger h4">${errorString}</p>
+						<%
+							}
+						%>
+    </div>
 						<form class="forms-sample" id="ProjectDetails" name="ProjectDetails" method="POST" action="/admin/addProjectDetails" enctype="application/json">
 							<div>
 								<div id="h1" class="hx" ">
@@ -42,23 +59,6 @@
 								class="btn btn-rounded btn-gradient-info mr-2">Save</button>
 								<button id="createsystem" name="createsystem" hidden="true"
 								class="btn btn-rounded btn-gradient-info mr-2">Create System</button>
-								 <div class="mt-3" align="center">
-                
-                <%
-							if (request.getAttribute("successString") != null) {
-						%>
-						<p class="text-success h4">${successString}</p>
-						<%
-							}
-						%>
-						<%
-							if (request.getAttribute("errorString") != null) {
-						%>
-						<p class="text-danger h4">${errorString}</p>
-						<%
-							}
-						%>
-    </div>
 						</form>
 					</div>
 				</div>
