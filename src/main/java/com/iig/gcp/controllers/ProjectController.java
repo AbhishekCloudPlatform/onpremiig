@@ -1,4 +1,4 @@
-package com.iig.gcp.controllers;
+/*package com.iig.gcp.controllers;
 
 import javax.validation.Valid;
 
@@ -20,18 +20,18 @@ public class ProjectController {
 	ProjectService projectService;
 
 
-	/**
+	*//**
 	 * This method redirects the usert to project registation form.
 	 * @param modelMap
 	 * @return ModelAndView
-	 */
+	 *//*
 	@RequestMapping(value = { "/admin/project"}, method = RequestMethod.GET)
     public ModelAndView register(ModelMap modelMap) {
 		return new ModelAndView("project/registerproject");
     }
 	
 	
-	/**
+	*//**
 	 * This method accepts the inputs from project registration form and pass then to service layer
 	 * @param projectId
 	 * @param projectName
@@ -39,7 +39,7 @@ public class ProjectController {
 	 * @param projectDetails
 	 * @param modelMap
 	 * @return String message if operation is successful or failure.
-	 */
+	 *//*
 	@RequestMapping(value = { "/admin/addProjectDetails" }, method = RequestMethod.POST)
 	public ModelAndView registerProject(@Valid @RequestParam("project_id") String projectId,
 			@RequestParam("project_name") String projectName,@RequestParam("project_owner") String projectOwner,
@@ -54,3 +54,4 @@ public class ProjectController {
 		return new ModelAndView("project/registerproject");
 	}
 }
+*/
