@@ -101,17 +101,18 @@ public class AdminController {
 			@RequestParam("project_name") String projectName,@RequestParam("project_owner") String projectOwner,
 			@RequestParam("project_details") String projectDetails, HttpServletRequest request, ModelMap modelMap) {
 		String message = null;
+		String message1 = null;
 		try {
 			UserAccount user = (UserAccount)request.getSession().getAttribute("user");
 			message = adminService.registerProject(projectId, projectName,projectOwner,projectDetails,user.getUser_id() );
 			int projectSeq = adminService.getProjectSeq(projectId);
-			message += adminService.registerAddAdminAccess(projectSeq, user.getUser_sequence());
+			message1 = adminService.registerAddAdminAccess(projectSeq, user.getUser_sequence());
 			
 			modelMap.addAttribute("successString", message);
 		} catch (Exception e) {
 			modelMap.addAttribute("errorStatus", message);
 			e.printStackTrace();
 		}
-		return new ModelAndView("project/registerproject");
+		return new ModelAndView("admin/onboardProject");
 	}
 }
