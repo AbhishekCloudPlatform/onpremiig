@@ -50,8 +50,20 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public String registerProject(@Valid String projectId, String projectName, String projectOwner,
-			String projectDetails) throws ClassNotFoundException, Exception {
-		return admindao.registerProject(projectId,projectName,projectOwner,projectDetails);
+			String projectDetails, String user) throws ClassNotFoundException, Exception {
+		return admindao.registerProject(projectId,projectName,projectOwner,projectDetails,user);
+	}
+
+	@Override
+	public int getProjectSeq(@Valid String projectId) throws Exception{
+		// TODO Auto-generated method stub
+		return admindao.getProjectSeq(projectId);
+	}
+
+	@Override
+	public String registerAddAdminAccess(int projectSeq, int user_sequence) throws Exception {
+		// TODO Auto-generated method stub
+		return admindao.registerAddAdminAccess(projectSeq,user_sequence);
 	}
 
 }
