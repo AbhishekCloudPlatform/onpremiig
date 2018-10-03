@@ -6,7 +6,15 @@ public class Feature {
 	private int feature_order;
 	private int feature_level;
 	private int feature_sequence;
+	private int selected_user_sequence;
+	
 
+	public int getSelected_user_sequence() {
+		return selected_user_sequence;
+	}
+	public void setSelected_user_sequence(int selected_user_sequence) {
+		this.selected_user_sequence = selected_user_sequence;
+	}
 	public String getFeature_name() {
 		return feature_name;
 	}
