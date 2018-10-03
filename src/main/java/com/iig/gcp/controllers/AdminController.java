@@ -94,4 +94,19 @@ public class AdminController {
 	return new ModelAndView("admin/onboardProject");
 	}
 	
+	
+	
+	@RequestMapping(value = { "/admin/addProjectDetails" }, method = RequestMethod.POST)
+	public ModelAndView registerProject(@Valid @RequestParam("project_id") String projectId,
+			@RequestParam("project_name") String projectName,@RequestParam("project_owner") String projectOwner,
+			@RequestParam("project_details") String projectDetails, ModelMap modelMap) {
+		String message = null;
+		try {
+			message = adminService.registerProject(projectId, projectName,projectOwner,projectDetails);
+			modelMap.addAttribute("successString", message);
+		} catch (Exception e) {
+			modelMap.addAttribute("errorStatus", message);
+		}
+		return new ModelAndView("project/registerproject");
+	}
 }

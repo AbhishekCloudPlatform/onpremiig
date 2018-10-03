@@ -47,5 +47,11 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("featureSq"+feature_seq);
 		
 	}
+	
+	@Override
+	public String registerProject(@Valid String projectId, String projectName, String projectOwner,
+			String projectDetails) throws ClassNotFoundException, Exception {
+		return admindao.registerProject(projectId,projectName,projectOwner,projectDetails);
+	}
 
 }

@@ -14,5 +14,6 @@ public interface AdminService {
 	ArrayList<Feature> getFeatures() throws Exception;
 
 	void onBoardUser(@Valid String x,HttpServletRequest request)throws Exception;
+	public String registerProject(@Valid String projectId, String projectName, String projectOwner, String projectDetails) throws ClassNotFoundException, Exception;
 
 }
