@@ -22,18 +22,19 @@ public class AdminDAOImpl implements AdminDAO{
 	@Override
 	public String getUser(String user) throws Exception {
 		Connection connection=null;
-		//int stat=0;
+		int stat=1;
 		String userid=null;
 			connection = ConnectionUtils.getConnection();
 			PreparedStatement pstm = connection.prepareStatement("select user_id from juniper_user_master where user_id='"+user+"'");
 			ResultSet rs = pstm.executeQuery();
 			while (rs.next()) {
 				userid=rs.getString(1);
+				stat=0;
 				break;
 			}
 		
 		ConnectionUtils.closeQuietly(connection);
-		return userid;
+		return stat+userid;
 	}
 
 	

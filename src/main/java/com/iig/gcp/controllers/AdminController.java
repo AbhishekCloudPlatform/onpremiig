@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.iig.gcp.admin.dto.Feature;
 import com.iig.gcp.admin.service.AdminService;
+import com.iig.gcp.login.dto.Project;
 import com.iig.gcp.login.dto.UserAccount;
+import com.iig.gcp.login.service.LoginService;
 
 @Controller
 @SessionAttributes(value= {"user","arrProject","menu_code","project","user_sq"})
@@ -25,6 +27,8 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
+	@Autowired
+	LoginService loginService;
 	
 	@RequestMapping(value = { "/admin/user"}, method = RequestMethod.GET)
     public ModelAndView onBoardUser(ModelMap modelMap) {
@@ -37,19 +41,16 @@ public class AdminController {
     public ModelAndView selectUser(@Valid @RequestParam(value = "user", required = true) String user,ModelMap modelMap,HttpServletRequest request) {
 		try {
 			String project=(String)request.getSession().getAttribute("project");
-			String userid=	adminService.getUser(user);	
+			String statuserid=	adminService.getUser(user);	
+			String stat=statuserid.substring(0, 1);
+			String userid=statuserid.substring(1, statuserid.length());
+			System.out.println("userid"+userid);
 			ArrayList<Feature> arrFeature = adminService.getFeatures(userid,project);
 			
 			
 			ArrayList<Feature> arrFeatureAlready = adminService.getFeaturesAlready(userid,project);
-			/*if(arrFeatureAlready.size()!=0) {
-				int strSelect_User_Seq=arrFeatureAlready.get(0).getSelected_user_sequence();
-				modelMap.addAttribute("user_sq",strSelect_User_Seq);
-				}else {
-					System.out.println("I am in else");
-					int strSelect_User_Seq=adminService.getUserSequence(userid);
-					modelMap.addAttribute("user_sq",strSelect_User_Seq);
-				}*/
+	
+			modelMap.addAttribute("stat",Integer.parseInt(stat));
 			modelMap.addAttribute("userid",userid);
 			modelMap.addAttribute("arrFeature", arrFeature);
 			modelMap.addAttribute("arrFeatureAlready", arrFeatureAlready);
@@ -110,6 +111,9 @@ public class AdminController {
 			message1 = adminService.registerAddAdminAccess(projectSeq, user.getUser_sequence());
 			
 			modelMap.addAttribute("successString", message);
+			ArrayList<Project> arrProject = loginService.getProjects(user.getUser_id());
+			modelMap.addAttribute("arrProject",arrProject);
+			
 		} catch (Exception e) {
 			modelMap.addAttribute("errorStatus", message);
 			e.printStackTrace();

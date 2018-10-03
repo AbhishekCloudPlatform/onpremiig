@@ -723,3 +723,6 @@ target/classes/com/iig/gcp/scheduler/dao/SchedularDAOImpl.class
 target/classes/com/iig/gcp/scheduler/service/SchedularService.class
 target/classes/com/iig/gcp/scheduler/service/SchedularServiceImpl.class
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
+.classpath

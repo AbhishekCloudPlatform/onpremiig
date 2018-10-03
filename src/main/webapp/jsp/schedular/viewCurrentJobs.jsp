@@ -136,13 +136,13 @@ $(document).ready(function() {
 						<%
 							}
 						%>
-					<!-- <form class="forms-sample" id="extractionExtractData"
+					<form class="forms-sample" id="extractionExtractData"
 							name="extractionExtractData" method="POST"
 							action="/extract/extractionExtractData1"
-							enctype="application/json"> -->
+							enctype="application/json"> 
 
-			<!-- <div id="allvalues" style="display: block;"> -->
-				 <table id="allvalues" style="display: block;" class="table table-bordered"   >
+			 <div id="allvalues" style="display: block;"> 
+				 <table   class="table table-bordered"   >
                     <thead>
                       <tr style="color: green;;font: bolder;">
                       <th>
@@ -192,9 +192,9 @@ $(document).ready(function() {
                       
                      </tbody>
                   </table>
-               <!--   </div> -->
+                </div> 
                  
-					<!-- 	</form> -->
+					</form>
 					</div>
 				</div>
 			</div>
