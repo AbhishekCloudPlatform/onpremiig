@@ -1,6 +1,7 @@
 package com.iig.gcp.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,7 +22,7 @@ import com.iig.gcp.login.dto.UserAccount;
 import com.iig.gcp.login.service.LoginService;
 
 @Controller
-@SessionAttributes(value= {"user","arrProject","menu_code","project","user_sq"})
+@SessionAttributes(value= {"user","arrProject","menu_code","project","user_sq","projectFeatureMap"})
 public class AdminController {
 	
 	@Autowired
@@ -113,7 +114,12 @@ public class AdminController {
 			modelMap.addAttribute("successString", message);
 			ArrayList<Project> arrProject = loginService.getProjects(user.getUser_id());
 			modelMap.addAttribute("arrProject",arrProject);
-			
+			HashMap<String,Integer> hsmap=new HashMap<String,Integer>();
+			for(Project project:arrProject ) {
+				
+				hsmap.put(project.getProject_id(), project.getProject_sequence());
+			}
+			modelMap.addAttribute("projectFeatureMap", hsmap);
 		} catch (Exception e) {
 			modelMap.addAttribute("errorStatus", message);
 			e.printStackTrace();
