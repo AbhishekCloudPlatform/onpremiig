@@ -39,18 +39,33 @@
   }
   function multisel(src_id,tgt_id)
   {
-	var el = document.getElementById(src_id);
-	var result = "";
-	var options = el.options;
-	var opt;
-	for (var i = 0, iLen = options.length; i < iLen; i++) {
-		opt = options[i];
-		if (opt.selected) {
-			result=result+","+opt.value;
+		var el = document.getElementById(src_id);
+		var result = "";
+		var options = el.options;
+		var opt;
+		for (var i = 0, iLen = options.length; i < iLen; i++) {
+			opt = options[i];
+			if (opt.selected) {
+				if(opt.value==="*")
+				{
+					result="";
+					for (var j = 0, jLen = options.length; j < jLen; j++) {
+						opt1 = options[j];
+						if(opt1.value!="*")
+						{
+							result=result+","+opt1.value;
+						}
+					}
+					break;
+				}
+				else
+				{
+					result=result+","+opt.value;
+				}
+			}
 		}
-	}
-	result=result.substring(1);
-	document.getElementById(tgt_id).value=result;
+		result=result.substring(1);
+		document.getElementById(tgt_id).value=result;
   }
   
   
