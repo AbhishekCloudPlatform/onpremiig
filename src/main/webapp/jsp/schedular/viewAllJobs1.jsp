@@ -42,7 +42,7 @@ $(document).ready(function() {
 						   jobId : $jobId
 						}, function(data) {
 						window.location.reload();
-						alert("Job suspended");	
+						alert("Job Unsuspended");	
 						});
 				} else {
 					   $.post('/scheduler/suspendMasterJob', {

@@ -163,6 +163,7 @@ public class AdminDAOImpl implements AdminDAO{
 		pstm.setInt(2,projectseq);
 		pstm.executeUpdate();
 		ConnectionUtils.closeQuietly(connection);
+	}
 
 	public int getProjectSeq(@Valid String projectId) throws Exception{
 		int projectSeq=0;
@@ -200,5 +201,7 @@ public class AdminDAOImpl implements AdminDAO{
 		ConnectionUtils.closeQuietly(conn);
 		return "Success";
 	}
+
+
 
 }
