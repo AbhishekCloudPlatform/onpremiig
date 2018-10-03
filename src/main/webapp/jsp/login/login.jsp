@@ -30,7 +30,7 @@
               
               <h5>Personalize your Data Movement Experience</h5>
               <h6 class="font-weight-light">Sign in to continue.</h6>
-              <form class="pt-3" action="/loginsubmit" method="POST">
+              <form class="pt-3" action="/login/submit" method="POST">
                 <div class="form-group">
                   <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Username">
                 </div>
@@ -44,7 +44,7 @@
                 </div>
                 
                 <div class="mt-3" align="center">
-                	<a href="/"><img src="../../assets/img/home.png" alt="Image"  height="30" width="30" class="rounded">
+                	<a href="/#works"><img src="../../assets/img/home.png" alt="Image"  height="30" width="30" class="rounded">
  </a>
                 </div>
                                 <div class="mt-3" align="center">

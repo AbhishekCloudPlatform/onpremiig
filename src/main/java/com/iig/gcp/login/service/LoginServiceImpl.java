@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iig.gcp.login.dao.LoginDAO;
+import com.iig.gcp.login.dto.Project;
 import com.iig.gcp.login.dto.UserAccount;
 
 @Service
@@ -22,9 +23,15 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public String getMenuCodesuser(String menu_id) throws Exception{
+	public ArrayList<Project> getProjects(String username) throws Exception {
 		// TODO Auto-generated method stub
-		return loginDAO.getMenuCodes(menu_id);
+		return loginDAO.getProjects(username);
+	}
+
+	@Override
+	public String getMenuCodes(String userId, String project) throws Exception {
+		// TODO Auto-generated method stub
+		return loginDAO.getMenuCodes(userId,project);
 	}
 
 }
