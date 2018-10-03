@@ -136,24 +136,24 @@
 										<div class="col-sm-6">
 											<label>KNOX URL *</label> <input type="text"
 												class="form-control" id="knox_url1"
-												name="knox_url1" placeholder="KNOX URL">
+												name="knox_url1" placeholder="KNOX URL" value="https://40.121.8.194:8443">
 										</div>
 										<div class="col-sm-6">
 											<label>Hadoop Path *</label> <input type="text"
 												class="form-control" id="hadoop_path1"
-												name="hadoop_path1" placeholder="Hadoop Path">
+												name="hadoop_path1" placeholder="Hadoop Path" value="/apps/hive/warehouse/demo/test123">
 										</div>
 										</div>
 										<div class="form-group row">
 										<div class="col-sm-6">
 											<label>Username *</label> <input type="text"
 												class="form-control" id="username1"
-												name="username1" placeholder="Username">
+												name="username1" placeholder="Username" value="guest">
 										</div>
 										<div class="col-sm-6">
 											<label>Password *</label> <input type="password"
 												class="form-control" id="password1"
-												name="password1" placeholder="Password">
+												name="password1" placeholder="Password" value="guest-password">
 										</div>
 									</div>
 								</div>
