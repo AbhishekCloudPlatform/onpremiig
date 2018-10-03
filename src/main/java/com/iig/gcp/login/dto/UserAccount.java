@@ -4,58 +4,68 @@ import java.io.Serializable;
 
 public class UserAccount implements Serializable {
  
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int login_id;
-	private String username;
-	private String email_id;
-	private String password;
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	private String group_id;
-	private String reservoir_id;
-	private String menu_id;
 	
-	public int getLogin_id() {
-		return login_id;
+	private int user_sequence; 
+	private String user_id;
+	private String user_domain ;
+	private String user_pass;
+	private String created_by; 
+	private String created_date;
+	private String updated_by ;
+	private String updated_date;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setLogin_id(int login_id) {
-		this.login_id = login_id;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	public String getUsername() {
-		return username;
+	public String getUser_domain() {
+		return user_domain;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser_domain(String user_domain) {
+		this.user_domain = user_domain;
 	}
-	public String getEmail_id() {
-		return email_id;
+	public String getUser_pass() {
+		return user_pass;
 	}
-	public void setEmail_id(String email_id) {
-		this.email_id = email_id;
+	public void setUser_pass(String user_pass) {
+		this.user_pass = user_pass;
 	}
-	public String getGroup_id() {
-		return group_id;
+	public String getCreated_by() {
+		return created_by;
 	}
-	public void setGroup_id(String group_id) {
-		this.group_id = group_id;
+	public void setCreated_by(String created_by) {
+		this.created_by = created_by;
 	}
-	public String getReservoir_id() {
-		return reservoir_id;
+	public String getCreated_date() {
+		return created_date;
 	}
-	public void setReservoir_id(String reservoir_id) {
-		this.reservoir_id = reservoir_id;
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
 	}
-	public String getMenu_id() {
-		return menu_id;
+	public String getUpdated_by() {
+		return updated_by;
 	}
-	public void setMenu_id(String menu_id) {
-		this.menu_id = menu_id;
-	} 
+	public void setUpdated_by(String updated_by) {
+		this.updated_by = updated_by;
+	}
+	public String getUpdated_date() {
+		return updated_date;
+	}
+	public void setUpdated_date(String updated_date) {
+		this.updated_date = updated_date;
+	}
+	public int getUser_sequence() {
+		return user_sequence;
+	}
+	public void setUser_sequence(int user_sequence) {
+		this.user_sequence = user_sequence;
+	}
+	
+	
 }

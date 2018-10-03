@@ -50,18 +50,18 @@
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload File">
                         <span class="input-group-append">
-                          <button class="file-upload-browse btn btn-block btn-facebook auth-form-btn" type="button" >Upload</button>
+                          <button class="file-upload-browse btn btn-block btn-facebook auth-form-btn" type="button" >Browse</button>
                         </span>
                       </div>
                     </div>
                 <div class="mt-3">
                 	<button type="submit" class="btn btn-block btn-facebook auth-form-btn" >
-                    Submit
+                    Upload
                   </button>
                 </div>
                 
                 <div class="mt-3" align="center">
-                	<a href="/"><img src="../../assets/img/home.png" alt="Image"  height="30" width="30" class="rounded">
+                	<a href="/#works"><img src="../../assets/img/home.png" alt="Image"  height="30" width="30" class="rounded">
  </a>
                 </div>
                                 <div class="mt-3" align="center">

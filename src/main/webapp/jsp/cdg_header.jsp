@@ -23,7 +23,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/multi.min.css">
   <script src="../assets/js/multi.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script>
+  <script type="text/javascript">
   function tog(ids)
   {
 	  if(ids=="max")
@@ -52,6 +52,28 @@
 	result=result.substring(1);
 	document.getElementById(tgt_id).value=result;
   }
+  
+  
+  
+  
+  $(document).ready(function() {
+	
+		 $("#projects").change(function() {
+
+				var project = $(this).val();
+	
+				 $.post('/login/features', {
+					project : project
+				}, function(data) {
+					//alert(data);
+					
+					window.location.href="/login/dashboard";
+				}); 
+	 
+		}); 
+	  
+  });
+  
   </script>
    <style>
 .cust {
@@ -132,42 +154,47 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href="/feature"><img src="/assets/img/gcp.png" alt="logo" style="height:145px;"/></a>
-        <a class="navbar-brand brand-logo-mini" href="/feature"><img src="/assets/img/gcp.png" alt="logo" style="height:145px;"/></a>
-		<H3>Juniper</H3>
+       <a class="navbar-brand brand-logo" href="/"><img src="/assets/img/juniper.jpg" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="/"><img src="/assets/img/juniper.jpg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
-        <!--<div class="search-field d-none d-md-block">
-          <form class="d-flex align-items-center h-100" action="#">
-            <div class="input-group">
-              <div class="input-group-prepend bg-transparent">
-                  <i class="input-group-text border-0 mdi mdi-magnify"></i>                
-              </div>
-              <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
-            </div>
-          </form>
-        </div>-->
+      	<div class="navbar-nav navbar-nav-left">
+			<select class="form-control"
+					id="projects" name="projects">
+					  <%
+							if (session.getAttribute("project") != null) {
+						%>
+						<option value="${project}" selected>${project}</option>
+						<%
+							}else{
+						%>
+					<option value="" selected>Project ...</option>
+					<%
+							}
+					%>
+					<c:forEach items="${arrProject}" var="arrProject">
+						<option value="${arrProject.project_id}">${arrProject.project_id}</option>
+					</c:forEach>
+				</select>
+
+        </div>
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <div class="nav-profile-img">
               
            <c:choose>
-			    <c:when test="${user.username=='admin'}"><img src="/assets/img/faces/jiten.jpg" alt="image"></c:when>
-			    <c:when test="${user.username=='user1'}"><img src="/assets/img/faces/rylan.jpg" alt="image"></c:when>
-			    <c:when test="${user.username=='user2'}"><img src="/assets/img/faces/biraj.jpg" alt="image"></c:when>
-			    <c:when test="${user.username=='jiten'}"><img src="img/faces/jiten.jpg" alt="image"></c:when>
-			    <c:when test="${user.username=='rylan'}"><img src="img/faces/rylan.jpg" alt="image"></c:when>
-			    <c:when test="${user.username=='biraj'}"><img src="img/faces/biraj.jpg" alt="image"></c:when>
-			    <c:when test="${user.username=='utpal'}"><img src="img/faces/utpal.jpg" alt="image"></c:when>
-			    <c:when test="${user.username=='sid'}"><img src="img/faces/siddharth.jpg" alt="image"></c:when>
+			    <c:when test="${user.user_id=='admin'}"><img src="/assets/img/faces/jiten.jpg" alt="image"></c:when>
+			    <c:when test="${user.user_id=='vaibhav'}"><img src="/assets/img/faces/face.png" alt="image"></c:when>
+			    <c:when test="${user.user_id=='abhishek'}"><img src="/assets/img/faces/face.png" alt="image"></c:when>
+			    <c:when test="${user.user_id=='test'}"><img src="/assets/img/faces/face.png" alt="image"></c:when>
 			    <c:otherwise><img src="/assets/img/faces/face.png" alt="image"></c:otherwise>
 			</c:choose>
 			 
                 <span class="availability-status online"></span>             
               </div>
               <div class="nav-profile-text">
-                <p class="mb-1 text-black">${user.username}</p>
+                <p class="mb-1 text-black">${user.user_id}</p>
               </div>
             </a>
             <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -176,7 +203,7 @@
                 Profile
               </a>
               <div class="dropdown-divider"></div>
-             <a class="dropdown-item" href="/login">
+             <a class="dropdown-item" href="/logout">
                 <i class="mdi mdi-logout mr-2 text-primary"></i>
                 Logout
               </a>
@@ -187,116 +214,11 @@
               <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
             </a>
           </li>
-          <!--<li class="nav-item dropdown">
-            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <i class="mdi mdi-email-outline"></i>
-              <span class="count-symbol bg-warning"></span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-              <h6 class="p-3 mb-0">Messages</h6>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                    <img src="img/faces/face4.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark sent you a message</h6>
-                  <p class="text-gray mb-0">
-                    1 Minute ago
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                    <img src="img/faces/face2.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Craig sent you a message</h6>
-                  <p class="text-gray mb-0">
-                    15 Minutes ago
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                    <img src="img/faces/face3.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
-                  <p class="text-gray mb-0">
-                    18 Minutes ago
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <h6 class="p-3 mb-0 text-center">3 new messages</h6>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-              <i class="mdi mdi-bell-outline"></i>
-              <span class="count-symbol bg-danger"></span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-              <h6 class="p-3 mb-0">Notifications</h6>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-success">
-                    <i class="mdi mdi-calendar"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                  <p class="text-gray ellipsis mb-0">
-                    Just a reminder that you have an event today
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-warning">
-                    <i class="mdi mdi-settings"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                  <p class="text-gray ellipsis mb-0">
-                    Update dashboard
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-info">
-                    <i class="mdi mdi-link-variant"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                  <p class="text-gray ellipsis mb-0">
-                    New admin wow!
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <h6 class="p-3 mb-0 text-center">See all notifications</h6>
-            </div>
-          </li>-->
           <li class="nav-item nav-logout d-none d-lg-block">
-           <a class="nav-link" href="/login">
+           <a class="nav-link" href="/logout">
               <i class="mdi mdi-power"></i>
             </a> 
           </li>
-          <!--<li class="nav-item nav-settings d-none d-lg-block">
-            <a class="nav-link" href="#">
-              <i class="mdi mdi-format-line-spacing"></i>
-            </a>
-          </li>-->
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
@@ -312,46 +234,31 @@
             <a href="#" class="nav-link">
               <div class="nav-profile-image">
                 <c:choose>
-			    <c:when test="${user.username=='admin'}"><img src="/assets/img/faces/jiten.jpg" alt="profile"></c:when>
-			    <c:when test="${user.username=='user1'}"><img src="/assets/img/faces/rylan.jpg" alt="profile"></c:when>
-			    <c:when test="${user.username=='user2'}"><img src="/assets/img/faces/biraj.jpg" alt="profile"></c:when>
-		
-			    <c:otherwise><img src="/assets/img/faces/face.png" alt="profile"></c:otherwise>
+			   <c:when test="${user.user_id=='admin'}"><img src="/assets/img/faces/jiten.jpg" alt="image"></c:when>
+			    <c:when test="${user.user_id=='vaibhav'}"><img src="/assets/img/faces/face.png" alt="image"></c:when>
+			    <c:when test="${user.user_id=='abhishek'}"><img src="/assets/img/faces/face.png" alt="image"></c:when>
+			    <c:when test="${user.user_id=='test'}"><img src="/assets/img/faces/face.png" alt="image"></c:when>
+			    <c:otherwise><img src="/assets/img/faces/face.png" alt="image"></c:otherwise>
 			</c:choose>
                 <span class="login-status online"></span> <!--change to offline or busy as needed-->              
               </div>
               <div class="nav-profile-text d-flex flex-column">
-                <span class="font-weight-bold mb-2">${user.username}</span>
+                <span class="font-weight-bold mb-2">${user.user_id}</span>
                 <span class="text-secondary text-small">Application User</span>
               </div>
               <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/feature">
+            <a class="nav-link" href="/login/dashboard">
               <span class="menu-title">Feature Dashboard</span>
               <i class="mdi mdi-home menu-icon"></i>
             </a>
           </li>
-			${menu_code}
+         <div id="menu">
+         ${menu_code}
+         </div>
+     
+			
         </ul>
       </nav>
-      <!-- partial -->
-
-<!-- <!-- <div id="min" style="display:block;position:fixed;bottom:0px;right:0px;z-index:999;text-align:right;background-color:white;padding:10px;">
-<div onclick="tog('min');" style="cursor:pointer;width:280px;padding:5px;">
-<div style="float:left;">Chatbot - How may I help you?</div>
-<div style="float:right;"><b>+</b></div>
-</div>
-</div>      
-<div id="max" style="display:none;position:fixed;bottom:400px;right:0px;z-index:999;text-align:right;background-color:white;padding:10px;">
-<div onclick="tog('max');" style="cursor:pointer;width:280px;padding:5px;">
-<div style="float:left;">Chatbot - How may I help you?</div>
-<div style="float:right;"><b>-</b></div>
-</div> -->
-<!-- <iframe
-frameborder="0" allowtransparency="yes" scrolling="no" allow="microphone"
-src="https://console.dialogflow.com/api-client/demo/embedded/a2b4f40f-b4a5-467a-8257-bb383322b071"
-style="width:300px;height:400px;position:fixed;right:0px;bottom:0px;margin:0;padding:0;" >
-</iframe> 
-</div>-->
