@@ -1,25 +1,5 @@
 <jsp:include page="../cdg_header.jsp" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script type="text/javascript">
-$(document).ready(function() {
-			
-			$("#save").click(function(){
-			var project_id = document.getElementById("project_id").value;
-			var project_name = document.getElementById("project_name").value;
-			var project_owner = document.getElementById("project_owner").value;
-			var project_details = document.getElementById("project_details").value;
-				$.post('/admin/addProjectDetails', {
-					project_id : project_id,
-					project_name : project_name,
-					project_owner : project_owner,
-					project_details : project_details
-				}, function(data) {
-					$('#allvalues').html(data)
-					  $("button").show();
-				});
-				});	
-});
-</script>
 
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -29,7 +9,24 @@ $(document).ready(function() {
 					<div class="card-body">
 						<h4 class="card-title">Create Project</h4>
 						<p class="card-description">Project Details</p>
-						<form class="forms-sample" id="ProjectDetails" name="ProjectDetails">
+						 <div class="mt-3" align="center">
+                
+                <%
+							if (request.getAttribute("successString") != null) {
+						%>
+						<p class="text-success h4">${successString}</p>
+						<%
+							}
+						%>
+						<%
+							if (request.getAttribute("errorString") != null) {
+						%>
+						<p class="text-danger h4">${errorString}</p>
+						<%
+							}
+						%>
+    </div>
+						<form class="forms-sample" id="ProjectDetails" name="ProjectDetails" method="POST" action="/admin/addProjectDetails" enctype="application/json">
 							<div>
 								<div id="h1" class="hx" ">
 									<div class="form-group row">
@@ -58,7 +55,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 								</div>
-							<button id="save" name="save"
+							<button id="save" name="save" type="submit"
 								class="btn btn-rounded btn-gradient-info mr-2">Save</button>
 								<button id="createsystem" name="createsystem" hidden="true"
 								class="btn btn-rounded btn-gradient-info mr-2">Create System</button>
