@@ -270,10 +270,46 @@
               <i class="mdi mdi-home menu-icon"></i>
             </a>
           </li>
-         <div id="menu">
-         ${menu_code}
-         </div>
-     
-			
+          
+		<c:if test="${user.is_admin=='Y'}">
+			<div id="menu">
+				<li class="nav-item"> 
+					<a class="nav-link" data-toggle="collapse" href="#extraction" aria-expanded="false" aria-controls="extraction"> <span class="menu-title">Data Extraction</span> <i class="menu-arrow"></i> <i class="mdi mdi-database menu-icon"></i> </a> 
+						<div class="collapse" id="extraction"> 
+							<ul class="nav flex-column sub-menu"> 
+								<li class="nav-item"> <a class="nav-link" href="/extraction/ConnectionHome"> Source Details </a></li> 
+								<li class="nav-item"> <a class="nav-link" href="/extraction/TargetDetails"> Target Details </a></li> 
+								<li class="nav-item"> <a class="nav-link" href="/extraction/SystemHome"> System Details </a></li>
+								<li class="nav-item"> <a class="nav-link" href="/extraction/DataHome"> Data Details </a></li>
+								<li class="nav-item"> <a class="nav-link" href="/extraction/ExtractHome"> Extract Data </a></li>
+							</ul>
+						</div>
+				</li>						
+					<li class="nav-item"> 
+						<a class="nav-link" data-toggle="collapse" href="#scheduler" aria-expanded="false" aria-controls="scheduler"> <span class="menu-title">Scheduler</span> <i class="menu-arrow"></i> <i class="mdi mdi-timer menu-icon"></i> </a> 
+						<div class="collapse" id="scheduler"> 
+							<ul class="nav flex-column sub-menu"> 
+								<li class="nav-item"> <a class="nav-link" href="/scheduler/alljobs"> Master Feed Details </a></li> 
+								<li class="nav-item"> <a class="nav-link" href="/scheduler/scheduledjobs"> Current Feed Details </a></li>
+								<li class="nav-item"> <a class="nav-link" href="/scheduler/runstats"> View Run Statistics </a></li> 
+							</ul>
+						</div>
+					</li>
+				<li class="nav-item"> 
+					<a class="nav-link" data-toggle="collapse" href="#admin" aria-expanded="false" aria-controls="admin"> <span class="menu-title">Admin Portal</span> <i class="menu-arrow"></i> <i class="mdi mdi-account-settings-variant menu-icon"></i> </a> 
+						<div class="collapse" id="admin"> 
+							<ul class="nav flex-column sub-menu"> 
+								<li class="nav-item"> <a class="nav-link" href="/admin/project"> Onboard Project </a></li>
+								<li class="nav-item"> <a class="nav-link" href="/admin/user"> Onboard User </a></li> 
+							</ul>
+						</div>
+					</li>
+				</div>
+		</c:if>
+		<c:if test="${user.is_admin=='N'}">
+			<div id="menu">
+         		${menu_code}
+         	</div>	
+		</c:if>          	
         </ul>
       </nav>
