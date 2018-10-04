@@ -30,8 +30,9 @@ import com.iig.gcp.utils.ConnectionUtils;
 @Component
 public class SchedularDAOImpl implements SchedularDAO {
 
-	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	DateFormat batchDate = new SimpleDateFormat("yyyy-MM-dd");
+	DateFormat lastUpdateTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	DateFormat jobScheduleTime = new SimpleDateFormat("hh:mm:ss");
 	DateFormat dateFormat2 = new SimpleDateFormat("hh:mm:ss");
 	Date date = new Date();
 
@@ -437,8 +438,14 @@ public class SchedularDAOImpl implements SchedularDAO {
 
 			String monthlyRunVal = rs.getString(32);
 			masterJobDTO.setMonth_run_val(monthlyRunVal);
-
-			masterJobDTO.setIs_dependent_job(rs.getString(33));
+ 
+			if(rs.getString(33)!=null) {
+				masterJobDTO.setIs_dependent_job(rs.getString(33));
+			}
+			else {
+				masterJobDTO.setIs_dependent_job("");
+			}
+			
 
 			String commandType = rs.getString(34);
 			masterJobDTO.setCommand_type(commandType);
@@ -483,7 +490,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 					+ QUOTE + masterJobDTO.getFeed_id() +QUOTE + COMMA 
 					+ QUOTE + masterJobDTO.getSource_emid()+QUOTE  + COMMA 
 					+ QUOTE + masterJobDTO.getTarget_emid()+ QUOTE + COMMA 
-					+ QUOTE + dateFormat.format(date)+ QUOTE + COMMA 
+					+ QUOTE + batchDate.format(date)+ QUOTE + COMMA 
 					+ QUOTE + masterJobDTO.getJob_id() + QUOTE+ COMMA 
 					+ QUOTE + masterJobDTO.getJob_name() + QUOTE+ COMMA 
 					+ QUOTE + masterJobDTO.getBatch_id()+ QUOTE + COMMA 
@@ -497,7 +504,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 					+ QUOTE + masterJobDTO.getArgument_5() + QUOTE+ COMMA 
 					+ QUOTE + masterJobDTO.getDaily_flag()+ QUOTE + COMMA 
 					+ QUOTE + masterJobDTO.getMonthly_flag()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getJob_schedule_time()+ QUOTE + COMMA
+					+ QUOTE + jobScheduleTime.format(date) + QUOTE+ COMMA
 					+ QUOTE + "" + QUOTE+ COMMA 
 					+ QUOTE + masterJobDTO.getPredessor_job_id_1() +QUOTE+ COMMA 
 					+ QUOTE + masterJobDTO.getPredessor_job_id_2() +QUOTE+ COMMA 
@@ -515,7 +522,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 					+ QUOTE + masterJobDTO.getMonth_run_val()+ QUOTE  + COMMA
 					+ QUOTE + masterJobDTO.getIs_dependent_job()+ QUOTE  + COMMA 
 					+ QUOTE + masterJobDTO.getCommand_type() + QUOTE + COMMA 
-					+ QUOTE + dateFormat1.format(date) + QUOTE+ COMMA
+					+ QUOTE + lastUpdateTs.format(date) + QUOTE+ COMMA
 					+ QUOTE + masterJobDTO.getYearly_flag()+ QUOTE + COMMA 
 					+ QUOTE + masterJobDTO.getWeek_num_month()+QUOTE + ")";
 
@@ -527,6 +534,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 
 		} catch (Exception e) {
 			System.out.println("cant write");
+			e.printStackTrace();
 			message = "Failure";
 			return message;
 		}
