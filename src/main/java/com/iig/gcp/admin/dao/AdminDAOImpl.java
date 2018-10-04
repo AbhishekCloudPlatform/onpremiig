@@ -154,7 +154,7 @@ public class AdminDAOImpl implements AdminDAO{
 			pstm.executeUpdate();
 			
 		}
-		};
+		}
 		ConnectionUtils.closeQuietly(connection);
 	}
 

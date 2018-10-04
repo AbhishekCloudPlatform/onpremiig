@@ -60,11 +60,11 @@
           </div>
 						<div class="row">
 							<div class="card-body">
-								<h2 class="card-title">Feed Master Dashboard</h2>
+								<h2 class="card-title"  align="left">Feed Master Dashboard</h2>
 										<div class="row">
-											<div class="col-md-12">
+											<div class="col-md-4">
 												<div class="form-group">
-													<label> Select Feed </label> <select class="form-control"
+													<h4 class="card-title" align="left">Select Feed</h4> <select class="form-control"
 														id="feedIdFilter" name="feedIdFilter">
 														<option value="" selected disabled>Select Feed
 															...</option>
