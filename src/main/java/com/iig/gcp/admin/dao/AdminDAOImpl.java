@@ -145,6 +145,7 @@ public class AdminDAOImpl implements AdminDAO{
 		Connection connection=null;
 		connection = ConnectionUtils.getConnection();
 		String[] arrString =feature_seq.split(",");
+		if(!arrString[0].equals("")) {
 		for(String feature:arrString) {
 			PreparedStatement pstm = connection.prepareStatement("insert ignore into juniper_pro_u_feat_master values (juniper_pro_u_feat_sequence,?,?,?);");
 			pstm.setInt(1,selectUser_Seq);
@@ -152,6 +153,7 @@ public class AdminDAOImpl implements AdminDAO{
 			pstm.setString(3,feature);
 			pstm.executeUpdate();
 			
+		}
 		}
 		ConnectionUtils.closeQuietly(connection);
 	}
