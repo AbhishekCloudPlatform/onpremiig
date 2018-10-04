@@ -128,15 +128,13 @@ $(document).ready(function() {
 
 			
 					<div class="card-body">
-						<h2 class="card-title">Run Statics</h2>	
+						<h2 class="card-title" align="left">Run Statics</h2>	
 						<form class="forms-sample" id="runform" name="runform"
 							method="post" action="/schedule/selectFeedId">
 							<fieldset class="fs">
 							<div class="row">
 								<div class="form-group col-md-4">
-								</div>
-								<div class="form-group col-md-4 ">
-										<h4 class="card-title">Select Feed</h4>
+								<h4 class="card-title" align="left">Select Feed</h4>
 										 <select class="form-control"
 											id="feedIdFilter" name="feedIdFilter">
 											<option value="" selected disabled>Feed Data...</option>
@@ -144,6 +142,9 @@ $(document).ready(function() {
 												<option value="${feed_id}">${feed_id}</option>
 											</c:forEach>
 										</select>
+								</div>
+								<div class="form-group col-md-4 ">
+										
 								</div>
 								<div class="form-group col-md-4" id="hello">
 			
