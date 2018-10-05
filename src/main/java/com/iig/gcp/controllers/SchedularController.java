@@ -62,16 +62,12 @@ public class SchedularController {
 	public ModelAndView moveJobFromMasterToCurrent(@Valid @RequestParam("feedId") String feedId,
 			@RequestParam("jobId") String jobId, ModelMap modelMap) {
 		try {
-			MasterJobsDTO masterJobDTO = schedularService.orderJobFromMaster(feedId, jobId);
-			if (masterJobDTO != null) {
-				String message = schedularService.moveJobFromMasterToCurrentJob(masterJobDTO);
+				String message = schedularService.moveJobFromMasterToCurrentJob(feedId,jobId);
 				if (message.equals("Success")) {
 					modelMap.addAttribute("successString", "Job Ordered for today");
-
 				} else {
-					modelMap.addAttribute("errorStatus", "Job ordering failure");
+					modelMap.addAttribute("errorStatus", "Job ordering failed");
 				}
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.addAttribute("errorStatus", e.getMessage());

@@ -35,7 +35,7 @@ public interface SchedularService {
 	List<MasterJobsDTO> allLoadJobs() throws Exception;
 	List<MasterJobsDTO> typeLoadJobs(String frequency, String batchId) throws Exception;
 	MasterJobsDTO orderJobFromMaster(String feedId,String jobId) throws ClassNotFoundException, SQLException, ParseException;
-	String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException;
+	String moveJobFromMasterToCurrentJob(String feedId, String jobId) throws ClassNotFoundException, SQLException;
 	String deleteJobFromMaster(String feedId,String jobId) throws Exception;
 	String suspendJobFromMaster(String feedId, String jobId) throws ClassNotFoundException, SQLException;
 	String unSuspendJobFromMaster(@Valid String feedId, String jobId);

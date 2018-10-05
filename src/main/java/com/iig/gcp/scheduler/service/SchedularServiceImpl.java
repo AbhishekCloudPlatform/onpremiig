@@ -102,8 +102,8 @@ public class SchedularServiceImpl implements SchedularService{
 	}
 
 	@Override
-	public String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO) throws ClassNotFoundException, SQLException {
-		return schedularDAO.moveJobFromMasterToCurrentJob(masterJobDTO);
+	public String moveJobFromMasterToCurrentJob(String feedId, String jobId) throws ClassNotFoundException, SQLException {
+		return schedularDAO.moveJobFromMasterToCurrentJob(feedId, jobId);
 		
 	}
 	

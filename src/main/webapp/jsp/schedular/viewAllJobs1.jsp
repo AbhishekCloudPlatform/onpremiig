@@ -12,7 +12,8 @@ $(document).ready(function() {
 				   feedId : $feedId,
 				   jobId : $jobId
 				}, function(data) {
-					window.location.reload();					
+					window.location.reload();
+					alert("Job ordered for today");						
 				});
 			}
 		});
@@ -26,6 +27,7 @@ $(document).ready(function() {
 						   jobId : $jobId
 						}, function(data) {
 							window.location.reload();
+							alert("Job deleted");	
 						});
 					});
 					
@@ -40,6 +42,7 @@ $(document).ready(function() {
 						   jobId : $jobId
 						}, function(data) {
 						window.location.reload();
+						alert("Job Unsuspended");	
 						});
 				} else {
 					   $.post('/scheduler/suspendMasterJob', {
@@ -47,6 +50,7 @@ $(document).ready(function() {
 						   jobId : $jobId
 						}, function(data) {
 						window.location.reload();
+						alert("Job suspended");
 						});
 				}
 						

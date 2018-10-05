@@ -55,8 +55,8 @@
               <div class="card bg-gradient-info card-img-holder text-white">
                 <div class="card-body">
                   <img src="/assets/img/circle.svg" class="card-img-absolute" alt="circle-image"/>
-                  <h2 class="font-weight-normal mb-3">Kafka</h2>
-                  
+                  <h2 class="font-weight-normal mb-3">Data Lineage</h2>
+                   <h4>View Data Lineage</h4>
                 </div>
               </div>
             </div>
@@ -66,6 +66,7 @@
                   <img src="/assets/img/circle.svg" class="card-img-absolute" alt="circle-image"/>
                   <h2 class="font-weight-normal mb-3">Realtime Streaming</h2>
                   <h4>STRIIM Streaming</h4>
+                   <h4>Kafka</h4>
 				  <h4>Tungsten Streaming</h4>
                 </div>
               </div>

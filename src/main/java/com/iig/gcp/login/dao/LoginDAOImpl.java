@@ -18,16 +18,17 @@ public class LoginDAOImpl implements LoginDAO {
 	public ArrayList<UserAccount> getUserAccount() throws Exception {
 		
 		ArrayList<UserAccount> arrUsers= new ArrayList<UserAccount>();
-		String sql = "select user_id,user_pass,user_sequence from juniper_user_master";
+		String sql = "select user_id,user_pass,user_sequence, coalesce(is_admin,'N') as is_admin from juniper_user_master";
 
 		Connection conn= ConnectionUtils.getConnection();
-		PreparedStatement pstm = conn.prepareStatement(sql);
+		PreparedStatement pstm = conn.prepareStatement(sql); 
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
 				UserAccount user = new UserAccount();
 				user.setUser_id(rs.getString(1));
 				user.setUser_pass(rs.getString(2));
 				user.setUser_sequence(rs.getInt(3));
+				user.setIs_admin(rs.getString(4));;
 				arrUsers.add(user);	
 		}
 		ConnectionUtils.closeQuietly(conn);

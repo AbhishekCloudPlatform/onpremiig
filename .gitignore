@@ -723,6 +723,7 @@ target/classes/com/iig/gcp/scheduler/dao/SchedularDAOImpl.class
 target/classes/com/iig/gcp/scheduler/service/SchedularService.class
 target/classes/com/iig/gcp/scheduler/service/SchedularServiceImpl.class
 target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+<<<<<<< HEAD
 target/classes/com/iig/gcp/controllers/LoginController.class
 target/classes/com/iig/gcp/login/dao/LoginDAO.class
 target/classes/com/iig/gcp/login/dao/LoginDAOImpl.class
@@ -773,6 +774,55 @@ target/test-classes/com/iig/gcp/IigOnPremApplicationTests.class
 *.class
 target/classes/com/iig/gcp/constants/MySqlConstants.class
 target/classes/com/iig/gcp/controllers/ExtractionController.class
+=======
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
+.classpath
+target/classes/com/iig/gcp/constants/MySqlConstants.class
+target/classes/com/iig/gcp/constants/MySqlConstants.class
+>>>>>>> 6bed42e2e7cdc3464b1063fe422203648483b14c
+target/classes/com/iig/gcp/controllers/LoginController.class
+target/classes/com/iig/gcp/controllers/RegisterController.class
+target/classes/com/iig/gcp/controllers/SchedularController.class
+target/classes/com/iig/gcp/extraction/dto/ComposerMaster.class
+target/classes/com/iig/gcp/extraction/dto/ConnectionMaster.class
+target/classes/com/iig/gcp/extraction/dto/CountryMaster.class
+target/classes/com/iig/gcp/extraction/dto/ExtractionMaster.class
+target/classes/com/iig/gcp/extraction/dto/ReservoirMaster.class
+target/classes/com/iig/gcp/extraction/dto/ScheduleMaster.class
+target/classes/com/iig/gcp/extraction/dto/SourceSystemMaster.class
+target/classes/com/iig/gcp/extraction/service/ExtractionService.class
+<<<<<<< HEAD
+target/classes/com/iig/gcp/extraction/service/ExtractionServiceImpl.class
+target/classes/com/iig/gcp/feedlogging/dao/FeedLoggerDAO.class
+target/classes/com/iig/gcp/feedlogging/dao/FeedLoggerDAOImpl.class
+target/classes/com/iig/gcp/feedlogging/dto/FeedLoggerDTO.class
+target/classes/com/iig/gcp/feedlogging/service/FeedLoggingService.class
+target/classes/com/iig/gcp/feedlogging/service/FeedLoggingServiceImpl.class
+target/classes/com/iig/gcp/IigOnPremApplication.class
+target/classes/com/iig/gcp/login/dao/LoginDAO.class
+target/classes/com/iig/gcp/login/dao/LoginDAOImpl.class
+target/classes/com/iig/gcp/login/dto/UserAccount.class
+target/classes/com/iig/gcp/login/service/LoginService.class
+target/classes/com/iig/gcp/login/service/LoginServiceImpl.class
+target/classes/com/iig/gcp/scheduler/dao/SchedularDAO.class
+target/classes/com/iig/gcp/scheduler/dao/SchedularDAOImpl.class
+target/classes/com/iig/gcp/scheduler/dto/ArchiveJobsDTO.class
+target/classes/com/iig/gcp/scheduler/dto/DailyJobsDTO.class
+target/classes/com/iig/gcp/scheduler/dto/MasterJobsDTO.class
+target/classes/com/iig/gcp/scheduler/service/SchedularService.class
+target/classes/com/iig/gcp/scheduler/service/SchedularServiceImpl.class
+target/classes/com/iig/gcp/utils/ConnectionUtils.class
+target/classes/com/iig/gcp/utils/DBUtils.class
+target/classes/com/iig/gcp/utils/MySQLConnUtils.class
+target/classes/com/iig/gcp/WebSecurityConfig.class
+target/IIGOnPrem-0.0.1-SNAPSHOT/jsp/hip/hipmasterdashboard.jsp
+target/test-classes/com/iig/gcp/IigOnPremApplicationTests.class
+=======
+*.class
+>>>>>>> 6bed42e2e7cdc3464b1063fe422203648483b14c
+target/classes/com/iig/gcp/constants/MySqlConstants.class
+target/classes/com/iig/gcp/controllers/ExtractionController.class
 target/classes/com/iig/gcp/controllers/LoginController.class
 target/classes/com/iig/gcp/controllers/RegisterController.class
 target/classes/com/iig/gcp/controllers/SchedularController.class
@@ -807,5 +857,6 @@ target/classes/com/iig/gcp/utils/ConnectionUtils.class
 target/classes/com/iig/gcp/utils/DBUtils.class
 target/classes/com/iig/gcp/utils/MySQLConnUtils.class
 target/classes/com/iig/gcp/WebSecurityConfig.class
-target/IIGOnPrem-0.0.1-SNAPSHOT/jsp/hip/hipmasterdashboard.jsp
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.properties
+target/m2e-wtp/web-resources/META-INF/maven/com.iig.gcp/IIGOnPrem/pom.xml
 target/test-classes/com/iig/gcp/IigOnPremApplicationTests.class

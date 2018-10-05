@@ -66,15 +66,10 @@ public class LoginController {
 			modelMap.addAttribute("user",user);
 			HashMap<String,Integer> hsmap=new HashMap<String,Integer>();
 			for(Project project:arrProject ) {
-				//menu_code=loginService.getMenuCodes(user.getUser_id(),project);
 				hsmap.put(project.getProject_id(), project.getProject_sequence());
 			}
 			modelMap.addAttribute("arrProject",arrProject);
 			modelMap.addAttribute("projectFeatureMap", hsmap);
-			//String menu_code=loginService.getMenuCodesuser(user.getMenu_id());
-			//System.out.println("menu_code-----"+menu_code);
-			//modelMap.addAttribute("user",user);
-			//modelMap.addAttribute("menu_code",menu_code);
 		}
 		
         }catch(Exception e) {

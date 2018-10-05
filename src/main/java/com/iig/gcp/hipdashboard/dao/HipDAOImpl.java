@@ -65,7 +65,7 @@ public class HipDAOImpl implements HipDAO {
 		Connection connection = null;
 		try {
 			connection = ConnectionUtils.getConnection();
-			PreparedStatement pstm = connection.prepareStatement("select distinct feed_id from logger_stats_master order by feed_id;");
+			PreparedStatement pstm = connection.prepareStatement("select distinct event_feed_id from logger_stats_master order by event_feed_id;");
 			ResultSet rs = pstm.executeQuery();
 			while (rs.next()) {
 				arr.add(rs.getString(1));
@@ -83,7 +83,7 @@ public class HipDAOImpl implements HipDAO {
 		ArrayList<HipDashboardDTO> arrHipDashboard=new ArrayList<HipDashboardDTO>();
 		HipDashboardDTO hipDashboardDTO = null;
 		Connection conn = ConnectionUtils.getConnection();
-		PreparedStatement pstm = conn.prepareStatement("select feed_id, batch_date,run_id,start_time,end_time,duration from (select st.feed_id, st.batch_date, st.run_id, st.value as start_time, en.value as end_time, cast(time_to_sec(timediff(en.value,st.value))/60 as char) as duration from (select * from logger_stats_master where field='start') st inner join (select * from logger_stats_master where field='end') en on st.feed_id=en.feed_id and st.run_id=en.run_id and st.batch_date=en.batch_date)a  where feed_id like ? order by batch_date;");
+		PreparedStatement pstm = conn.prepareStatement("select event_feed_id, event_batch_date,event_run_id,start_time,end_time,duration from (select st.event_feed_id, st.event_batch_date, st.event_run_id, st.event_value as start_time, en.event_value as end_time, cast(time_to_sec(timediff(en.event_value,st.event_value))/60 as char) as duration from (select * from logger_stats_master where event_type='start') st inner join (select * from logger_stats_master where event_type='end') en on st.event_feed_id=en.event_feed_id and st.event_run_id=en.event_run_id and st.event_batch_date=en.event_batch_date)a  where event_feed_id = ? order by event_batch_date;");
 		pstm.setString(1, feed_id);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
