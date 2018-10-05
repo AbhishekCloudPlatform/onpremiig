@@ -480,8 +480,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 	 * @see com.iig.gcp.scheduler.dao.SchedularDAO#moveJobFromMasterToCurrentJob(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public String moveJobFromMasterToCurrentJob(String feedId, String jobId)
-			throws ClassNotFoundException, SQLException {
+	public String moveJobFromMasterToCurrentJob(String feedId, String jobId)throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionUtils.getConnection();
 		try {
 			String insertCurrentFeedLoggerQuery = "insert into iigs_current_job_detail (project_id,feed_id,source_emid,target_emid,batch_date,"
@@ -502,9 +501,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 			pstm.executeUpdate();
 			ConnectionUtils.closeQuietly(conn);
 			return "Success";
-
 		} catch (Exception e) {
-			System.out.println("cant write");
 			e.printStackTrace();
 			return "Failure";
 		}
