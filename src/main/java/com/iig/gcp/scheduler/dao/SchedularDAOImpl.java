@@ -349,7 +349,7 @@ public class SchedularDAOImpl implements SchedularDAO {
 				+ "predessor_job_id_1,predessor_job_id_2,predessor_job_id_3,predessor_job_id_4,"
 				+ "predessor_job_id_5,predessor_job_id_6,predessor_job_id_7,predessor_job_id_8,predessor_job_id_9,predessor_job_id_10,"
 				+ "weekly_flag,week_run_day,month_run_day,month_run_val,is_dependent_job,command_type,yearly_flag,"
-				+ "week_num_month,job_sequence from " + FEED_MASTER_TABLE + " where batch_id=? and job_id=?;";
+				+ "week_num_month,job_sequence,is_suspended from " + FEED_MASTER_TABLE + " where batch_id=? and job_id=?;";
 		PreparedStatement pstm = conn.prepareStatement(query);
 		pstm.setString(1, feedId);
 		pstm.setString(2, jobId);
@@ -466,77 +466,47 @@ public class SchedularDAOImpl implements SchedularDAO {
 			}
 			
 			masterJobDTO.setJob_sequence(rs.getInt(37));
+			
+			masterJobDTO.setIs_suspended(rs.getString(38));
 
 		}
 		ConnectionUtils.closeQuietly(conn);
 		return masterJobDTO;
 	}
 
+	/* 
+	 * This method move job from master table to current table
+	 * (non-Javadoc)
+	 * @see com.iig.gcp.scheduler.dao.SchedularDAO#moveJobFromMasterToCurrentJob(java.lang.String, java.lang.String)
+	 */
 	@Override
-	public String moveJobFromMasterToCurrentJob(MasterJobsDTO masterJobDTO)
+	public String moveJobFromMasterToCurrentJob(String feedId, String jobId)
 			throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionUtils.getConnection();
-		String message;
 		try {
-			String insertCurrentFeedLoggerQuery = "INSERT INTO" + SPACE + DATABASE_NAME + "." + FEED_CURRENT_TABLE
-					+ SPACE
-					+ "(project_id,feed_id,source_emid,target_emid,batch_date,job_id,job_name,batch_id,pre_processing,post_processing,"
-					+ "command,argument_1,argument_2,argument_3,argument_4,argument_5,daily_flag,monthly_flag,job_schedule_time,status,"
-					+ "predessor_job_id_1,predessor_job_id_2,predessor_job_id_3,predessor_job_id_4,predessor_job_id_5,"
-					+ "predessor_job_id_6,predessor_job_id_7,predessor_job_id_8,predessor_job_id_9,predessor_job_id_10,"
-					+ "weekly_flag,week_run_day,month_run_day,month_run_val,is_dependent_job,command_type,last_update_ts,"
-					+ "yearly_flag,week_num_month )" + "VALUES" + "(" 
-					+ QUOTE + masterJobDTO.getProject_id()+ QUOTE  + COMMA
-					+ QUOTE + masterJobDTO.getFeed_id() +QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getSource_emid()+QUOTE  + COMMA 
-					+ QUOTE + masterJobDTO.getTarget_emid()+ QUOTE + COMMA 
-					+ "now()" + COMMA 
-					+ QUOTE + masterJobDTO.getJob_id() + QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getJob_name() + QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getBatch_id()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getPre_processing()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getPost_processing()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getCommand()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getArgument_1()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getArgument_2()+ QUOTE + COMMA
-					+ QUOTE + masterJobDTO.getArgument_3()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getArgument_4() + QUOTE+ COMMA
-					+ QUOTE + masterJobDTO.getArgument_5() + QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getDaily_flag()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getMonthly_flag()+ QUOTE + COMMA 
-					+ "now()" + COMMA 
-					+ QUOTE + "" + QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_1() +QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_2() +QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_3() +QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_4()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_5()+ QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_6()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_7()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_8()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_9()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getPredessor_job_id_10()+QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getWeekly_flag() + QUOTE+ COMMA
-					+ QUOTE + masterJobDTO.getWeek_run_day() +QUOTE+ COMMA 
-					+ QUOTE + masterJobDTO.getMonth_run_day() + QUOTE+ COMMA
-					+ QUOTE + masterJobDTO.getMonth_run_val()+ QUOTE  + COMMA
-					+ QUOTE + masterJobDTO.getIs_dependent_job()+ QUOTE  + COMMA 
-					+ QUOTE + masterJobDTO.getCommand_type() + QUOTE + COMMA 
-					+ "now()" + COMMA 
-					+ QUOTE + masterJobDTO.getYearly_flag()+ QUOTE + COMMA 
-					+ QUOTE + masterJobDTO.getWeek_num_month()+QUOTE + ")";
-
-			Statement statement = conn.createStatement();
-			statement.execute(insertCurrentFeedLoggerQuery);
+			String insertCurrentFeedLoggerQuery = "insert into iigs_current_job_detail (project_id,feed_id,source_emid,target_emid,batch_date,"
+					+ "job_id,job_name,batch_id,pre_processing,post_processing,command,argument_1,argument_2,argument_3,argument_4,argument_5,"
+					+ "daily_flag,monthly_flag,job_schedule_time,status,predessor_job_id_1,predessor_job_id_2,predessor_job_id_3,predessor_job_id_4,"
+					+ "predessor_job_id_5,predessor_job_id_6,predessor_job_id_7,predessor_job_id_8,predessor_job_id_9,predessor_job_id_10,weekly_flag,"
+					+ "week_run_day,month_run_day,month_run_val,is_dependent_job,command_type,last_update_ts,yearly_flag,week_num_month )\r\n" + 
+					" select project_id,feed_id,source_emid,target_emid,now(),job_id,job_name,batch_id,pre_processing,post_processing,command,"
+					+ "argument_1,argument_2,argument_3,argument_4,argument_5,daily_flag,monthly_flag,now(),"
+					+ "case when trim(coalesce(predessor_job_id_1,''))<>'' then 'W' else '' end as status,predessor_job_id_1,predessor_job_id_2,"
+					+ "predessor_job_id_3,predessor_job_id_4,predessor_job_id_5,predessor_job_id_6,predessor_job_id_7,predessor_job_id_8,"
+					+ "predessor_job_id_9,predessor_job_id_10,weekly_flag,week_run_day,month_run_day,month_run_val,is_dependent_job,"
+					+ "command_type,now(),yearly_flag,week_num_month from iigs_ui_master_job_detail where batch_id = ? and job_id = ?;";
+			
+			PreparedStatement pstm = conn.prepareStatement(insertCurrentFeedLoggerQuery);
+			pstm.setString(1, feedId);
+			pstm.setString(2, jobId);
+			pstm.executeUpdate();
 			ConnectionUtils.closeQuietly(conn);
-			message = "Success";
-			return message;
+			return "Success";
 
 		} catch (Exception e) {
 			System.out.println("cant write");
 			e.printStackTrace();
-			message = "Failure";
-			return message;
+			return "Failure";
 		}
 	}
 
