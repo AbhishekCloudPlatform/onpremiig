@@ -187,19 +187,26 @@ public class AdminDAOImpl implements AdminDAO{
 	public String registerAddAdminAccess(int projectSeq, int user_sequence) throws Exception {
 		// TODO Auto-generated method stub
 		Connection conn = ConnectionUtils.getConnection();
-		String query = "select feature_sequence from juniper_feature_master order by feature_sequence";
-		PreparedStatement pstm = conn.prepareStatement(query);
-		ResultSet rs = pstm.executeQuery();
-		while (rs.next()) {
-			int featureId=rs.getInt(1);
-			String addProject = "INSERT INTO" + SPACE + DATABASE_NAME + "." + PROJECT_LINK_TABLE
-					+ SPACE
-					+ "(juniper_pro_u_feat_sequence ,user_sequence,project_sequence,feature_sequence)" + "VALUES (juniper_pro_u_feat_sequence "+ COMMA
-					+ QUOTE + user_sequence + QUOTE  + COMMA
-					+ QUOTE + projectSeq + QUOTE + COMMA
-					+ QUOTE + featureId + QUOTE  + ")";
-			Statement statement = conn.createStatement();
-			statement.execute(addProject);
+		String featureQuery = "select feature_sequence from juniper_feature_master order by feature_sequence";
+		String adminQuery = "select user_sequence from juniper_user_master where is_admin='Y'";
+		PreparedStatement featurePstm = conn.prepareStatement(featureQuery);
+		PreparedStatement adminPstm = conn.prepareStatement(adminQuery);
+		ResultSet adminRs = adminPstm.executeQuery();
+
+		while (adminRs.next()) {
+			int adminId=adminRs.getInt(1);
+			ResultSet featureRs = featurePstm.executeQuery();
+			while (featureRs.next()) {
+				int featureId=featureRs.getInt(1);
+				String addProject = "INSERT INTO" + SPACE + DATABASE_NAME + "." + PROJECT_LINK_TABLE
+						+ SPACE
+						+ "(juniper_pro_u_feat_sequence ,user_sequence,project_sequence,feature_sequence)" + "VALUES (juniper_pro_u_feat_sequence "+ COMMA
+						+ QUOTE + adminId + QUOTE  + COMMA
+						+ QUOTE + projectSeq + QUOTE + COMMA
+						+ QUOTE + featureId + QUOTE  + ")";
+				Statement statement = conn.createStatement();
+				statement.execute(addProject);
+			}
 		}
 		ConnectionUtils.closeQuietly(conn);
 		return "Success";
