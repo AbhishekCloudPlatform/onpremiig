@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.iig.gcp.extraction.dto.SourceSystemDetailBean;
+import com.iig.gcp.extraction.dto.DataDetailBean;
 import com.iig.gcp.extraction.dto.ConnectionMaster;
 import com.iig.gcp.extraction.dto.CountryMaster;
 import com.iig.gcp.extraction.dto.ReservoirMaster;
@@ -27,7 +29,6 @@ public class ExtractionController {
 	@Autowired
 	private ExtractionService es;
 
-	
 	@RequestMapping(value = "/extraction/ConnectionHome", method = RequestMethod.GET)
 	public ModelAndView ConnectionHome() {
 		return new ModelAndView("extraction/ConnectionHome");
@@ -36,29 +37,61 @@ public class ExtractionController {
 	@RequestMapping(value = "/extraction/ConnectionDetails", method = RequestMethod.POST)
 	public ModelAndView ConnectionDetails(@Valid @ModelAttribute("src_val") String src_val, ModelMap model) {
 		model.addAttribute("src_val", src_val);
+		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
+		model.addAttribute("conn_val", conn_val);
 		return new ModelAndView("extraction/ConnectionDetails");
 	}
 
 	@RequestMapping(value = "/extraction/ConnectionDetails1", method = RequestMethod.POST)
-	public ModelAndView ConnectionDetails1(@Valid @ModelAttribute("x") String x, @ModelAttribute("src_val") String src_val, ModelMap model) throws UnsupportedOperationException, Exception {
-//		System.out.println(x);
-		String resp = es.invokeRest(x, "addConnection");
+	public ModelAndView ConnectionDetails1(@Valid @ModelAttribute("x") String x, @ModelAttribute("src_val") String src_val, @ModelAttribute("button_type") String button_type, ModelMap model) throws UnsupportedOperationException, Exception {
+		String resp = null;
+		if(button_type.equalsIgnoreCase("add"))
+			resp = es.invokeRest(x, "addConnection");
+		else if (button_type.equalsIgnoreCase("upd"))
+			resp = es.invokeRest(x, "updConnection");
+		else if (button_type.equalsIgnoreCase("del"))
+			resp = es.invokeRest(x, "delConnection");
+		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
 		model.addAttribute("successString", resp.toString());
 		model.addAttribute("src_val", src_val);
+		model.addAttribute("conn_val", conn_val);
 		return new ModelAndView("extraction/ConnectionDetails");
+	}
+
+	@RequestMapping(value = "/extraction/ConnectionDetailsEdit", method = RequestMethod.POST)
+	public ModelAndView ConnectionDetailsEdit(@Valid @ModelAttribute("conn") int conn, @ModelAttribute("src_val") String src_val, ModelMap model) throws UnsupportedOperationException, Exception {
+		ConnectionMaster conn_val = es.getConnections2(src_val,conn);
+		model.addAttribute("conn_val", conn_val);
+		model.addAttribute("src_val", src_val);
+		return new ModelAndView("extraction/ConnectionDetailsEdit");
 	}
 	
 	@RequestMapping(value = "/extraction/TargetDetails", method = RequestMethod.GET)
 	public ModelAndView TargetDetails(@Valid ModelMap model) {
+		ArrayList<String> tgt = es.getTargets();
+		model.addAttribute("tgt_val", tgt);
 		return new ModelAndView("extraction/TargetDetails");
 	}
 	
 	@RequestMapping(value = "/extraction/TargetDetails1", method = RequestMethod.POST)
-	public ModelAndView ConnectionDetails1(@Valid @ModelAttribute("x") String x, ModelMap model) throws UnsupportedOperationException, Exception {
+	public ModelAndView TargetDetails1(@Valid @ModelAttribute("x") String x, @ModelAttribute("button_type") String button_type, ModelMap model) throws UnsupportedOperationException, Exception {
 //		System.out.println(x);
-		String resp = es.invokeRest(x, "addTarget");
+		String resp = null;
+		if(button_type.equalsIgnoreCase("add"))
+			resp = es.invokeRest(x, "addTarget");
+		else if (button_type.equalsIgnoreCase("upd"))
+			resp = es.invokeRest(x, "updTarget");
+		else if (button_type.equalsIgnoreCase("del"))
+			resp = es.invokeRest(x, "delTarget");
 		model.addAttribute("successString", resp.toString());
 		return new ModelAndView("extraction/TargetDetails");
+	}
+	
+	@RequestMapping(value = "/extraction/TargetDetailsEdit", method = RequestMethod.POST)
+	public ModelAndView TargetDetailsEdit(@Valid @ModelAttribute("tgt") String tgt,ModelMap model) {
+		ArrayList<String> tgtx = es.getTargets1(tgt);
+		model.addAttribute("tgtx", tgtx);
+		return new ModelAndView("extraction/TargetDetailsEdit");
 	}
 	
 	@RequestMapping(value = "/extraction/SystemHome", method = RequestMethod.GET)
@@ -69,6 +102,8 @@ public class ExtractionController {
 	@RequestMapping(value = "/extraction/SystemDetails", method = RequestMethod.POST)
 	public ModelAndView SystemDetails(@Valid @ModelAttribute("src_val") String src_val, ModelMap model) {
 		model.addAttribute("src_val", src_val);
+		ArrayList<SourceSystemMaster> src_sys_val = es.getSources(src_val);
+		model.addAttribute("src_sys_val", src_sys_val);
 		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
 		model.addAttribute("conn_val", conn_val);
 		ArrayList<String> tgt = es.getTargets();
@@ -90,11 +125,19 @@ public class ExtractionController {
 	}
 
 	@RequestMapping(value = "/extraction/SystemDetails2", method = RequestMethod.POST)
-	public ModelAndView SystemDetails2(@Valid @ModelAttribute("src_val") String src_val, @ModelAttribute("x") String x, ModelMap model) throws UnsupportedOperationException, Exception {
+	public ModelAndView SystemDetails2(@Valid @ModelAttribute("src_val") String src_val, @ModelAttribute("x") String x, @ModelAttribute("button_type") String button_type, ModelMap model) throws UnsupportedOperationException, Exception {
 //		System.out.println(x);
-		String resp = es.invokeRest(x, "onboardSystem");
+		String resp = null;
+		if(button_type.equalsIgnoreCase("add"))
+			resp = es.invokeRest(x, "onboardSystem");
+		else if (button_type.equalsIgnoreCase("upd"))
+			resp = es.invokeRest(x, "updSystem");
+		else if (button_type.equalsIgnoreCase("del"))
+			resp = es.invokeRest(x, "delSystem");
 		model.addAttribute("successString", resp.toString());
 		model.addAttribute("src_val", src_val);
+		ArrayList<SourceSystemMaster> src_sys_val = es.getSources(src_val);
+		model.addAttribute("src_sys_val", src_sys_val);
 		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
 		model.addAttribute("conn_val", conn_val);
 		ArrayList<String> tgt = es.getTargets();
@@ -106,6 +149,24 @@ public class ExtractionController {
 		/*ArrayList<ReservoirMaster> reservoir = es.getReservoirs();
 		model.addAttribute("reservoir", reservoir);*/
 		return new ModelAndView("extraction/SystemDetails");
+	}
+
+	@RequestMapping(value = "/extraction/SystemDetailsEdit", method = RequestMethod.POST)
+	public ModelAndView SystemDetailsEdit(@Valid @ModelAttribute("src_sys") int src_sys, @ModelAttribute("src_val") String src_val, ModelMap model) throws UnsupportedOperationException, Exception {
+		ArrayList<SourceSystemDetailBean> ssm = es.getSources1(src_val, src_sys);
+		model.addAttribute("ssm", ssm);
+		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
+		model.addAttribute("conn_val", conn_val);
+		ArrayList<String> tgt = es.getTargets();
+		model.addAttribute("tgt", tgt);
+//		ArrayList<String> buckets = DBUtils.getBuckets();
+//		model.addAttribute("buckets", buckets);
+		ArrayList<CountryMaster> countries = es.getCountries();
+		model.addAttribute("countries", countries);
+//		ArrayList<ReservoirMaster> reservoir = es.getReservoirs();
+//		model.addAttribute("reservoir", reservoir);
+		model.addAttribute("src_val", src_val);
+		return new ModelAndView("extraction/SystemDetailsEdit");
 	}
 
 	@RequestMapping(value = "/extraction/DataHome", method = RequestMethod.GET)
@@ -151,6 +212,20 @@ public class ExtractionController {
 		ArrayList<SourceSystemMaster> src_sys_val = es.getSources(src_val);
 		model.addAttribute("src_sys_val", src_sys_val);
 		return new ModelAndView("extraction/DataDetails");
+	}
+	
+	@RequestMapping(value = "/extraction/DataDetailsEdit", method = RequestMethod.POST)
+	public ModelAndView DataDetailsEdit(@Valid @ModelAttribute("src_sys_id") int src_sys_id, @ModelAttribute("src_val") String src_val, ModelMap model)
+			throws UnsupportedOperationException, Exception {
+		ConnectionMaster conn_val = es.getConnections1(src_val,src_sys_id);
+		model.addAttribute("conn_val", conn_val);
+		String ext_type=es.getExtType(src_sys_id);
+		model.addAttribute("ext_type", ext_type);
+		ArrayList<String> tables = es.getTables(src_val, conn_val.getConnection_id());
+		model.addAttribute("tables", tables);
+		ArrayList<DataDetailBean> arrddb = es.getData(src_sys_id,src_val);
+		model.addAttribute("arrddb", arrddb);
+		return new ModelAndView("extraction/DataDetailsEdit");
 	}
 
 	@RequestMapping(value = "/extraction/ExtractHome", method = RequestMethod.GET)

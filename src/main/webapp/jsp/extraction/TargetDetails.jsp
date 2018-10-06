@@ -1,8 +1,9 @@
 <jsp:include page="../cdg_header.jsp" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
-	function jsonconstruct() {
+	function jsonconstruct(val) {
 		var data = {};
+		document.getElementById('button_type').value = val;
 		$(".form-control").serializeArray().map(function(x) {
 			data[x.name] = x.value;
 		});
@@ -59,6 +60,28 @@
 			document.getElementById(in3).style.display = "none";
 		}
 	}
+
+	function chg()
+	{
+		if (document.getElementById("tgt").value == "") {
+			window.location.reload();
+		} else {
+			var tgt = document.getElementById("tgt").value;
+			$.post('/extraction/TargetDetailsEdit', {
+				tgt : tgt
+			}, function(data) {
+				$('#cud').html(data)
+			});
+		}
+	}
+
+function funccheck(val) {
+	if (val == 'create') {
+		window.location.reload();
+	} else {
+		document.getElementById('tgtfunc').style.display = "block";
+	}
+}
 </script>
 
 <div class="main-panel">
@@ -89,6 +112,38 @@
 							<input type="hidden" name="x" id="x" value=""> <input
 								type="hidden" name="counter" id="counter" class="form-control"
 								value="1">
+								<input type="hidden" name="button_type" id="button_type" value="">
+								
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Target</label>
+								<div class="col-sm-4">
+									<div class="form-check form-check-info">
+										<label class="form-check-label"> <input type="radio"
+											class="form-check-input" name="radio" id="radio1"
+											checked="checked" value="create"
+											onclick="funccheck(this.value)"> Create
+										</label>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-check form-check-info">
+										<label class="form-check-label"> <input type="radio"
+											class="form-check-input" name="radio" id="radio2"
+											value="edit" onclick="funccheck(this.value)"> Edit
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" id="tgtfunc" style="display: none;">
+								<label>Select Target</label> <select name="tgt" id="tgt"
+									class="form-control" onchange="chg()">
+									<option value="" selected disabled>Select Target ...</option>
+									<c:forEach items="${tgt_val}" var="tgt_val">
+										<option value="${tgt_val}">${tgt_val}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div id="cud">					
 							<fieldset class="fs">
 							<div>
 							<div id="dyn1">
@@ -165,8 +220,9 @@
 										onclick="return dup_div();">+</button>
 								</div>-->
 							</fieldset>
-							<button onclick="jsonconstruct();"
+							<button onclick="jsonconstruct('add');"
 								class="btn btn-rounded btn-gradient-info mr-2">Save</button>
+								</div>
 						</form>
 					</div>
 				</div>

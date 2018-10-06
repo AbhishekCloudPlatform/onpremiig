@@ -16,6 +16,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
+import com.iig.gcp.extraction.dto.SourceSystemDetailBean;
+import com.iig.gcp.extraction.dto.DataDetailBean;
 import com.iig.gcp.constants.MySqlConstants;
 import com.iig.gcp.extraction.dto.ConnectionMaster;
 import com.iig.gcp.extraction.dto.CountryMaster;
@@ -92,6 +94,33 @@ public class ExtractionServiceImpl implements ExtractionService {
 	}
 	
 	@Override
+	public ArrayList<String> getTargets1(String tgt) {
+		ArrayList<String> arr = new ArrayList<String>();
+		Connection connection;
+		try {
+			connection = ConnectionUtils.getConnection();
+			PreparedStatement pstm = connection.prepareStatement("select "
+					+ "target_unique_name,target_type,target_project,service_account,target_bucket,target_knox_url,target_hdfs_path,target_user,target_password"
+					+ " from target_master where target_unique_name='"+tgt+"'");
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next()) {
+				arr.add(rs.getString(1));
+				arr.add(rs.getString(2));
+				arr.add(rs.getString(3));
+				arr.add(rs.getString(4));
+				arr.add(rs.getString(5));
+				arr.add(rs.getString(6));
+				arr.add(rs.getString(7));
+				arr.add(rs.getString(8));
+				arr.add(rs.getString(9));
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return arr;
+	}
+	
+	@Override
 	public ConnectionMaster getConnections1(String src_val,int src_sys_id) {
 		// TODO Auto-generated method stub
 		Connection connection;
@@ -103,6 +132,33 @@ public class ExtractionServiceImpl implements ExtractionService {
 			while (rs.next()) {
 				conn.setConnection_id(rs.getInt(1));
 			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+
+	@Override
+	public ConnectionMaster getConnections2(String src_val,int conn_id) {
+		// TODO Auto-generated method stub
+		Connection connection;
+		ConnectionMaster conn = new ConnectionMaster();
+		try {
+			connection = ConnectionUtils.getConnection();
+			PreparedStatement pstm = connection.prepareStatement("select * from connection_master where connection_id="+conn_id);
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next()) {
+				conn.setConnection_id(rs.getInt(1));
+				conn.setConnection_name(rs.getString(2));
+				conn.setConnection_type(rs.getString(3));
+				conn.setHost_name(rs.getString(4));
+				conn.setPort_no(rs.getString(5));
+				conn.setUsername(rs.getString(6));
+				conn.setPassword(rs.getString(7));
+				conn.setDatabase_name(rs.getString(8));
+				conn.setService_name(rs.getString(9));
+			}
+			connection.close();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -299,6 +355,38 @@ public class ExtractionServiceImpl implements ExtractionService {
 	}
 
 	@Override
+	public ArrayList<SourceSystemDetailBean> getSources1(String src_val,int src_sys_id) {
+		SourceSystemDetailBean ssm = null;
+		ArrayList<SourceSystemDetailBean> arrssm = new ArrayList<SourceSystemDetailBean>();
+		Connection connection;
+		try {
+			connection = ConnectionUtils.getConnection();
+			PreparedStatement pstm = connection.prepareStatement(
+					"select a.src_sys_id,a.src_unique_name,a.src_sys_desc,a.country_code,b.extraction_type,b.target,b.connection_id "
+					+ "from source_system_master a , extraction_master b where a.src_sys_id = b.src_sys_id "
+					+ "and a.src_sys_id="+src_sys_id);
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next()) {
+				ssm = new SourceSystemDetailBean();
+				ssm.setSrc_sys_id(rs.getInt(1));
+				ssm.setSrc_unique_name(rs.getString(2));
+				ssm.setSrc_sys_desc(rs.getString(3));
+				ssm.setCountry_code(rs.getString(4));
+				ssm.setExtraction_type(rs.getString(5));
+				ssm.setTarget(rs.getString(6));
+				ssm.setConnection_id(rs.getInt(7));
+				arrssm.add(ssm);
+			}
+			connection.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			// connection.close();
+		}
+		// connection.close();
+		return arrssm;
+	}
+
+	@Override
 	public ArrayList<CountryMaster> getCountries() {
 		CountryMaster cm = null;
 		ArrayList<CountryMaster> arrcm = new ArrayList<CountryMaster>();
@@ -339,6 +427,39 @@ public class ExtractionServiceImpl implements ExtractionService {
 			e.printStackTrace();
 		}
 		return arrrm;
+	}
+	
+	@Override
+	public ArrayList<DataDetailBean> getData(int src_sys_id,String src_val) {
+		DataDetailBean ddb = null;
+		ArrayList<DataDetailBean> arrddb = new ArrayList<DataDetailBean>();
+		ConnectionMaster conn = getConnections1(src_val, src_sys_id);
+		Connection connection;
+		try {
+			connection = ConnectionUtils.getConnection();
+			PreparedStatement pstm = connection.prepareStatement(
+					"select table_name, columns, where_clause, fetch_type, incr_col from table_master where src_sys_id="+src_sys_id);
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next()) {
+				ddb = new DataDetailBean();
+				ddb.setTable_name(rs.getString(1));
+				ddb.setColumn_name(rs.getString(2));
+				ddb.setWhere_clause(rs.getString(3));
+				ddb.setFetch_type(rs.getString(4));
+				ddb.setIncremental_column(rs.getString(5));
+				ArrayList<String> agf=getFields("1", src_val, rs.getString(1), conn.getConnection_id());
+				String cols = agf.toString();
+				cols = cols.substring(1, cols.length() - 1).replace(", ", ",");
+				ddb.setCols(cols);
+				arrddb.add(ddb);
+			}
+			connection.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			//connection.close();
+		}
+		
+		return arrddb;
 	}
 	
 	@Override
