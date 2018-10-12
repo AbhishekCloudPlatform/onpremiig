@@ -13,6 +13,11 @@ function jsonconstruct() {
 	document.getElementById('SystemOnboard').submit();
 }
 
+history.pushState(null, null, document.URL);
+window.addEventListener('popstate', function () {
+    history.pushState(null, null, document.URL);
+});
+
 function sys_typ(id,val) {
 	var in1 = id.slice(-1);
 	var in2 = id.slice(-2, -1);
