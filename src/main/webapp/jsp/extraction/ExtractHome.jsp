@@ -17,37 +17,89 @@
 						<form class="forms-sample" id="ExtractHome" name="ExtractHome"
 							method="post" action="/extraction/ExtractData">
 							<input type="hidden" name="src_val" id="src_val" value="">
-							<div class="row1">
-								<div class="column2">
-									<a href="#" onclick="pass('Oracle');"><img src="../assets/img/oracle.png"></a> 
-									<a href="#"><img src="../assets/img/db2.png"></a> 
-									<a href="#"><img src="../assets/img/sybase.png"></a>
-								</div>
-								<div class="column2">
-									<a href="#" onclick="pass('Teradata');"><img src="../assets/img/teradata.png"></a> 
-									<a href="#"><img src="../assets/img/hive.png"></a> 
-									<a href="#"><img src="../assets/img/hbase.png"></a>
-								</div>
-								<div class="column2">
-									<a href="#" onclick="pass('Mysql');"><img src="../assets/img/mysql.png"></a> 
-									<a href="#"><img src="../assets/img/mongodb.png"></a> 
-									<a href="#"><img src="../assets/img/kafka.png"></a>
-								</div>
-								<div class="column2">
-									<a href="#" onclick="pass('Mssql');"><img src="../assets/img/sqlserver.png"></a> 
-									<a href="#"><img src="../assets/img/avro.png"></a> 
-									<a href="#"><img src="../assets/img/exadata.png"></a>
-								</div>
-								<div class="column2">
-									<a href="#" onclick="pass('Unix');"><img src="../assets/img/linux.png"></a> 
-									<a href="#"><img src="../assets/img/aws.png"></a> 
-									<a href="#"><img src="../assets/img/azure.png"></a>
-								</div>
-								<div class="column2">
-									<a href="#" onclick="pass('Hadoop');"><img src="../assets/img/hadoop.png"></a> 
-									<a href="#"><img src="../assets/img/netezza.png"></a> 
-									<a href="#"><img src="../assets/img/windows.png"></a>
-								</div>
+							<div class="container">
+								  <div class="row text-center text-lg-left">
+									 <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      	<a class="d-block mb-4 h-100" href="#" onclick="pass('Oracle');">
+								      		<img class="img-fluid img-thumbnail" src="../assets/img/oracle.png" >
+								      	</a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      	<a class="d-block mb-4 h-100" href="#" onclick="pass('Teradata');">
+								      		<img class="img-fluid img-thumbnail" src="../assets/img/teradata.png">
+								      	</a> 
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								     	<a class="d-block mb-4 h-100" href="#" onclick="pass('Mysql');">
+								     		<img class="img-fluid img-thumbnail" src="../assets/img/mysql.png">
+								     	</a> 
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100" onclick="pass('Mssql');">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/sqlserver.png">
+								          </a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100" onclick="pass('Unix');">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/aws.png">
+								          </a>
+								    </div>
+								     <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100" onclick="pass('Hadoop');">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/hadoop.png">
+								          </a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								    	<a class="d-block mb-4 h-100" href="#">
+								    		<img class="img-fluid img-thumbnail" src="../assets/img/db2.png">
+								    	</a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      	<a class="thumbnail" href="#">
+								      		<img class="img-fluid img-thumbnail" src="../assets/img/sybase.png">
+								      	</a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a class="d-block mb-4 h-100" href="#">
+								      	<img class="img-fluid img-thumbnail" src="../assets/img/hive.png">
+								      </a> 
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								     <a class="d-block mb-4 h-100" href="#">
+								     	<img class="img-fluid img-thumbnail" src="../assets/img/hbase.png">
+								     </a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/mongodb.png">
+								          </a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/kafka.png">
+								          </a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/exadata.png">
+								          </a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/linux.png">
+								          </a>
+								    </div>
+								    <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/azure.png">
+								          </a>
+								    </div>
+								   <div class="thumbnail col-lg-3 col-md-4 col-xs-6">
+								      <a href="#" class="d-block mb-4 h-100">
+								            <img class="img-fluid img-thumbnail" src="../assets/img/windows.png">
+								          </a>
+								    </div>
+								  </div>
 							</div>
 						</form>
 					</div>

@@ -54,7 +54,15 @@
 		c.className = "form-group row";
 		var d = document.createElement('div');
 		d.id = "fldd" + i;
+		var del = document.createElement('div');
+		del.id = "delete" + x;
+		del.style.cssFloat = "right";
+		del.innerHTML = '<button id="del'
+				+ x
+				+ '" type="button" class="btn btn-rounded btn-gradient-danger mr-2" onclick="delblock(\''
+				+ x + '\')">X</button>';
 
+		tbl.parentNode.parentNode.parentNode.appendChild(del);
 		tbl.parentNode.parentNode.parentNode.appendChild(c);
 		c.appendChild(tbldiv);
 		c.appendChild(fthdiv);
@@ -74,6 +82,45 @@
 		}
 
 		document.getElementById('incc' + x).style.display = "none";
+		document.getElementById('counter').value = i;
+	}
+	function delblock(val) {
+		document.getElementById('table_name' + val).parentNode.parentNode.id = "del";
+		document.getElementById("del").innerHTML = "";
+		document.getElementById("del").remove();
+		document.getElementById('col_name' + val).parentNode.parentNode.id = "del";
+		document.getElementById("del").innerHTML = "";
+		document.getElementById("del").remove();
+		document.getElementById('where_clause' + val).parentNode.id = "del";
+		document.getElementById("del").innerHTML = "";
+		document.getElementById("del").remove();
+		document.getElementById("delete" + val).remove();
+		if (val < document.getElementById('counter').value) {
+		var p;
+			for (var q = parseInt(val) + 1; q <= document.getElementById('counter').value; q++) {
+				p = parseInt(q) - 1; 
+				document.getElementById('table_name' + q).id = 'table_name' + p;
+				document.getElementById('col_name' + q).id = 'col_name' + p;
+				document.getElementById('where_clause' + q).id = 'where_clause'
+						+ p;
+				document.getElementById('fetch_type' + q).id = 'fetch_type' + p;
+				document.getElementById('incr_col' + q).id = 'incr_col' + p;
+				document.getElementById('incc' + q).id = 'incc' + p;
+				document.getElementById('fldd' + q).id = 'fldd' + p;
+				document.getElementById('del' + q).id = 'del' + p;
+				document.getElementById('delete' + q).id = 'delete' + p;
+				document.getElementById('columns_name' + q).id = 'columns_name' + p;
+				document.getElementById('table_name' + p).name = 'table_name' + p;
+				document.getElementById('col_name' + p).name = 'col_name' + p;
+				document.getElementById('where_clause' + p).name = 'where_clause'
+						+ p;
+				document.getElementById('fetch_type' + p).name = 'fetch_type' + p;
+				document.getElementById('incr_col' + p).name = 'incr_col' + p;
+				document.getElementById('columns_name' + p).name = 'columns_name' + p;
+			}
+		}
+		i = document.getElementById('counter').value;
+		--i;
 		document.getElementById('counter').value = i;
 	}
 	function incr(id, val) {
@@ -116,15 +163,35 @@
 		$("#src_sys_id").change(function() {
 			var src_sys_id = $(this).val();
 			var src_val = document.getElementById("src_val").value;
-			$.post('/extraction/DataDetails1', {
-				src_sys_id : src_sys_id,
-				src_val : src_val
-			}, function(data) {
-				$('#datdyn').html(data)
-			});
+			if(document.getElementById('radio1').checked)
+			{
+				$.post('/extraction/DataDetails1', {
+					src_sys_id : src_sys_id,
+					src_val : src_val
+				}, function(data) {
+					$('#datdyn').html(data)
+				});
+			}
+			else if(document.getElementById('radio2').checked) 
+			{
+				$.post('/extraction/DataDetailsEdit', {
+					src_sys_id : src_sys_id,
+					src_val : src_val
+				}, function(data) {
+					$('#datdyn').html(data)
+				});
+			}
 		});
 	});
-		
+
+	function funccheck(val) {
+		if (val == 'create') {
+			window.location.reload();
+		} else if(val=='edit') {
+			document.getElementById('datdyn').innerHTML="";
+			$("#src_sys_id").val("");
+		}
+	}
 </script>
 
 <div class="main-panel">
@@ -152,19 +219,41 @@
 						<form class="forms-sample" id="DataDetails" name="DataDetails"
 							method="POST" action="/extraction/DataDetails3"
 							enctype="application/json">
-							<input type="hidden" name="x" id="x" value=""> 
-							<input type="hidden" name="src_val" id="src_val" value="${src_val}">
-							<div class="form-group">
-									<label>Source System Name *</label> <select name="src_sys_id"
-										id="src_sys_id" class="form-control">
-										<option value="" selected disabled>Source System Name
-											...</option>
-										<c:forEach items="${src_sys_val}" var="src_sys_val">
-											<option value="${src_sys_val.src_sys_id}">${src_sys_val.src_unique_name}</option>
-										</c:forEach>
-									</select>
+							<input type="hidden" name="x" id="x" value=""> <input
+								type="hidden" name="src_val" id="src_val" value="${src_val}">
+
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Data Tables</label>
+								<div class="col-sm-4">
+									<div class="form-check form-check-info">
+										<label class="form-check-label"> <input type="radio"
+											class="form-check-input" name="radio" id="radio1"
+											checked="checked" value="create"
+											onclick="funccheck(this.value)"> Create
+										</label>
+									</div>
 								</div>
-								<div id="datdyn"></div>
+								<div class="col-sm-4">
+									<div class="form-check form-check-info">
+										<label class="form-check-label"> <input type="radio"
+											class="form-check-input" name="radio" id="radio2"
+											value="edit" onclick="funccheck(this.value)"> Edit
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Source System Name *</label> <select name="src_sys_id"
+									id="src_sys_id" class="form-control">
+									<option value="" selected disabled>Source System Name
+										...</option>
+									<c:forEach items="${src_sys_val}" var="src_sys_val">
+										<option value="${src_sys_val.src_sys_id}">${src_sys_val.src_unique_name}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div id="datdyn"></div>
 						</form>
 					</div>
 				</div>
