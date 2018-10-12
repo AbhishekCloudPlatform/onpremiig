@@ -144,7 +144,7 @@ public class SchedularController {
 
 		} catch (Exception e) {
 
-			modelMap.addAttribute("errorStatus", e.getMessage());
+			modelMap.addAttribute("errorString", e.getMessage());
 
 		}
 		return new ModelAndView("schedular/viewAllJobs1");

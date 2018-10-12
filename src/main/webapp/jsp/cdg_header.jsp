@@ -299,8 +299,9 @@
 					<a class="nav-link" data-toggle="collapse" href="#admin" aria-expanded="false" aria-controls="admin"> <span class="menu-title">Admin Portal</span> <i class="menu-arrow"></i> <i class="mdi mdi-account-settings-variant menu-icon"></i> </a> 
 						<div class="collapse" id="admin"> 
 							<ul class="nav flex-column sub-menu"> 
-								<li class="nav-item"> <a class="nav-link" href="/admin/project"> Onboard Project </a></li>
-								<li class="nav-item"> <a class="nav-link" href="/admin/user"> Onboard User </a></li> 
+								<li class="nav-item"> <a class="nav-link" href="/admin/project"> Project Details </a></li>
+								<li class="nav-item"> <a class="nav-link" href="/admin/user"> User Details </a></li> 
+								<li class="nav-item"> <a class="nav-link" href="/systemOnboardForm"> System Details </a></li>
 							</ul>
 						</div>
 					</li>
