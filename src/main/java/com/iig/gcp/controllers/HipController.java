@@ -79,4 +79,41 @@ public class HipController {
 		map.addAttribute("feed", fs);
         return  new ModelAndView("/hip/hipmasterdashboard1");
     }
+	
+	@RequestMapping(value = { "/hip/filterSearch"}, method = RequestMethod.POST)
+	public ModelAndView hipFeedSearchFilter(ModelMap map,@Valid @RequestParam("feed_id") String feed_id)
+			throws Exception {
+		
+		String statFeed=hipService.checkFeedAvailable(feed_id);
+		String stat=statFeed.substring(0, 1);
+		System.out.println("help me"+stat);
+		if(stat.equals("0")) {
+			map.addAttribute("stat",Integer.parseInt(stat));
+			ArrayList<String> arrBatchDate=new ArrayList<String>();
+			ArrayList<String> arrDuration=new ArrayList<String>();
+			ArrayList<HipDashboardDTO> arrHipDashboard = hipService.getTableChartLoggerStats(feed_id);
+			map.addAttribute("arrHipDashboard", arrHipDashboard);
+			
+			//ObjectMapper mapper = new ObjectMapper();
+
+			for(HipDashboardDTO hipVO :arrHipDashboard) {
+				//System.out.println("Job Id:"+archiveJob.getDuration());
+				arrBatchDate.add(hipVO.getBatch_date().toString());
+				arrDuration.add(hipVO.getDuration());
+			}
+			//String json = mapper.writeValueAsString(arrBatchDate);
+			//System.out.println("json String"+json);
+			//System.out.println(" arrDuration"+arrDuration);
+			map.addAttribute("x", arrBatchDate);
+			map.addAttribute("y",arrDuration);
+			
+			 return  new ModelAndView("/hip/hipdashboard2");
+		}else {
+			map.addAttribute("stat",Integer.parseInt(stat));
+			System.out.println("in else");
+			 return  new ModelAndView("/hip/hipdashboard3");
+		}
+		
+	}
+	
 }

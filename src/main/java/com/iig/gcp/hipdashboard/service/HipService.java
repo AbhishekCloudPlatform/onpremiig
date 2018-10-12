@@ -12,5 +12,6 @@ public interface HipService {
 	ArrayList<FeedLoggerDTO> getfeeddetails(String feed_id) throws SQLException, Exception;
 	ArrayList<String> getfeedsFromLoggerStats() throws SQLException, Exception;
 	ArrayList<HipDashboardDTO> getTableChartLoggerStats(@Valid String feed_id) throws SQLException, Exception;
+	String checkFeedAvailable(@Valid String feed_id)throws SQLException, Exception;
 
 }
