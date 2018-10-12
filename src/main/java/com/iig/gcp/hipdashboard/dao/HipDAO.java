@@ -15,4 +15,5 @@ public interface HipDAO {
 	public ArrayList<String> getfeedsFromLoggerStats() throws SQLException, Exception;
 
 	public ArrayList<HipDashboardDTO> getTableChartLoggerStats(@Valid String feed_id) throws SQLException, Exception;
+	public String checkFeedAvailable(@Valid String feed_id) throws SQLException, Exception;
 }

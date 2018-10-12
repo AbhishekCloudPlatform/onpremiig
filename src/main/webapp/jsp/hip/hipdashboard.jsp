@@ -10,198 +10,145 @@
     Juniper
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <!--<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">-->
-  <!-- CSS Files -->
-  <link href="../../material/css/material-kit.css?v=2.0.4" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../../material/demo/demo.css" rel="stylesheet" />
-  
-  
   <link rel="stylesheet" href="../../assets/iconfonts/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../assets/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- inject:css -->
   <link rel="stylesheet" href="../../assets/css/style2.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../../assets/img/favicon.ico" />
   <!-- Include multi.js -->
   <link rel="stylesheet" type="text/css" href="../../assets/css/multi.min.css">
   <script src="../../assets/js/multi.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script type="text/javascript" src="../../assets/js/hip.js"></script>
 </head>
-<script type="text/javascript">
-$(document).ready(function() {
-	//fetch the job filer values using feedid-Start
-	$("#feedIdFilter").change(function() {
-		var feed_id = $(this).val();
-	//	alert(feed_id);
-		$.post('/hip/feedIdFilter', {		
-			feed_id : feed_id	
-		}, function(data) {
-				$('#table').html(data);	
-				  document.getElementById('chartId').style.display= "block";
-				  document.getElementById('table').style.display= "block";
-			//alert(feed_id);
-		var x=document.getElementById("x").value;
-		var y=document.getElementById("y").value;
-		var newx = x.split(',');
-		var newy = y.split(',');
-		//var a=[180801,180802,180805];
-		//var b=[26.0000,13.0000,18];
-		newx[0]=newx[0].replace("[","");
-		newy[0]=newy[0].replace("[","")
-		newx[newx.length-1]=newx[newx.length-1].replace("]","");
-		newy[newy.length-1]=newy[newy.length-1].replace("]","");
-		
-		 var areaData = {
-				
-				    labels: newx,
-				    datasets: [{
-				      label: 'Duration in Minutes',
-				      data: newy,
-				      backgroundColor: [
-				       // 'rgba(255, 99, 132, 0.2)',
-				        'rgba(54, 162, 235, 0.2)',
-				        'rgba(255, 206, 86, 0.2)',
-				        'rgba(75, 192, 192, 0.2)',
-				        'rgba(153, 102, 255, 0.2)',
-				        'rgba(255, 159, 64, 0.2)'
-				      ],
-				      borderColor: [
-				        //'rgba(255,99,132,1)',
-				        'rgba(54, 162, 235, 1)',
-				        'rgba(255, 206, 86, 1)',
-				        'rgba(75, 192, 192, 1)',
-				        'rgba(153, 102, 255, 1)',
-				        'rgba(255, 159, 64, 1)'
-				      ],
-				      borderWidth: 1,
-				      fill: true, // 3: no fill
-				    }]
-				  };
+<style>
+* {
+  box-sizing: border-box;
+}
+.menu {
+  float:left;
+  width:20%;
+  text-align:center;
+}
+.menu a {
+  background-color:#e5e5e5;
+  padding:8px;
+  margin-top:7px;
+  display:block;
+  width:100%;
+  color:black;
+}
+.main {
+  float:left;
+  width:80%;
+  padding:0 20px;
+}
+/* .right {
+  background-color:#e5e5e5;
+  float:left;
+  width:20%;
+  padding:15px;
+  margin-top:7px;
+  text-align:center;
+} */
 
-				  var areaOptions = {
-				    plugins: {
-				      filler: {
-				        propagate: true
-				      }
-				    }
-				  }
-				  
-				  if ($("#areaChart").length) {
-					    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-					    var areaChart = new Chart(areaChartCanvas, {
-					      type: 'line',
-					      data: areaData,
-					      options: areaOptions
-					    });
-					  }
-		
-		
-				
-		});
-	
-		//fetch the job filer values using feedid-End
-	
-	});
-		
-	});
-	
+@media only screen and (max-width:620px) {
+  /* For mobile phones: */
+  .menu, .main/* , .right */ {
+    width:100%;
+  }
+}
+</style>
+<body  style="background-image: url('../../assets/img/city-profile.jpg');">
 
-</script>
-<body class="profile-page sidebar-collapse" data-parallax="true" style="background-image: url('./material/img/city-profile.jpg');">
+<div class="row" style="margin: 1%;">
+	<div class="col-12  stretch-card" >
+		<div class="card">
+			<div style="background-image:linear-gradient(to right, rgba(192,192,192,0), rgba(192,192,192,1));padding:15px;">
+  				
+  				<div class="row ">
+  					
+  					<div class=" col-md-12" align="center"><h1 style="font-family:fantasy;color: gray;">RUN STATISTICS</h1></div>
+  					<!-- <div class=" col-md-2"  align="right">
+	  					<button type="button" onclick="homebutton()"  class="btn btn-gradient-dark btn-rounded btn-icon" >
+	  					  <i class="mdi mdi-home-outline"></i>
+	                    </button>
+  					</div> -->
+  					
+  				</div>
+  				<br>
+  				<div class="row " >
+  				  
+	  					<div class="menu" align="center">
+	  	
+	  					</div>
+  					<div class="main" >
+  						<button type="button" onclick="feedpage()" class="btn btn-gradient-secondary btn-fw">Feed Type</button>
+  						<button type="button" onclick="tablepage()" class="btn btn-gradient-secondary btn-fw">Table Type</button>
+  						
+  					</div>
 
-  <div class="page-header header-filter" style="height: 100px; " >  </div>
-  <div class="main main-raised">
-    <div class="profile-content">
-      <div class="container">
-			<div class="tab-content tab-space">
-          <div class="tab-pane active text-center gallery" id="studio">
-          <div class="row">
-          <div class="mt-3" align="left">
-                	<a href="/">Home</a>
-                </div>
-          </div>
-            <div class="row">
-
-			
-					<div class="card-body">
-						<h2 class="card-title" align="left">Run Statics</h2>	
-						<form class="forms-sample" id="runform" name="runform"
-							method="post" action="/schedule/selectFeedId">
-							<fieldset class="fs">
-							<div class="row">
-								<div class="form-group col-md-4">
-								<h4 class="card-title" align="left">Select Feed</h4>
-										 <select class="form-control"
-											id="feedIdFilter" name="feedIdFilter">
-											<option value="" selected disabled>Feed Data...</option>
-											<c:forEach items="${feed_id}" var="feed_id">
-												<option value="${feed_id}">${feed_id}</option>
-											</c:forEach>
-										</select>
-								</div>
-								<div class="form-group col-md-4 ">
-										
-								</div>
-								<div class="form-group col-md-4" id="hello">
-			
-								</div>
-								</div>
-								<div class="row" style="display: none;" id="chartId" style="display: none;">
-									<h4 class="card-title">Run chart</h4>
-                  					<canvas id="areaChart" style="height:250px"></canvas>
-								</div>
-								<br>
-								<div class="row" style="display: none;" id="table" style="display: none;">
-								
-                  					
-								</div>
-							</fieldset>							
-						</form>		
-					</div>
-				</div>
-			<%-- <div class="row" id="chartId" style="display: none;">
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-body">
-                  		<h4 class="card-title">Run chart</h4>
-                  		<canvas id="areaChart" style="height:250px"></canvas>
-               		 </div>
-				</div>
+  				</div>
+  			
 			</div>
-		</div> --%>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
 
-<div class="row" id="chartId" style="display: none;">
-			<div class="col-12 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-body">
-                  		<h4 class="card-title">Run chart</h4>
-                  		<canvas id="areaChart" style="height:250px"></canvas>
-               		 </div>
-				</div>
-			</div>
+<div id="feedpage" style="overflow:auto;display: block;">
+  <div class="menu" style="background-image:linear-gradient(to right, rgba(192,192,192,0), rgba(192,192,192,1));padding:15px;text-align:left;" >
+  	<div class="form-group col-md-12 ">
+	    <label>Search Feed</label>
+		<input type="text" class="form-control" id="feedid_s" name="feedid_s" placeholder="Feed ID">
+	</div>
+    <div class="form-group col-md-12 ">
+    	<label>Select Feed</label>
+		<select class="form-control" id="feedIdFilter" name="feedIdFilter">
+			<option value="" selected disabled>Feed Data...</option>
+			<c:forEach items="${feed_id}" var="feed_id">
+				<option value="${feed_id}">${feed_id}</option>
+			</c:forEach>
+		</select>
+    </div>
+    <div class="form-group col-md-12 ">
+    	<label>Select Date</label>
+		<div>
+			<input class="form-control"  type="date"/> 
 		</div>
+    </div>
+    <div class="form-group col-md-12 " align="center">
+    	<button type="button" id="clear" class="btn btn-gradient-secondary btn-fw" >Clear</button>
+    </div>
+  </div>
 
-	
+  <div class="main">
+  					<br>
+  					<br>
+  					<div class="row" >
+									<div class=" col-md-2"></div>	
+									 <div class="col-md-8" align="justify" id="chartId" style="display: none;border-style: ridge; " >
+										<h4>Duration of Feed in Minutes</h4>
+	                  					<canvas id="areaChart" style="height:250px"></canvas>
+	                  				 </div>
+	                  				 <div class=" col-md-2"></div>	
+					</div>
+								<br>
+				    <div class="row" >
+						<div class=" col-md-2"></div>			
+						<div class=" col-md-8"  id="table" style="display: none;overflow-x:auto;border-style: ridge">
+						</div>
+                  		<div class=" col-md-2"></div>				
+				    </div>
+   </div>
 
-  <!--   Core JS Files   -->
-  <!-- <script src="../../material/js/core/jquery.min.js" type="text/javascript"></script> -->
-  <script src="../../material/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="../../material/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-  <script src="../../material/js/plugins/moment.min.js"></script>
-   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<!--   <script src="../../material/js/material-kit.js?v=2.0.4" type="text/javascript"></script> -->
-  
-  
+  <!-- <div class="right">
+    <h2>About</h2>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+  </div> -->
+</div>
+<div id="tablepage" style="overflow:auto;display: none;" >
+</div>
+<div style="background-image:linear-gradient(to right, rgba(192,192,192,0), rgba(192,192,192,1));text-align:center;padding:10px;margin-top:7px;">Copyright © 2018 <a href="https://www.infosys.com" target="_blank">Infosys Limited</a>. All rights reserved.</div>
+		</div>
+	</div>
+</div>
    <script src="../../assets/js/vendor.bundle.base.js"></script>
   <script src="../../assets/js/vendor.bundle.addons.js"></script>
   <script src="../../assets/js/off-canvas.js"></script>

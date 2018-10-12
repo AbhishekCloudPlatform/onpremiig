@@ -99,6 +99,26 @@ public class HipDAOImpl implements HipDAO {
 		}
 		return arrHipDashboard;
 	}
+
+	@Override
+	public String checkFeedAvailable(@Valid String feed_id) throws SQLException, Exception {
+		System.out.println("feed id"+feed_id);
+		
+		Connection connection=null;
+		int stat=1;
+		String strfeed_id=null;
+			connection = ConnectionUtils.getConnection();
+			PreparedStatement pstm = connection.prepareStatement("select event_feed_id from logger_stats_master where event_feed_id='"+feed_id+"'");
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next()) {
+				strfeed_id=rs.getString(1);
+				stat=0;
+				break;
+			}
+		
+		ConnectionUtils.closeQuietly(connection);
+		return stat+strfeed_id;
+	}
 	
 	
 	

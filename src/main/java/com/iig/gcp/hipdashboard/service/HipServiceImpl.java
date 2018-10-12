@@ -42,4 +42,10 @@ public class HipServiceImpl implements HipService {
 		return hipDao.getTableChartLoggerStats(feed_id);
 	}
 
+	@Override
+	public String checkFeedAvailable(@Valid String feed_id) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return hipDao.checkFeedAvailable(feed_id);
+	}
+
 }
