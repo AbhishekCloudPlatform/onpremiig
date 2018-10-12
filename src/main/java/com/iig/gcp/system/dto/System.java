@@ -1,6 +1,6 @@
 package com.iig.gcp.system.dto;
 
-public class SystemDTO {
+public class System {
 	private int system_sequence;
 	private String system_eim;
 	private String system_name;
