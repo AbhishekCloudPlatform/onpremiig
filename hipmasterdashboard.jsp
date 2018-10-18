@@ -15,7 +15,7 @@
 	});
 </script>
 <div class="main-panel" style="width:100%">
-	<div class="content-wrapper" style="background-image:url('../../assets/img/city-profile.jpg')">
+	<div class="content-wrapper">
 		<div class="row">
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
