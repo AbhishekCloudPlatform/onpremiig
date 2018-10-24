@@ -85,7 +85,6 @@
 								type="hidden" name="button_type" id="button_type" value="">
 							<input type="hidden" name="src_val" id="src_val"
 								value="${src_val}">
-
 							<div class="form-group row">
 								<label class="col-sm-3 col-form-label">Connection</label>
 								<div class="col-sm-4">

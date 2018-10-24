@@ -28,14 +28,14 @@ public class ExtractionController {
 
 	@Autowired
 	private ExtractionService es;
-
+	
 	@RequestMapping(value = "/extraction/ConnectionHome", method = RequestMethod.GET)
 	public ModelAndView ConnectionHome() {
 		return new ModelAndView("extraction/ConnectionHome");
 	}
 
 	@RequestMapping(value = "/extraction/ConnectionDetails", method = RequestMethod.POST)
-	public ModelAndView ConnectionDetails(@Valid @ModelAttribute("src_val") String src_val, ModelMap model) {
+	public ModelAndView ConnectionDetails(@Valid @ModelAttribute("src_val") String src_val, ModelMap model) throws Exception {
 		model.addAttribute("src_val", src_val);
 		ArrayList<ConnectionMaster> conn_val = es.getConnections(src_val);
 		model.addAttribute("conn_val", conn_val);
@@ -175,7 +175,7 @@ public class ExtractionController {
 	}
 
 	@RequestMapping(value = "/extraction/DataDetails", method = RequestMethod.POST)
-	public ModelAndView DataDetails(@Valid @ModelAttribute("src_val") String src_val, ModelMap model) throws IOException {
+	public ModelAndView DataDetails(@Valid @ModelAttribute("src_val") String src_val, ModelMap model) throws Exception {
 		model.addAttribute("src_val", src_val);
 		ArrayList<SourceSystemMaster> src_sys_val = es.getSources(src_val);
 		model.addAttribute("src_sys_val", src_sys_val);
